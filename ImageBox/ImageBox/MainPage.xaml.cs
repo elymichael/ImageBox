@@ -46,7 +46,7 @@
         {
             try
             {
-                ImageList imageList = await ImageFolderScan.LoadBitmapCollection("https://raw.githubusercontent.com/xamarin/docs-archive/master/Images/stock/small/stock.json");
+                ImageList imageList = await ImageFolderScan.GetImages("https://raw.githubusercontent.com/xamarin/docs-archive/master/Images/stock/small/stock.json");
 
                 // Create an Image object for each bitmap
                 foreach (string filepath in imageList.Photos)
@@ -114,15 +114,10 @@
 
         private void loadDirectory()
         {
-            //ImageDestinationDisplay.ItemsSource = _destinationFolder;
-            _destinationFolder.Add(new DestinationFolder { Name = "Clases", FolderType = FolderType.Images });
-            _destinationFolder.Add(new DestinationFolder { Name = "Familia", FolderType = FolderType.Images });
-            _destinationFolder.Add(new DestinationFolder { Name = "Música", FolderType = FolderType.Images });
-            _destinationFolder.Add(new DestinationFolder { Name = "Meditación", FolderType = FolderType.Images });
-            _destinationFolder.Add(new DestinationFolder { Name = "Investigación", FolderType = FolderType.Images });
-            _destinationFolder.Add(new DestinationFolder { Name = "Personal", FolderType = FolderType.Images });
-            _destinationFolder.Add(new DestinationFolder { Name = "Otros", FolderType = FolderType.Images });
-            _destinationFolder.Add(new DestinationFolder { Name = "Hijos", FolderType = FolderType.Images });
+            List<DestinationFolder> folders = ImageFolderScan.GetFolders("");
+            foreach(DestinationFolder df in folders) {
+                _destinationFolder.Add(df);
+            }            
         }
 
         private async void Button_Clicked(object sender, EventArgs e)

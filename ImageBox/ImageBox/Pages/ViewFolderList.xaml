@@ -11,19 +11,19 @@
                 <StackLayout Orientation="Horizontal" Padding="10">
                     <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
                         <Label  x:Name="txtTitleCloseIcon" Text="&#xf00d;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
-                            <!--<Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding RefreshPage}" />
-                            </Label.GestureRecognizers>-->
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ClosePage}" />
+                            </Label.GestureRecognizers>
                         </Label>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
                         <Label x:Name="txtTitle" Text="ALBUMS" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" TextColor="White"/>
                     </StackLayout>
                     <StackLayout HorizontalOptions="End" VerticalOptions="Center">
-                        <Label x:Name="btnTrash" Text="&#xf067;" TextColor="White" HorizontalOptions="End" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
-                            <!--<Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding OpenTrash}" />
-                            </Label.GestureRecognizers>-->
+                        <Label x:Name="btnAdd" Text="&#xf067;" TextColor="White" HorizontalOptions="End" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding AddFolder}" />
+                            </Label.GestureRecognizers>
                         </Label>
                     </StackLayout>
                 </StackLayout>

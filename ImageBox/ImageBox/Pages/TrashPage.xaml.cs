@@ -18,6 +18,8 @@
         {
             InitializeComponent();
 
+            BindingContext = this;
+
             LoadBitmapCollection();
         }
 
@@ -63,7 +65,7 @@
 
             try
             {
-                ImageList imageList = await ImageFolderScan.LoadBitmapCollection("https://raw.githubusercontent.com/xamarin/docs-archive/master/Images/stock/small/stock.json");
+                ImageList imageList = await ImageFolderScan.GetImages("https://raw.githubusercontent.com/xamarin/docs-archive/master/Images/stock/small/stock.json");
 
                 // Create an Image object for each bitmap
                 foreach (string filepath in imageList.Photos)
