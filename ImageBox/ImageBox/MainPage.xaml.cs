@@ -27,7 +27,7 @@
 
         private void loadConfiguration()
         {
-            BindingContext = this;
+            BindingContext = this;                       
 
             LoadBitmapCollection();
 
@@ -91,13 +91,31 @@
             switch (e.Direction)
             {
                 case SwipeDirection.Left:
-                    pointer++;
+                    if(pointer < (_unsortedImages.Count - 1))
+                    {
+                        pointer++;
+                    }
+                    else
+                    {
+                        pointer = 0;
+                    }
                     break;
                 case SwipeDirection.Right:
-                    pointer--;
+                    if(pointer > 0)
+                    {
+                        pointer--;
+                    }
+                    else
+                    {
+                        pointer = (_unsortedImages.Count - 1);
+                    }
                     break;
                 case SwipeDirection.Up:
-                    pointer++;
+                    _unsortedImages.RemoveAt(pointer);
+                    if(pointer >= (_unsortedImages.Count - 1))
+                    {
+                        pointer--;
+                    }
                     break;
                 case SwipeDirection.Down:
                     // Handle the swipe

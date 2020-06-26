@@ -31,8 +31,8 @@
                            IsRunning="True"
                            VerticalOptions="Center" />
             </Grid>
-            <Button x:Name="btnRecover" Text="{Binding RecoverText}" Padding="0" />
-            <Button x:Name="btnDelete" Text="{Binding DeleteText}" Padding="0" BackgroundColor="Red"/>
+            <Button x:Name="btnRecover" Text="{Binding RecoverText}" Padding="0" Clicked="btnRecover_Clicked" />
+            <Button x:Name="btnDelete" Text="{Binding DeleteText}" Padding="0" BackgroundColor="Red" Clicked="btnDelete_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

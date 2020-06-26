@@ -77,7 +77,7 @@
             {
                 flexLayout.Children.Add(new Label
                 {
-                    Text = "Cannot access list of bitmap files"
+                    Text = string.Format("Cannot access list of bitmap files: {0}", ex.Message)
                 });
             }
             finally
@@ -94,7 +94,10 @@
             {
                 Source = ImageSource.FromUri(new Uri(filepath)),
                 HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HeightRequest = 120,
+                WidthRequest = 120,
+                Margin = 5
             };
 
             var tapGestureRecognizer = new TapGestureRecognizer();
@@ -148,6 +151,30 @@
         private async void OnDismissButtonClicked()
         {
             await Navigation.PopModalAsync();
+        }
+
+        private void btnDelete_Clicked(object sender, EventArgs e)
+        {
+            if (Selected >= 1)
+            {
+
+            }
+            else
+            {
+                flexLayout.Children.Clear();
+            }
+        }
+
+        private void btnRecover_Clicked(object sender, EventArgs e)
+        {
+            if(Selected >= 1)
+            {
+                
+            }
+            else
+            {
+                flexLayout.Children.Clear();
+            }
         }
     }
 }

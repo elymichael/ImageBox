@@ -4,8 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             xmlns:controls="clr-namespace:ImageBox.Views"     
-             xmlns:resources="clr-namespace:ImageBox.Resources"
+             xmlns:controls="clr-namespace:ImageBox.Views"                  
              x:Class="ImageBox.MainPage" BackgroundColor="Black">
 
     <StackLayout Spacing="10" Padding="10">
@@ -20,6 +19,7 @@
                     </Label>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                    <!--<Label x:Name="txtTitle" Text="{x:Static resources:AppResources.unsortedstring}" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" TextColor="White"/>-->
                     <Label x:Name="txtTitle" Text="UNSORTED" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" TextColor="White"/>
                     <Label x:Name="txtTitleSortIcon" Text="&#xf0dc;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center"/>
                 </StackLayout>
@@ -34,7 +34,7 @@
             <Label x:Name="txtPhotoTotal" Text="" TextColor="White" HorizontalOptions="Center" FontSize="Small" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <ScrollView Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <!--<ScrollView Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">-->
                 <Image x:Name="imgCurrent" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFit" Source="Button">
                     <Image.GestureRecognizers>
                         <SwipeGestureRecognizer Direction="Left"  Swiped="SwipeGestureRecognizer_Swiped" />
@@ -43,7 +43,7 @@
                         <SwipeGestureRecognizer Direction="Down" Swiped="SwipeGestureRecognizer_Swiped"/>
                     </Image.GestureRecognizers>
                 </Image>
-            </ScrollView>
+            <!--</ScrollView>-->
         </StackLayout>
         <ActivityIndicator x:Name="activityIndicator"
                            IsRunning="True"
