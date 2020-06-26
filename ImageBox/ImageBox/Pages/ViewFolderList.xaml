@@ -37,10 +37,14 @@
                                     <StackLayout Orientation="Horizontal">
                                         <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
                                             <Label Text="{Binding Name}" TextColor="White" FontSize="Medium"></Label>
+                                            <Label Text="{Binding Name}" TextColor="White" FontSize="Medium"></Label>
                                         </StackLayout>
                                         <StackLayout HorizontalOptions="End">
                                             <Label Text="{Binding Quantity}" TextColor="Gray"></Label>
                                         </StackLayout>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ViewFolder}" />
+                                        </StackLayout.GestureRecognizers>
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>

@@ -29,16 +29,11 @@
         {
             BindingContext = this;                       
 
-            LoadBitmapCollection();
-
-            loadDirectory();
+            LoadBitmapCollection();            
         }
 
-        ObservableCollection<UnsortedImage> _unsortedImages = new ObservableCollection<UnsortedImage>();
-        ObservableCollection<UnsortedImage> UnsortedImages { get { return _unsortedImages; } }
-
-        ObservableCollection<DestinationFolder> _destinationFolder = new ObservableCollection<DestinationFolder>();
-        ObservableCollection<DestinationFolder> ImagesDestinationFolder { get { return _destinationFolder; } }
+        ObservableCollection<UnsortedImage> UnsortedImages { get { return App._unsortedImages; } }
+        ObservableCollection<UnsortedImage> trashImages { get { return App._trashImages; } }
 
         private int pointer = 0;
 
@@ -51,7 +46,7 @@
                 // Create an Image object for each bitmap
                 foreach (string filepath in imageList.Photos)
                 {
-                    _unsortedImages.Add(new UnsortedImage(filepath));
+                    UnsortedImages.Add(new UnsortedImage(filepath));
                 }
 
                 setImages();
@@ -81,7 +76,7 @@
             activityIndicator.IsRunning = true;
             activityIndicator.IsVisible = true;
 
-            _unsortedImages.Clear();
+            UnsortedImages.Clear();
 
             LoadBitmapCollection();
         }
@@ -91,7 +86,7 @@
             switch (e.Direction)
             {
                 case SwipeDirection.Left:
-                    if(pointer < (_unsortedImages.Count - 1))
+                    if(pointer < (UnsortedImages.Count - 1))
                     {
                         pointer++;
                     }
@@ -107,12 +102,13 @@
                     }
                     else
                     {
-                        pointer = (_unsortedImages.Count - 1);
+                        pointer = (UnsortedImages.Count - 1);
                     }
                     break;
                 case SwipeDirection.Up:
-                    _unsortedImages.RemoveAt(pointer);
-                    if(pointer >= (_unsortedImages.Count - 1))
+                    trashImages.Add(new UnsortedImage(UnsortedImages[pointer].ImagePath));
+                    UnsortedImages.RemoveAt(pointer);                    
+                    if (pointer >= (UnsortedImages.Count - 1))
                     {
                         pointer--;
                     }
@@ -126,16 +122,8 @@
 
         private void setImages()
         {
-            txtPhotoTotal.Text = string.Format("{0} of {1}", (pointer + 1), _unsortedImages.Count);
-            imgCurrent.Source = _unsortedImages[pointer].ImagePath;
-        }
-
-        private void loadDirectory()
-        {
-            List<DestinationFolder> folders = ImageFolderScan.GetFolders("");
-            foreach(DestinationFolder df in folders) {
-                _destinationFolder.Add(df);
-            }            
+            txtPhotoTotal.Text = string.Format("{0} of {1}", (pointer + 1), UnsortedImages.Count);
+            imgCurrent.Source = UnsortedImages[pointer].ImagePath;
         }
 
         private async void Button_Clicked(object sender, EventArgs e)

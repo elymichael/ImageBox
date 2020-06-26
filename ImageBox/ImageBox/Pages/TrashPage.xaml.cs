@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Linq;
     using System.Runtime.CompilerServices;
@@ -24,9 +25,10 @@
         }
 
 
-        private int Selected { get; set; } = 0;
+        ObservableCollection<UnsortedImage> UnsortedImages { get { return App._unsortedImages; } }
+        ObservableCollection<UnsortedImage> trashImages { get { return App._trashImages; } }
 
-        private int ImageAdded { get; set; } = 0;
+        private int Selected { get; set; } = 0;
 
         private string _recoverText;
         public string RecoverText
@@ -58,19 +60,16 @@
             }
         }
 
-
-        async void LoadBitmapCollection()
+        void LoadBitmapCollection()
         {
             setButtonBindings(Selected);
 
             try
             {
-                ImageList imageList = await ImageFolderScan.GetImages("https://raw.githubusercontent.com/xamarin/docs-archive/master/Images/stock/small/stock.json");
-
-                // Create an Image object for each bitmap
-                foreach (string filepath in imageList.Photos)
+                flexLayout.Children.Clear();
+                foreach (UnsortedImage _image in trashImages)
                 {
-                    AddImage(filepath);
+                    AddImage(_image.ImagePath);
                 }
             }
             catch (Exception ex)
@@ -88,8 +87,7 @@
         }
 
         private void AddImage(string filepath)
-        {
-            ImageAdded++;
+        {            
             Image image = new Image
             {
                 Source = ImageSource.FromUri(new Uri(filepath)),
@@ -113,6 +111,7 @@
                 {
                     image.BackgroundColor = Color.White;
                     Selected++;
+                    //trashImages.Where(x => x.ImagePath == ((Uri)image.Source).OriginalString)
                 }
                 setButtonBindings(Selected);
             };
@@ -160,9 +159,14 @@
 
             }
             else
-            {
-                flexLayout.Children.Clear();
+            {                
+                foreach(UnsortedImage _image in trashImages)
+                {
+                    UnsortedImages.Add(_image);
+                }
+                trashImages.Clear();                
             }
+            this.LoadBitmapCollection();
         }
 
         private void btnRecover_Clicked(object sender, EventArgs e)
@@ -173,7 +177,8 @@
             }
             else
             {
-                flexLayout.Children.Clear();
+                trashImages.Clear();
+                this.LoadBitmapCollection();
             }
         }
     }

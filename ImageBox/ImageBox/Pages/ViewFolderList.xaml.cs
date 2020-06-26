@@ -57,6 +57,12 @@
             await Navigation.PopModalAsync();
         }
 
-        
+
+        public ICommand ViewFolder => new Command(OnViewButtonClicked);
+
+        private async void OnViewButtonClicked()
+        {
+            await DisplayAlert("Mensaje", "tab", "Ok");
+        }
     }
 }

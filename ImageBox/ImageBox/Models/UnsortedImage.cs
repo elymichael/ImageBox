@@ -5,6 +5,7 @@
     {
         public string Name { get; set; }
         public string ImagePath { get; set; }
+        public bool Selected { get; set; }
 
         public UnsortedImage() { }
 
