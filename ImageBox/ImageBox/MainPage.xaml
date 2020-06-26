@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ImageBox.MainPage">
+
+    <StackLayout Spacing="10" Padding="10" BackgroundColor="Black">
+        <StackLayout HorizontalOptions="FillAndExpand">
+            <StackLayout Orientation="Horizontal">
+                <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
+                    <Label  x:Name="txtTitleUndoIcon" Text="&#xf0e2;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RefreshPage}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                    <Label x:Name="txtTitle" Text="UNSORTED" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" TextColor="White"/>
+                    <Label x:Name="txtTitleSortIcon" Text="&#xf0dc;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center"/>
+                </StackLayout>
+                <StackLayout HorizontalOptions="End" VerticalOptions="Center">
+                    <Label x:Name="btnTrash" Text="&#xf1f8;" TextColor="White" HorizontalOptions="End" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenTrash}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+            </StackLayout>
+            <Label x:Name="txtPhotoTotal" Text="" TextColor="White" HorizontalOptions="Center" FontSize="Small" />
+        </StackLayout>
+        <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <ScrollView Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Image x:Name="imgCurrent" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFit" Source="Button">
+                    <Image.GestureRecognizers>
+                        <SwipeGestureRecognizer Direction="Left"  Swiped="SwipeGestureRecognizer_Swiped" />
+                        <SwipeGestureRecognizer Direction="Right" Swiped="SwipeGestureRecognizer_Swiped"/>
+                        <SwipeGestureRecognizer Direction="Up" Swiped="SwipeGestureRecognizer_Swiped"/>
+                        <SwipeGestureRecognizer Direction="Down" Swiped="SwipeGestureRecognizer_Swiped"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </ScrollView>
+        </StackLayout>
+        <ActivityIndicator x:Name="activityIndicator"
+                           IsRunning="True"
+                           VerticalOptions="Center" />
+        <ScrollView Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                <!--<ListView x:Name="ImageDestinationDisplay" ItemsSource="{Binding ImagesDestinationFolder}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout Padding="5" Margin="0,5,0,0">
+                                <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
+                                <Label Text="Clases" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>-->
+                <StackLayout Padding="5" Margin="0,5,0,0">
+                    <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
+                    <Label Text="Clases" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
+                </StackLayout>
+                <StackLayout Padding="5" Margin="0,5,0,0">
+                    <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
+                    <Label Text="Familia" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
+                </StackLayout>
+                <StackLayout Padding="5" Margin="0,5,0,0">
+                    <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
+                    <Label Text="Música" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
+                </StackLayout>
+                <StackLayout Padding="5" Margin="0,5,0,0">
+                    <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
+                    <Label Text="Meditación" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
+                </StackLayout>
+                <StackLayout Padding="5" Margin="0,5,0,0">
+                    <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
+                    <Label Text="Investigación" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
+                </StackLayout>
+                <StackLayout Padding="5" Margin="0,5,0,0">
+                    <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
+                    <Label Text="Personal" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
+                </StackLayout>
+                <StackLayout Padding="5" Margin="0,5,0,0">
+                    <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
+                    <Label Text="Otros" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
+                </StackLayout>
+                <StackLayout Padding="5" Margin="0,5,0,0">
+                    <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
+                    <Label Text="Hijos" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+        <Button Text="View Albums" Clicked="Button_Clicked" />
+    </StackLayout>
+
+
+</ContentPage>

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ImageBox.Pages.SettingsPage" BackgroundColor="Black">
+    <ContentPage.Content>
+        <StackLayout Padding="10" Spacing="10">
+            <StackLayout HorizontalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal" Padding="10">
+                    <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
+                        <Label  x:Name="txtTitleCloseIcon" Text="&#xf00d;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                        </Label>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Padding="20">
+                    <Label x:Name="txtTitleIcon" Text="&#xf085;" TextColor="White" FontSize="Large" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" />
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="20,0,10,0">
+                    <Label Text="Organize photos across all your devices without sharing your personal information." TextColor="White" HorizontalOptions="Center"></Label>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                    <Label x:Name="txtTitle" Text="ImageBox" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" VerticalOptions="Center" TextColor="White"/>
+                </StackLayout>
+            </StackLayout>
+            <Frame>
+                <Label Text="STORAGE" />
+            </Frame>
+            <StackLayout>
+                <StackLayout Orientation="Horizontal" Margin="10">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                        <Label Text="Primary Storage" TextColor="White" FontSize="Medium"/>
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="End">
+                        <Label Text="50GB" TextColor="Gray"></Label>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Margin="10">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                        <Label Text="SD Card Storage" TextColor="White" FontSize="Medium" />
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="End">
+                        <Label Text="50GB" TextColor="Gray"></Label>
+                    </StackLayout>
+                </StackLayout>
+                
+            </StackLayout>
+            <Frame>
+                <Label Text="APP" />
+            </Frame>
+            <StackLayout>
+                <Label Text="Write a review" TextColor="White" FontSize="Medium" Margin="10" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

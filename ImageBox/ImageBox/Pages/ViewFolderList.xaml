@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ImageBox.Pages.ViewFolderList" BackgroundColor="Black">
+    <ContentPage.Content>
+        <StackLayout Spacing="10" Padding="10">
+            <StackLayout HorizontalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal" Padding="10">
+                    <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
+                        <Label  x:Name="txtTitleCloseIcon" Text="&#xf00d;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                            <!--<Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding RefreshPage}" />
+                            </Label.GestureRecognizers>-->
+                        </Label>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                        <Label x:Name="txtTitle" Text="ALBUMS" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" TextColor="White"/>
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="End" VerticalOptions="Center">
+                        <Label x:Name="btnTrash" Text="&#xf067;" TextColor="White" HorizontalOptions="End" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                            <!--<Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenTrash}" />
+                            </Label.GestureRecognizers>-->
+                        </Label>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout Padding="20">
+                <ListView x:Name="ImageDestinationDisplay" ItemsSource="{Binding ImagesDestinationFolder}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Orientation="Horizontal">
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
+                                            <Label Text="{Binding Name}" TextColor="White" FontSize="Medium"></Label>
+                                        </StackLayout>
+                                        <StackLayout HorizontalOptions="End">
+                                            <Label Text="{Binding Quantity}" TextColor="Gray"></Label>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            <Button Text="Settings" Clicked="Button_Clicked" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
