@@ -27,6 +27,8 @@ Please, check the concept layout of the aplication, the main idea is to organize
       <td>
         <img src="./ImageBox/ImageBox/Design/Settings.png" width="200">
       </td>
+  </tr>
+    <tr>
     <td>
       <img src="./ImageBox/ImageBox/Design/Trash.png" width="200">
     </td>
