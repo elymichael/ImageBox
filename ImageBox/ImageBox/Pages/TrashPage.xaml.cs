@@ -67,7 +67,15 @@
 
             try
             {
+                trashImages.Clear();
                 flexLayout.Children.Clear();
+                ImageList imageList = CacheDataImages.GetImages("trash");
+
+                foreach (string filepath in imageList.Photos)
+                {
+                    trashImages.Add(new UnsortedImage(filepath));
+                }
+
                 foreach (UnsortedImage _image in trashImages)
                 {
                     AddImage(_image.ImagePath);
@@ -88,10 +96,10 @@
         }
 
         private void AddImage(string filepath)
-        {
+        {            
             Image image = new Image
             {
-                Source = ImageSource.FromUri(new Uri(filepath)),
+                Source = ImageSource.FromFile(filepath),
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HeightRequest = 120,

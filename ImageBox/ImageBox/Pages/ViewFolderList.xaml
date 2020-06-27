@@ -4,10 +4,12 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:controls="clr-namespace:ImageBox.Views"     
              x:Class="ImageBox.Pages.ViewFolderList" BackgroundColor="Black">
     <ContentPage.Content>
         <StackLayout Spacing="10" Padding="10">
             <StackLayout HorizontalOptions="FillAndExpand">
+                <controls:LogoView />
                 <StackLayout Orientation="Horizontal" Padding="10">
                     <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
                         <Label  x:Name="txtTitleCloseIcon" Text="&#xf00d;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
@@ -34,7 +36,7 @@
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
-                                    <StackLayout Orientation="Horizontal">
+                                    <StackLayout Orientation="Horizontal" AutomationId="{Binding Name}">
                                         <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
                                             <Label Text="{Binding Name}" TextColor="White" FontSize="Medium"></Label>
                                         </StackLayout>
@@ -42,7 +44,7 @@
                                             <Label Text="{Binding Quantity}" TextColor="Gray"></Label>
                                         </StackLayout>
                                         <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Command="{Binding ViewFolder}" />
+                                            <TapGestureRecognizer Tapped="OnTapGestureRecognizerFolderTapped" />
                                         </StackLayout.GestureRecognizers>
                                     </StackLayout>
                                 </ViewCell.View>

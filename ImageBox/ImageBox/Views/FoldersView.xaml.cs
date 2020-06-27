@@ -123,6 +123,7 @@
             if (result != null)
             {
                 CacheDataImages.CreateFolder(result);
+                loadDirectory();
             }
         }
     }

@@ -3,20 +3,41 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
+    using System.Net.Http;
     using System.Text;
+    using System.Threading.Tasks;
     using Xamarin.Essentials;
+    using Xamarin.Forms;
 
     public static class CacheDataImages
     {
+        public static async Task SaveUrlImage(string imageName)
+        {
+            await SaveUrlImage("temp", imageName);
+        }
 
-        public static void SaveImage(string imageName)
+        public static async Task SaveUrlImage(string folderName, string imageName)
         {
             var cacheDir = FileSystem.CacheDirectory;
-            string newdirectory = Path.Combine(cacheDir, "temp");
+
+            string filename = Path.GetFileName(imageName);
+
+            string newdirectory = Path.Combine(cacheDir, folderName);
 
             if (!Directory.Exists(newdirectory))
             {
                 Directory.CreateDirectory(newdirectory);
+            }
+
+            filename = Path.Combine(newdirectory, filename);
+            using (var client = new HttpClient())
+            {
+                using (var response = await client.GetAsync(imageName))
+                {
+                    byte[] imageBytes = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    File.WriteAllBytes(filename, imageBytes);
+                }
             }
         }
 
@@ -34,9 +55,27 @@
             }
         }
 
-        public static List<string> GetImages(string folderName)
+        public static void MoveFile(string folderName, string imageName)
+        {            
+            string filename = Path.GetFileName(imageName);
+            string newdirectory = Path.Combine(FileSystem.CacheDirectory, folderName);
+            if (!Directory.Exists(newdirectory))
+            {
+                Directory.CreateDirectory(newdirectory);
+            }
+
+            filename = Path.Combine(newdirectory, filename);            
+            File.Move(imageName, filename);            
+        }
+
+        public static ImageList GetImages(string folderName)
         {
-            return new List<string>();
+            string newdirectory = Path.Combine(FileSystem.CacheDirectory, folderName);
+            ImageList imageList = new ImageList();
+            imageList.Photos = Directory.GetFiles(newdirectory).ToList<string>();
+
+            return imageList;
+
         }
 
         public static List<DestinationFolder> GetFolders()
@@ -49,7 +88,7 @@
 
             foreach (string _directory in _directories)
             {
-                if (!Path.GetFileNameWithoutExtension(_directory).ToLower().Equals("temp"))
+                if (!",temp,trash,".Contains( Path.GetFileNameWithoutExtension(_directory).ToLower()))
                 {
                     if (_directory != cacheDir)
                     {

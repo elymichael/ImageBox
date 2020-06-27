@@ -4,12 +4,34 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="ImageBox.Pages.ViewFolderPage">
+             xmlns:controls="clr-namespace:ImageBox.Views"     
+             x:Class="ImageBox.Pages.ViewFolderPage" BackgroundColor="Black">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout BackgroundColor="Black">
+            <StackLayout Padding="10" Margin="10" HorizontalOptions="FillAndExpand">
+                <controls:LogoView />
+                <StackLayout Orientation="Horizontal">
+                    <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
+                        <Label x:Name="txtTitleCloseIcon" Text="&#xf00d;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CloseTrash}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                        <Label x:Name="foldertitle" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" TextColor="White" />
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BindingContext="{Binding ViewFolderPage}">
+                <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                    <FlexLayout x:Name="flexLayout"
+                        Wrap="Wrap" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="Black" />
+                </ScrollView>
+                <ActivityIndicator x:Name="activityIndicator"
+                           IsRunning="True"
+                           VerticalOptions="Center" />
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

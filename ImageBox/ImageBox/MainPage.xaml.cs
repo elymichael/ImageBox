@@ -33,16 +33,25 @@
         }
 
         ObservableCollection<UnsortedImage> UnsortedImages { get { return App._unsortedImages; } }
-        ObservableCollection<UnsortedImage> trashImages { get { return App._trashImages; } }
-
+        
         private int pointer = 0;
 
         async void LoadBitmapCollection()
         {
             try
             {
-                ImageList imageList = await ImageFolderScan.GetImages("https://raw.githubusercontent.com/xamarin/docs-archive/master/Images/stock/small/stock.json");
 
+                ImageList imageList = CacheDataImages.GetImages("temp");
+
+                if(imageList.Photos.Count <= 0) {
+                    imageList = await ImageFolderScan.GetImages("https://raw.githubusercontent.com/xamarin/docs-archive/master/Images/stock/small/stock.json");
+                    foreach (string filepath in imageList.Photos)
+                    {
+                        await CacheDataImages.SaveUrlImage(filepath);
+                    }
+                }
+
+                imageList = CacheDataImages.GetImages("temp");
                 // Create an Image object for each bitmap
                 foreach (string filepath in imageList.Photos)
                 {
@@ -105,8 +114,8 @@
                         pointer = (UnsortedImages.Count - 1);
                     }
                     break;
-                case SwipeDirection.Up:
-                    trashImages.Add(new UnsortedImage(UnsortedImages[pointer].ImagePath));
+                case SwipeDirection.Up:                    
+                    CacheDataImages.MoveFile("trash", UnsortedImages[pointer].ImagePath);
                     UnsortedImages.RemoveAt(pointer);                    
                     if (pointer >= (UnsortedImages.Count - 1))
                     {
@@ -134,7 +143,7 @@
 
         void MoveImage(string folderName)
         {
-            CacheDataImages.SaveImage(folderName);
+            CacheDataImages.MoveFile(folderName, UnsortedImages[pointer].ImagePath);
             UnsortedImages.RemoveAt(pointer);
             if (pointer >= (UnsortedImages.Count - 1))
             {

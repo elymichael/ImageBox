@@ -32,6 +32,7 @@
             List<DestinationFolder> folders = CacheDataImages.GetFolders();
             foreach (DestinationFolder df in folders)
             {
+                df.Images = CacheDataImages.GetImages(df.Name);
                 _destinationFolder.Add(df);
             }
         }
@@ -54,7 +55,12 @@
 
         private async void OnAddButtonClicked()
         {
-            await Navigation.PopModalAsync();
+            string result = await App.Current.MainPage.DisplayPromptAsync("New Folder", "Add your folder name");
+            if (result != null)
+            {
+                CacheDataImages.CreateFolder(result);
+                loadDirectory();
+            }            
         }
 
 
@@ -63,6 +69,15 @@
         private async void OnViewButtonClicked()
         {
             await DisplayAlert("Mensaje", "tab", "Ok");
+        }
+
+        async void OnTapGestureRecognizerFolderTapped(object sender, EventArgs args)
+        {
+            string folderName = ((StackLayout)sender).AutomationId;
+
+            var viewFolderPage = new ViewFolderPage(folderName);
+            
+            await Navigation.PushModalAsync(viewFolderPage, true);
         }
     }
 }

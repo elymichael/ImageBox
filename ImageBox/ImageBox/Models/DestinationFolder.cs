@@ -15,13 +15,13 @@ namespace ImageBox
 
         public string Source { get; set; }
 
-        public int Quantity { get { return Images.Count; } }  
+        public int Quantity { get { return Images.Photos.Count; } }  
         
-        public List<UnsortedImage> Images { get; set; }
+        public ImageList Images { get; set; }
        
         public DestinationFolder()
         {
-            Images = new List<UnsortedImage>();
+            Images = new ImageList();
         }
     }
 }
