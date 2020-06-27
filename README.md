@@ -13,3 +13,25 @@ Send photos to trash only swiping up the photo.
 Organize the photos storing in your personal folders only clicking over the folder name.
 * ### View Photos in folder
 View all photos in the folder organized in the previous process.
+
+## Concept Layout.
+Please, check the concept layout of the aplication, the main idea is to organize the photo in personal folders created under the Picture directory of your Android phone. Also, you can move photo to trash under deleted from the phone.
+<table>
+  <tr>
+    <td>
+      <img src="./ImageBox/ImageBox/Design/MainPage.png" width="200">
+    </td>
+    <td>
+      <img src="./ImageBox/ImageBox/Design/Albumns.png" width="200">
+      </td>
+      <td>
+        <img src="./ImageBox/ImageBox/Design/Settings.png" width="200">
+      </td>
+    <td>
+      <img src="./ImageBox/ImageBox/Design/Trash.png" width="200">
+    </td>
+    <td>
+      <img src="./ImageBox/ImageBox/Design/Trash-2.png" width="200">
+      </td>
+  </tr>
+  </table>
