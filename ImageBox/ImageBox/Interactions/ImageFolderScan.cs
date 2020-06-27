@@ -44,21 +44,5 @@
             }
             return imageList;
         }
-
-        public static List<DestinationFolder> GetFolders(string imagepath)
-        {
-            List<DestinationFolder> _destinationFolder = new List<DestinationFolder>();
-
-            _destinationFolder.Add(new DestinationFolder { Name = "Clases", FolderType = FolderType.Images, Quantity = 20, });
-            _destinationFolder.Add(new DestinationFolder { Name = "Familia", FolderType = FolderType.Images, Quantity = 5 });
-            _destinationFolder.Add(new DestinationFolder { Name = "Música", FolderType = FolderType.Images, Quantity = 2 });
-            _destinationFolder.Add(new DestinationFolder { Name = "Meditación", FolderType = FolderType.Images, Quantity = 12 });
-            _destinationFolder.Add(new DestinationFolder { Name = "Investigación", FolderType = FolderType.Images, Quantity = 20 });
-            _destinationFolder.Add(new DestinationFolder { Name = "Personal", FolderType = FolderType.Images, Quantity = 300 });
-            _destinationFolder.Add(new DestinationFolder { Name = "Otros", FolderType = FolderType.Images, Quantity = 55 });
-            _destinationFolder.Add(new DestinationFolder { Name = "Hijos", FolderType = FolderType.Images, Quantity = 450 });
-
-            return _destinationFolder;
-        }
     }
 }

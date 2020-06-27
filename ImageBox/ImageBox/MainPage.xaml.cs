@@ -27,8 +27,8 @@
 
         private void loadConfiguration()
         {
-            BindingContext = this;                       
-
+            BindingContext = this;
+            foldersViewer.OnMoveFileClicked += MoveImage;
             LoadBitmapCollection();            
         }
 
@@ -130,6 +130,17 @@
         {
             var viewFolderList = new ViewFolderList();
             await Navigation.PushModalAsync(viewFolderList);
+        }
+
+        void MoveImage(string folderName)
+        {
+            CacheDataImages.SaveImage(folderName);
+            UnsortedImages.RemoveAt(pointer);
+            if (pointer >= (UnsortedImages.Count - 1))
+            {
+                pointer--;
+            }
+            setImages();
         }
     }
 }

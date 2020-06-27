@@ -37,7 +37,6 @@
                                     <StackLayout Orientation="Horizontal">
                                         <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
                                             <Label Text="{Binding Name}" TextColor="White" FontSize="Medium"></Label>
-                                            <Label Text="{Binding Name}" TextColor="White" FontSize="Medium"></Label>
                                         </StackLayout>
                                         <StackLayout HorizontalOptions="End">
                                             <Label Text="{Binding Quantity}" TextColor="Gray"></Label>

@@ -29,7 +29,7 @@
         {
             ImageDestinationDisplay.ItemsSource = _destinationFolder;
 
-            List<DestinationFolder> folders = ImageFolderScan.GetFolders("");
+            List<DestinationFolder> folders = CacheDataImages.GetFolders();
             foreach (DestinationFolder df in folders)
             {
                 _destinationFolder.Add(df);

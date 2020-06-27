@@ -1,4 +1,6 @@
-﻿namespace ImageBox
+﻿using System.Collections.Generic;
+
+namespace ImageBox
 {
     public enum FolderType
     {
@@ -13,7 +15,13 @@
 
         public string Source { get; set; }
 
-        public int Quantity { get; set; }
+        public int Quantity { get { return Images.Count; } }  
+        
+        public List<UnsortedImage> Images { get; set; }
        
+        public DestinationFolder()
+        {
+            Images = new List<UnsortedImage>();
+        }
     }
 }

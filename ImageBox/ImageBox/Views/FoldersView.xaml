@@ -6,39 +6,7 @@
              mc:Ignorable="d"
              x:Class="ImageBox.Views.FoldersView">
   <ContentView.Content>
-        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-            <StackLayout Padding="5" Margin="0,5,0,0">
-                <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
-                <Label Text="Clases" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
-            </StackLayout>
-            <StackLayout Padding="5" Margin="0,5,0,0">
-                <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
-                <Label Text="Familia" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
-            </StackLayout>
-            <StackLayout Padding="5" Margin="0,5,0,0">
-                <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
-                <Label Text="Música" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
-            </StackLayout>
-            <StackLayout Padding="5" Margin="0,5,0,0">
-                <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
-                <Label Text="Meditación" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
-            </StackLayout>
-            <StackLayout Padding="5" Margin="0,5,0,0">
-                <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
-                <Label Text="Investigación" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
-            </StackLayout>
-            <StackLayout Padding="5" Margin="0,5,0,0">
-                <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
-                <Label Text="Personal" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
-            </StackLayout>
-            <StackLayout Padding="5" Margin="0,5,0,0">
-                <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
-                <Label Text="Otros" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
-            </StackLayout>
-            <StackLayout Padding="5" Margin="0,5,0,0">
-                <Label Text="&#xf063;" TextColor="White" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" HorizontalOptions="Center" />
-                <Label Text="Hijos" TextColor="White" VerticalOptions="Center" HorizontalOptions="Center" />
-            </StackLayout>
+        <StackLayout x:Name="folderLayout" Orientation="Horizontal" VerticalOptions="Center">
         </StackLayout>
   </ContentView.Content>
 </ContentView>

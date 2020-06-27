@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.IO;
     using System.Linq;
     using System.Runtime.CompilerServices;
     using System.Text;
@@ -87,7 +88,7 @@
         }
 
         private void AddImage(string filepath)
-        {            
+        {
             Image image = new Image
             {
                 Source = ImageSource.FromUri(new Uri(filepath)),
@@ -95,23 +96,29 @@
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HeightRequest = 120,
                 WidthRequest = 120,
-                Margin = 5
+                Margin = 5,
+                AutomationId = filepath
+
             };
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.NumberOfTapsRequired = 1;
             tapGestureRecognizer.Tapped += (s, e) =>
             {
+                UnsortedImage ui = trashImages.Where(x => x.ImagePath == image.AutomationId).First();
+
                 if (image.BackgroundColor == Color.White)
                 {
                     image.BackgroundColor = Color.Transparent;
                     Selected--;
+                    ui.Selected = false;
                 }
                 else
                 {
                     image.BackgroundColor = Color.White;
                     Selected++;
-                    //trashImages.Where(x => x.ImagePath == ((Uri)image.Source).OriginalString)
+                    
+                    ui.Selected = true;
                 }
                 setButtonBindings(Selected);
             };
@@ -156,7 +163,12 @@
         {
             if (Selected >= 1)
             {
-
+                var listImages = trashImages.Where(x => x.Selected == true).ToList<UnsortedImage>();
+                foreach(UnsortedImage _image in listImages)
+                {
+                    UnsortedImages.Add(_image);
+                    trashImages.Add(_image);
+                }
             }
             else
             {                
@@ -173,7 +185,11 @@
         {
             if(Selected >= 1)
             {
-                
+                var listImages = trashImages.Where(x => x.Selected == true).ToList<UnsortedImage>();
+                foreach (UnsortedImage _image in listImages)
+                {                 
+                    trashImages.Add(_image);
+                }
             }
             else
             {

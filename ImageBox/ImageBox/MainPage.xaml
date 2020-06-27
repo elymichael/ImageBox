@@ -49,7 +49,7 @@
                            IsRunning="True"
                            VerticalOptions="Center" />
         <ScrollView Orientation="Horizontal">
-            <controls:FoldersView/>
+            <controls:FoldersView x:Name="foldersViewer"/>
         </ScrollView>
         <Button Text="View Albums" Clicked="Button_Clicked" />
     </StackLayout>
