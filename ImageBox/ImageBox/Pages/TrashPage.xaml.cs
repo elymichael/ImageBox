@@ -175,7 +175,7 @@
                 foreach(UnsortedImage _image in listImages)
                 {
                     UnsortedImages.Add(_image);
-                    trashImages.Add(_image);
+                    CacheDataImages.DeleteFile(_image.ImagePath);                
                 }
             }
             else
@@ -183,8 +183,9 @@
                 foreach(UnsortedImage _image in trashImages)
                 {
                     UnsortedImages.Add(_image);
+                    CacheDataImages.DeleteFile(_image.ImagePath);
                 }
-                trashImages.Clear();                
+                              
             }
             this.LoadBitmapCollection();
         }
@@ -195,15 +196,19 @@
             {
                 var listImages = trashImages.Where(x => x.Selected == true).ToList<UnsortedImage>();
                 foreach (UnsortedImage _image in listImages)
-                {                 
-                    trashImages.Add(_image);
+                {
+                    CacheDataImages.MoveFile("temp", _image.ImagePath);
                 }
             }
             else
             {
-                trashImages.Clear();
-                this.LoadBitmapCollection();
+                foreach (UnsortedImage _image in trashImages)
+                {
+                    CacheDataImages.MoveFile("temp", _image.ImagePath);
+                }
+                
             }
+            this.LoadBitmapCollection();
         }
     }
 }

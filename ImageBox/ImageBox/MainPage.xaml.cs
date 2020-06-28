@@ -29,11 +29,11 @@
         {
             BindingContext = this;
             foldersViewer.OnMoveFileClicked += MoveImage;
-            LoadBitmapCollection();            
+            LoadBitmapCollection();
         }
 
         ObservableCollection<UnsortedImage> UnsortedImages { get { return App._unsortedImages; } }
-        
+
         private int pointer = 0;
 
         async void LoadBitmapCollection()
@@ -43,7 +43,7 @@
 
                 ImageList imageList = CacheDataImages.GetImages("temp");
 
-                if(imageList.Photos.Count <= 0) {
+                if (imageList.Photos.Count <= 0) {
                     imageList = await ImageFolderScan.GetImages("https://raw.githubusercontent.com/xamarin/docs-archive/master/Images/stock/small/stock.json");
                     foreach (string filepath in imageList.Photos)
                     {
@@ -57,6 +57,8 @@
                 {
                     UnsortedImages.Add(new UnsortedImage(filepath));
                 }
+                
+                badgeTrash.Text = CacheDataImages.GetImages("trash").Photos.Count.ToString();
 
                 setImages();
             }
@@ -68,7 +70,7 @@
             {
                 activityIndicator.IsRunning = false;
                 activityIndicator.IsVisible = false;
-            }            
+            }
         }
 
         public ICommand OpenTrash => new Command(OnOpenTrash);
@@ -81,7 +83,7 @@
         }
 
         private void OnRefreshPage()
-        {            
+        {
             activityIndicator.IsRunning = true;
             activityIndicator.IsVisible = true;
 
@@ -89,44 +91,66 @@
 
             LoadBitmapCollection();
         }
+        void SwipeGestureRecognizer_SwipedRight(object sender, SwipedEventArgs e)
+        {
+            if (e.Direction == SwipeDirection.Right)
+            {
+                if (pointer > 0)
+                {
+                    pointer--;
+                }
+                else
+                {
+                    pointer = (UnsortedImages.Count - 1);
+                }
 
+                setImages();
+            }
+        }
+
+        void SwipeGestureRecognizer_SwipedLeft(object sender, SwipedEventArgs e)
+        {
+            if (e.Direction == SwipeDirection.Left)
+            {
+                if (pointer < (UnsortedImages.Count - 1))
+                {
+                    pointer++;
+                }
+                else
+                {
+                    pointer = 0;
+                }
+                setImages();
+            }
+        }
+
+        void SwipeGestureRecognizer_SwipedUp(object sender, SwipedEventArgs e)
+        {
+            if(e.Direction == SwipeDirection.Up)
+            {
+                CacheDataImages.MoveFile("trash", UnsortedImages[pointer].ImagePath);
+                UnsortedImages.RemoveAt(pointer);
+                if (pointer >= (UnsortedImages.Count - 1))
+                {
+                    pointer--;
+                }
+                badgeTrash.Text = CacheDataImages.GetImages("trash").Photos.Count.ToString();
+                setImages();
+            }            
+        }
         void SwipeGestureRecognizer_Swiped(object sender, SwipedEventArgs e)
         {
             switch (e.Direction)
             {
-                case SwipeDirection.Left:
-                    if(pointer < (UnsortedImages.Count - 1))
-                    {
-                        pointer++;
-                    }
-                    else
-                    {
-                        pointer = 0;
-                    }
+                case SwipeDirection.Left:                   
                     break;
-                case SwipeDirection.Right:
-                    if(pointer > 0)
-                    {
-                        pointer--;
-                    }
-                    else
-                    {
-                        pointer = (UnsortedImages.Count - 1);
-                    }
+                case SwipeDirection.Right:                    
                     break;
-                case SwipeDirection.Up:                    
-                    CacheDataImages.MoveFile("trash", UnsortedImages[pointer].ImagePath);
-                    UnsortedImages.RemoveAt(pointer);                    
-                    if (pointer >= (UnsortedImages.Count - 1))
-                    {
-                        pointer--;
-                    }
+                case SwipeDirection.Up:                                        
                     break;
-                case SwipeDirection.Down:
-                    // Handle the swipe
+                case SwipeDirection.Down:                    
                     break;
             }
-            setImages();
         }
 
         private void setImages()

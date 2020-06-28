@@ -124,6 +124,9 @@
             {
                 CacheDataImages.CreateFolder(result);
                 loadDirectory();
+
+                if (OnMoveFileClicked != null)
+                    OnMoveFileClicked(result);
             }
         }
     }

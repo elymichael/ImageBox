@@ -12,7 +12,7 @@
             <controls:LogoView />
             <StackLayout Orientation="Horizontal" Padding="20,0,20,0">
                 <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
-                    <Label  x:Name="txtTitleUndoIcon" Text="&#xf0e2;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                    <Label  x:Name="txtTitleUndoIcon" Text="&#xf0e2;" TextColor="White" FontSize="Medium" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding RefreshPage}" />
                         </Label.GestureRecognizers>
@@ -24,25 +24,28 @@
                     <Label x:Name="txtTitleSortIcon" Text="&#xf0dc;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center"/>
                 </StackLayout>
                 <StackLayout HorizontalOptions="End" VerticalOptions="Center">
-                    <Label x:Name="btnTrash" Text="&#xf1f8;" TextColor="White" HorizontalOptions="End" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding OpenTrash}" />
-                        </Label.GestureRecognizers>
-                    </Label>
+                    <Grid>
+                        <Label x:Name="btnTrash" Text="&#xf1f8; " TextColor="White" FontSize="Large" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenTrash}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <controls:BadgeView x:Name="badgeTrash" Text="0" BadgeColor="Red" VerticalOptions="Start" HorizontalOptions="End"/>
+                    </Grid>
                 </StackLayout>
             </StackLayout>
             <Label x:Name="txtPhotoTotal" Text="" TextColor="White" HorizontalOptions="Center" FontSize="Small" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <!--<ScrollView Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">-->
-                <Image x:Name="imgCurrent" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFit" Source="Button">
-                    <Image.GestureRecognizers>
-                        <SwipeGestureRecognizer Direction="Left"  Swiped="SwipeGestureRecognizer_Swiped" />
-                        <SwipeGestureRecognizer Direction="Right" Swiped="SwipeGestureRecognizer_Swiped"/>
-                        <SwipeGestureRecognizer Direction="Up" Swiped="SwipeGestureRecognizer_Swiped"/>
-                        <SwipeGestureRecognizer Direction="Down" Swiped="SwipeGestureRecognizer_Swiped"/>
-                    </Image.GestureRecognizers>
-                </Image>
+            <Image x:Name="imgCurrent" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFit" Source="Button">
+                <Image.GestureRecognizers>
+                    <SwipeGestureRecognizer Direction="Left"  Swiped="SwipeGestureRecognizer_SwipedLeft" />
+                    <SwipeGestureRecognizer Direction="Right" Swiped="SwipeGestureRecognizer_SwipedRight"/>
+                    <SwipeGestureRecognizer Direction="Up" Swiped="SwipeGestureRecognizer_SwipedUp"/>
+                    <SwipeGestureRecognizer Direction="Down" Swiped="SwipeGestureRecognizer_Swiped"/>
+                </Image.GestureRecognizers>
+            </Image>
             <!--</ScrollView>-->
         </StackLayout>
         <ActivityIndicator x:Name="activityIndicator"

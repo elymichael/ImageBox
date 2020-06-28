@@ -56,7 +56,7 @@
         }
 
         public static void MoveFile(string folderName, string imageName)
-        {            
+        {
             string filename = Path.GetFileName(imageName);
             string newdirectory = Path.Combine(FileSystem.CacheDirectory, folderName);
             if (!Directory.Exists(newdirectory))
@@ -64,8 +64,16 @@
                 Directory.CreateDirectory(newdirectory);
             }
 
-            filename = Path.Combine(newdirectory, filename);            
-            File.Move(imageName, filename);            
+            filename = Path.Combine(newdirectory, filename);
+            File.Move(imageName, filename);
+        }
+
+        public static void DeleteFile(string imageName)
+        {
+            if (File.Exists(imageName))
+            {
+                File.Delete(imageName);
+            }
         }
 
         public static ImageList GetImages(string folderName)
@@ -88,7 +96,7 @@
 
             foreach (string _directory in _directories)
             {
-                if (!",temp,trash,".Contains( Path.GetFileNameWithoutExtension(_directory).ToLower()))
+                if (!",temp,trash,".Contains(Path.GetFileNameWithoutExtension(_directory).ToLower()))
                 {
                     if (_directory != cacheDir)
                     {
