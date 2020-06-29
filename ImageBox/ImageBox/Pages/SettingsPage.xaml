@@ -43,13 +43,19 @@
                         <Label Text="50GB" TextColor="Gray"></Label>
                     </StackLayout>
                 </StackLayout>
-
             </StackLayout>
             <Frame>
                 <Label Text="APP" />
             </Frame>
-            <StackLayout>
-                <Label Text="Write a review" TextColor="White" FontSize="Medium" Margin="10" />
+            <StackLayout Orientation="Vertical" Margin="10">
+                <StackLayout HorizontalOptions="FillAndExpand">
+                    <Button Text="Write a review" />
+                </StackLayout>
+                <StackLayout HorizontalOptions="FillAndExpand">
+                    <ScrollView>
+                        <Label x:Name="lblApplicationInfo" TextColor="White" FontSize="Medium" />
+                    </ScrollView>
+                </StackLayout>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

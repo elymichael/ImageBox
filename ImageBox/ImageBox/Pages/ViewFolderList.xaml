@@ -53,7 +53,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </StackLayout>
-            <Button Text="Settings" Clicked="Button_Clicked" />
+            <Button Text="Status" Clicked="Button_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
