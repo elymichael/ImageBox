@@ -1,17 +1,13 @@
 ﻿namespace ImageBox
 {
     using System;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Windows.Input;
+    using Xamarin.Essentials;
     using Xamarin.Forms;
 
     using ImageBox.Pages;
-    using System.IO;
 
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
@@ -43,11 +39,17 @@
 
                 ImageList imageList = CacheDataImages.GetImages("temp");
 
-                if (imageList.Photos.Count <= 0) {
-                    imageList = await ImageFolderScan.GetImages("https://raw.githubusercontent.com/xamarin/docs-archive/master/Images/stock/small/stock.json");
-                    foreach (string filepath in imageList.Photos)
+                if (imageList.Photos.Count <= 0)
+                {
+                    var current = Connectivity.NetworkAccess;
+
+                    if (current == NetworkAccess.Internet)
                     {
-                        await CacheDataImages.SaveUrlImage(filepath);
+                        imageList = await ImageFolderScan.GetImages("https://raw.githubusercontent.com/xamarin/docs-archive/master/Images/stock/small/stock.json");
+                        foreach (string filepath in imageList.Photos)
+                        {
+                            await CacheDataImages.SaveUrlImage(filepath);
+                        }
                     }
                 }
 
@@ -57,7 +59,7 @@
                 {
                     UnsortedImages.Add(new UnsortedImage(filepath));
                 }
-                
+
                 badgeTrash.Text = CacheDataImages.GetImages("trash").Photos.Count.ToString();
 
                 setImages();
@@ -78,6 +80,12 @@
 
         private async void OnOpenTrash()
         {
+            if (CacheDataImages.GetImages("trash").Photos.Count == 0)
+            {
+                await DisplayAlert("Empty Trash", "Swipe a photo UP to put into trash first.", "Ok");
+                return;
+            }
+
             var trashPage = new TrashPage();
             await Navigation.PushModalAsync(trashPage);
         }
@@ -126,7 +134,7 @@
 
         void SwipeGestureRecognizer_SwipedUp(object sender, SwipedEventArgs e)
         {
-            if(e.Direction == SwipeDirection.Up)
+            if (e.Direction == SwipeDirection.Up)
             {
                 CacheDataImages.MoveFile("trash", UnsortedImages[pointer].ImagePath);
                 UnsortedImages.RemoveAt(pointer);
@@ -136,19 +144,19 @@
                 }
                 badgeTrash.Text = CacheDataImages.GetImages("trash").Photos.Count.ToString();
                 setImages();
-            }            
+            }
         }
         void SwipeGestureRecognizer_Swiped(object sender, SwipedEventArgs e)
         {
             switch (e.Direction)
             {
-                case SwipeDirection.Left:                   
+                case SwipeDirection.Left:
                     break;
-                case SwipeDirection.Right:                    
+                case SwipeDirection.Right:
                     break;
-                case SwipeDirection.Up:                                        
+                case SwipeDirection.Up:
                     break;
-                case SwipeDirection.Down:                    
+                case SwipeDirection.Down:
                     break;
             }
         }

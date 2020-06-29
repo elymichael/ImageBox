@@ -4,14 +4,12 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using System.IO;
     using System.Linq;
     using System.Runtime.CompilerServices;
-    using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Input;
     using Xamarin.Forms;
-    using Xamarin.Forms.Xaml;
+    using Plugin.Toast;
 
     [DesignTimeVisible(false)]
     public partial class TrashPage : ContentPage
@@ -30,6 +28,16 @@
         ObservableCollection<UnsortedImage> trashImages { get { return App._trashImages; } }
 
         private int Selected { get; set; } = 0;
+
+        #region Properties
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
         private string _recoverText;
         public string RecoverText
@@ -60,6 +68,7 @@
                 }
             }
         }
+        #endregion
 
         void LoadBitmapCollection()
         {
@@ -76,17 +85,21 @@
                     trashImages.Add(new UnsortedImage(filepath));
                 }
 
-                foreach (UnsortedImage _image in trashImages)
+                if (trashImages.Count > 0)
                 {
-                    AddImage(_image.ImagePath);
+                    foreach (UnsortedImage _image in trashImages)
+                    {
+                        AddImage(_image.ImagePath);
+                    }
+                }
+                else
+                {
+                    addEmptyTrashMessage("Empty Trash...", 18);
                 }
             }
             catch (Exception ex)
             {
-                flexLayout.Children.Add(new Label
-                {
-                    Text = string.Format("Cannot access list of bitmap files: {0}", ex.Message)
-                });
+                addEmptyTrashMessage(string.Format("Cannot access list of bitmap files: {0}", ex.Message), 12);
             }
             finally
             {
@@ -96,7 +109,7 @@
         }
 
         private void AddImage(string filepath)
-        {            
+        {
             Image image = new Image
             {
                 Source = ImageSource.FromFile(filepath),
@@ -125,7 +138,7 @@
                 {
                     image.BackgroundColor = Color.White;
                     Selected++;
-                    
+
                     ui.Selected = true;
                 }
                 setButtonBindings(Selected);
@@ -151,15 +164,6 @@
             btnRecover.Text = RecoverText;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
         public ICommand CloseTrash => new Command(OnDismissButtonClicked);
 
         private async void OnDismissButtonClicked()
@@ -167,48 +171,102 @@
             await Navigation.PopModalAsync();
         }
 
-        private void btnDelete_Clicked(object sender, EventArgs e)
+        private async void btnDelete_Clicked(object sender, EventArgs e)
         {
+            List<UnsortedImage> listImages = new List<UnsortedImage>();
             if (Selected >= 1)
             {
-                var listImages = trashImages.Where(x => x.Selected == true).ToList<UnsortedImage>();
-                foreach(UnsortedImage _image in listImages)
-                {
-                    UnsortedImages.Add(_image);
-                    CacheDataImages.DeleteFile(_image.ImagePath);                
-                }
+                listImages = trashImages.Where(x => x.Selected == true).ToList<UnsortedImage>();
             }
             else
-            {                
-                foreach(UnsortedImage _image in trashImages)
+            {
+                listImages = trashImages.ToList<UnsortedImage>();
+            }
+
+            bool answer = await DeleteConfirmNotifications(listImages.Count);
+            if (answer)
+            {
+                foreach (UnsortedImage _image in listImages)
                 {
                     UnsortedImages.Add(_image);
                     CacheDataImages.DeleteFile(_image.ImagePath);
                 }
-                              
             }
-            this.LoadBitmapCollection();
+
+            LoadBitmapCollection();
+
+            ShowToastMessage("Photos deleted permanently!");
         }
 
-        private void btnRecover_Clicked(object sender, EventArgs e)
+        private async void btnRecover_Clicked(object sender, EventArgs e)
         {
-            if(Selected >= 1)
+            List<UnsortedImage> listImages = new List<UnsortedImage>();
+            if (Selected >= 1)
             {
-                var listImages = trashImages.Where(x => x.Selected == true).ToList<UnsortedImage>();
+                listImages = trashImages.Where(x => x.Selected == true).ToList<UnsortedImage>();
+            }
+            else
+            {
+                listImages = trashImages.ToList<UnsortedImage>();
+            }
+
+            bool answer = await RecoverConfirmNotifications(listImages.Count);
+            if (answer)
+            {
                 foreach (UnsortedImage _image in listImages)
                 {
                     CacheDataImages.MoveFile("temp", _image.ImagePath);
                 }
             }
-            else
+
+            LoadBitmapCollection();
+
+            ShowToastMessage("Photos moved to unsorted!");
+        }
+
+        private async Task<bool> DeleteConfirmNotifications(int total)
+        {
+            return await DisplayAlert(
+                string.Format("Delete {0} photos permanently?", total),
+                string.Format("{0} photos in trash will be deleted permanently from your device.", total),
+                "Yes", "No");
+        }
+
+        private async Task<bool> RecoverConfirmNotifications(int total)
+        {
+            return await DisplayAlert(
+                string.Format("Recover {0} photos?", total),
+                string.Format("{0} photos in trash will be put back into unsorted.", total),
+                "Yes", "No");
+        }
+
+        private void ShowToastMessage(string message)
+        {
+            CrossToastPopUp.Current.ShowToastMessage(message);
+        }
+
+        private void addEmptyTrashMessage(string message, int size)
+        {
+            StackLayout stackLayout = new StackLayout()
             {
-                foreach (UnsortedImage _image in trashImages)
-                {
-                    CacheDataImages.MoveFile("temp", _image.ImagePath);
-                }
-                
-            }
-            this.LoadBitmapCollection();
+                Orientation = StackOrientation.Horizontal,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                Margin = new Thickness(50, 0, 50, 0),
+                Padding = new Thickness(50, 0, 50, 0)
+            };
+
+            stackLayout.Children.Add(new Label
+            {
+                Text = message,
+                TextColor = Color.White,
+                FontSize = size,
+                FontAttributes = FontAttributes.Bold,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
+                HorizontalOptions = LayoutOptions.CenterAndExpand
+            });
+
+            flexLayout.Children.Add(stackLayout);
         }
     }
 }
