@@ -32,7 +32,7 @@
                         <Label Text="Primary Storage" TextColor="White" FontSize="Medium"/>
                     </StackLayout>
                     <StackLayout HorizontalOptions="End">
-                        <Label Text="50GB" TextColor="Gray"></Label>
+                        <Label x:Name="lblPrimaryStorage" Text="50GB" TextColor="Gray"></Label>
                     </StackLayout>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Margin="10">
@@ -40,7 +40,7 @@
                         <Label Text="SD Card Storage" TextColor="White" FontSize="Medium" />
                     </StackLayout>
                     <StackLayout HorizontalOptions="End">
-                        <Label Text="50GB" TextColor="Gray"></Label>
+                        <Label x:Name="lblSecondaryStorage" Text="50GB" TextColor="Gray"></Label>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
