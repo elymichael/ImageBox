@@ -9,6 +9,7 @@
     <ContentPage.Content>
         <StackLayout Padding="10" Spacing="10">
             <StackLayout HorizontalOptions="FillAndExpand">
+                <controls:LogoView />
                 <StackLayout Orientation="Horizontal" Padding="10">
                     <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
                         <Label  x:Name="txtTitleCloseIcon" Text="&#xf00d;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
@@ -18,7 +19,6 @@
                         </Label>
                     </StackLayout>
                 </StackLayout>
-                <controls:LogoView />
                 <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="20,10,10,10">
                     <Label Text="Organize photos across all your devices without sharing your personal information." TextColor="White" HorizontalOptions="Fill" VerticalOptions="Center"></Label>
                 </StackLayout>
@@ -29,18 +29,18 @@
             <StackLayout>
                 <StackLayout Orientation="Horizontal" Margin="10">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                        <Label Text="Primary Storage" TextColor="White" FontSize="Medium"/>
+                        <Label Text="Primary Storage" TextColor="White" />
                     </StackLayout>
                     <StackLayout HorizontalOptions="End">
-                        <Label x:Name="lblPrimaryStorage" Text="50GB" TextColor="Gray"></Label>
+                        <Label x:Name="lblPrimaryStorage" Text="N/A" TextColor="Gray"></Label>
                     </StackLayout>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Margin="10">
                     <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                        <Label Text="SD Card Storage" TextColor="White" FontSize="Medium" />
+                        <Label Text="SD Card Storage" TextColor="White" />
                     </StackLayout>
                     <StackLayout HorizontalOptions="End">
-                        <Label x:Name="lblSecondaryStorage" Text="50GB" TextColor="Gray"></Label>
+                        <Label x:Name="lblSecondaryStorage" Text="N/A" TextColor="Gray"></Label>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
@@ -49,12 +49,10 @@
             </Frame>
             <StackLayout Orientation="Vertical" Margin="10">
                 <StackLayout HorizontalOptions="FillAndExpand">
-                    <Button Text="Write a review" />
+                    <Label x:Name="lblApplicationInfo" TextColor="White" />
                 </StackLayout>
                 <StackLayout HorizontalOptions="FillAndExpand">
-                    <ScrollView>
-                        <Label x:Name="lblApplicationInfo" TextColor="White" />
-                    </ScrollView>
+                    <Button Text="Write a review" />
                 </StackLayout>
             </StackLayout>
         </StackLayout>
