@@ -14,7 +14,7 @@
     {
         public static async Task SaveUrlImage(string imageName)
         {
-            await SaveUrlImage("temp", imageName);
+            await SaveUrlImage("temp", imageName);            
         }
 
         public static async Task SaveUrlImage(string folderName, string imageName)
@@ -37,6 +37,9 @@
                 {
                     byte[] imageBytes = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                     File.WriteAllBytes(filename, imageBytes);
+                    // Store in the in phone public directory.
+                    Stream stream = new MemoryStream(imageBytes);
+                    DependencyService.Get<IFileService>().Save(Path.GetFileName(filename), stream, folderName);
                 }
             }
         }
