@@ -28,6 +28,7 @@
         ObservableCollection<UnsortedImage> UnsortedImages { get { return App._unsortedImages; } }
         ObservableCollection<UnsortedImage> trashImages { get { return App._trashImages; } }
 
+        public event EventHandler<EventArgs> OperationCompleted;
         private int Selected { get; set; } = 0;
 
         #region Properties
@@ -184,6 +185,7 @@
 
         private async void OnDismissButtonClicked()
         {
+            OperationCompleted?.Invoke(this, EventArgs.Empty);
             await Navigation.PopModalAsync();
         }
 

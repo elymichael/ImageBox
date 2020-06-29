@@ -87,10 +87,17 @@
             }
 
             var trashPage = new TrashPage();
+            trashPage.OperationCompleted += TrashPage_OperationCompleted;
             await Navigation.PushModalAsync(trashPage);
         }
 
-        private void OnRefreshPage()
+        private void TrashPage_OperationCompleted(object sender, EventArgs e)
+        {
+            (sender as TrashPage).OperationCompleted -= TrashPage_OperationCompleted;
+            OnRefreshPage();
+        }
+
+        public void OnRefreshPage()
         {
             activityIndicator.IsRunning = true;
             activityIndicator.IsVisible = true;
@@ -170,7 +177,14 @@
         private async void Button_Clicked(object sender, EventArgs e)
         {
             var viewFolderList = new ViewFolderList();
+            viewFolderList.OperationCompleted += ViewFolderList_OperationCompleted;
             await Navigation.PushModalAsync(viewFolderList);
+        }
+
+        private void ViewFolderList_OperationCompleted(object sender, EventArgs e)
+        {
+            (sender as ViewFolderList).OperationCompleted -= TrashPage_OperationCompleted;
+            OnRefreshPage();
         }
 
         void MoveImage(string folderName)

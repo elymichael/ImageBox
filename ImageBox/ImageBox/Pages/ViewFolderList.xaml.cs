@@ -22,6 +22,8 @@
         ObservableCollection<DestinationFolder> _destinationFolder = new ObservableCollection<DestinationFolder>();
         ObservableCollection<DestinationFolder> ImagesDestinationFolder { get { return _destinationFolder; } }
 
+        public event EventHandler<EventArgs> OperationCompleted;
+
         private void loadDirectory()
         {
             ImageDestinationDisplay.ItemsSource = _destinationFolder;
@@ -45,6 +47,7 @@
 
         private async void OnDismissButtonClicked()
         {
+            OperationCompleted?.Invoke(this, EventArgs.Empty);
             await Navigation.PopModalAsync();
         }
 
