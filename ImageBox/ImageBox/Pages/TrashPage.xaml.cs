@@ -23,7 +23,8 @@
             LoadBitmapCollection();
         }
 
-
+        private int rowPosition = 0;
+        private int colPosition = 0;
         ObservableCollection<UnsortedImage> UnsortedImages { get { return App._unsortedImages; } }
         ObservableCollection<UnsortedImage> trashImages { get { return App._trashImages; } }
 
@@ -76,8 +77,10 @@
 
             try
             {
+                Selected = 0;
                 trashImages.Clear();
                 flexLayout.Children.Clear();
+
                 ImageList imageList = CacheDataImages.GetImages("trash");
 
                 foreach (string filepath in imageList.Photos)
@@ -85,6 +88,8 @@
                     trashImages.Add(new UnsortedImage(filepath));
                 }
 
+                rowPosition = 0;
+                colPosition = 0;
                 if (trashImages.Count > 0)
                 {
                     foreach (UnsortedImage _image in trashImages)
@@ -117,6 +122,7 @@
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HeightRequest = 120,
                 WidthRequest = 120,
+                Aspect = Aspect.Fill,
                 Margin = 5,
                 AutomationId = filepath
 
@@ -145,7 +151,17 @@
             };
             image.GestureRecognizers.Add(tapGestureRecognizer);
 
+            Grid.SetColumn(image, colPosition);
+            Grid.SetRow(image, rowPosition);
+
             flexLayout.Children.Add(image);
+
+            colPosition++;
+            if (colPosition == 3)
+            {
+                colPosition = 0;
+                rowPosition++;
+            }
         }
 
         private void setButtonBindings(int selected)
@@ -266,7 +282,7 @@
                 HorizontalOptions = LayoutOptions.CenterAndExpand
             });
 
-            flexLayout.Children.Add(stackLayout);
+            MainLayout.Children.Add(stackLayout);
         }
     }
 }

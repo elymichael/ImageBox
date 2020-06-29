@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-
-namespace ImageBox.Pages
+﻿namespace ImageBox.Pages
 {
+    using System;
+    using System.Windows.Input;
+    using Xamarin.Forms;
+    using Xamarin.Forms.Xaml;
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewFolderPage : ContentPage
     {
@@ -41,7 +37,8 @@ namespace ImageBox.Pages
             await Navigation.PopModalAsync();
         }
 
-
+        private int rowPosition = 0;
+        private int colPosition = 0;
         void LoadBitmapCollection()
         {
             try
@@ -53,6 +50,8 @@ namespace ImageBox.Pages
                     flexLayout.Children.Clear();
                     ImageList imageList = CacheDataImages.GetImages(FolderName);
 
+                    rowPosition = 0;
+                    colPosition = 0;
                     foreach (string filepath in imageList.Photos)
                     {
                         AddImage(filepath);
@@ -74,7 +73,7 @@ namespace ImageBox.Pages
         }
 
         private void AddImage(string filepath)
-        {
+        {            
             Image image = new Image
             {
                 Source = ImageSource.FromFile(filepath),
@@ -82,12 +81,22 @@ namespace ImageBox.Pages
                 VerticalOptions = LayoutOptions.FillAndExpand,
                 HeightRequest = 120,
                 WidthRequest = 120,
+                Aspect = Aspect.Fill,
                 Margin = 5,
                 AutomationId = filepath
-
             };
+            
+            Grid.SetColumn(image, colPosition);
+            Grid.SetRow(image, rowPosition);
 
             flexLayout.Children.Add(image);
+
+            colPosition++;
+            if(colPosition == 3)
+            {
+                colPosition = 0;
+                rowPosition++;
+            }
         }
     }
 }
