@@ -13,11 +13,21 @@ namespace ImageBox.Droid
             StorageInfo storageInfo = new StorageInfo();
 
             StatFs stat = new StatFs(Environment.RootDirectory.AbsolutePath);
-            //StatFs stat = new StatFs(path); //"/storage/sdcard1"
+
+            SetStats(storageInfo.localStorage, stat);
+
+            stat = new StatFs(Environment.ExternalStorageDirectory.AbsolutePath);
+
+            SetStats(storageInfo.sDStorage, stat);
+
+            return storageInfo;
+        }
+
+        private void SetStats(StorageBase storage, StatFs stat)
+        {
             long totalSpaceBytes = 0;
             long freeSpaceBytes = 0;
             long availableSpaceBytes = 0;
-
 
             if (Build.VERSION.SdkInt >= BuildVersionCodes.JellyBeanMr2)
             {
@@ -31,11 +41,9 @@ namespace ImageBox.Droid
                 availableSpaceBytes = (long)stat.AvailableBlocks * (long)stat.BlockSize;
                 freeSpaceBytes = (long)stat.FreeBlocks * (long)stat.BlockSize;
             }
-
-            storageInfo.TotalSpace = totalSpaceBytes;
-            storageInfo.AvailableSpace = availableSpaceBytes;
-            storageInfo.FreeSpace = freeSpaceBytes;
-            return storageInfo;
+            storage.TotalSpace = totalSpaceBytes;
+            storage.AvailableSpace = availableSpaceBytes;
+            storage.FreeSpace = freeSpaceBytes;
         }
     }
 }

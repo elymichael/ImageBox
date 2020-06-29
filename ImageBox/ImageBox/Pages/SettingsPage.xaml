@@ -53,7 +53,7 @@
                 </StackLayout>
                 <StackLayout HorizontalOptions="FillAndExpand">
                     <ScrollView>
-                        <Label x:Name="lblApplicationInfo" TextColor="White" FontSize="Medium" />
+                        <Label x:Name="lblApplicationInfo" TextColor="White" />
                     </ScrollView>
                 </StackLayout>
             </StackLayout>

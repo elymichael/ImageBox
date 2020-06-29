@@ -37,7 +37,8 @@
             
             StorageInfo storage = DependencyService.Get<IDeviceInformation>().GetStorage();
 
-            lblPrimaryStorage.Text = bytesToHuman(storage.FreeSpace) + " of " + bytesToHuman(storage.TotalSpace);
+            lblPrimaryStorage.Text = bytesToHuman(storage.localStorage.FreeSpace) + " of " + bytesToHuman(storage.localStorage.TotalSpace);
+            lblSecondaryStorage.Text = bytesToHuman(storage.sDStorage.FreeSpace) + " of " + bytesToHuman(storage.sDStorage.TotalSpace);
         }
 
         public ICommand ClosePage => new Command(OnDismissButtonClicked);
