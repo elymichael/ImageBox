@@ -28,7 +28,7 @@
             LoadBitmapCollection();
         }
 
-        ObservableCollection<UnsortedImage> UnsortedImages { get { return App._unsortedImages; } }
+        ObservableCollection<ImageInfo> UnsortedImages { get { return App._unsortedImages; } }
 
         private int pointer = 0;
 
@@ -37,7 +37,7 @@
             try
             {
 
-                ImageList imageList = CacheDataImages.GetImages("temp");
+                ImageList imageList = FileManager.GetImages("temp");
 
                 if (imageList.Photos.Count <= 0)
                 {
@@ -48,19 +48,19 @@
                         imageList = await ImageFolderScan.GetImages("https://raw.githubusercontent.com/xamarin/docs-archive/master/Images/stock/small/stock.json");
                         foreach (string filepath in imageList.Photos)
                         {
-                            await CacheDataImages.SaveUrlImage(filepath);
+                            await FileManager.SaveUrlImage(filepath);
                         }
                     }
                 }
 
-                imageList = CacheDataImages.GetImages("temp");
+                imageList = FileManager.GetImages("temp");
                 // Create an Image object for each bitmap
                 foreach (string filepath in imageList.Photos)
                 {
-                    UnsortedImages.Add(new UnsortedImage(filepath));
+                    UnsortedImages.Add(new ImageInfo(filepath));
                 }
 
-                badgeTrash.Text = CacheDataImages.GetImages("trash").Photos.Count.ToString();
+                badgeTrash.Text = FileManager.GetImages("trash").Photos.Count.ToString();
 
                 setImages();
             }
@@ -80,7 +80,7 @@
 
         private async void OnOpenTrash()
         {
-            if (CacheDataImages.GetImages("trash").Photos.Count == 0)
+            if (FileManager.GetImages("trash").Photos.Count == 0)
             {
                 await DisplayAlert("Empty Trash", "Swipe a photo UP to put into trash first.", "Ok");
                 return;
@@ -143,13 +143,13 @@
         {
             if (e.Direction == SwipeDirection.Up)
             {
-                CacheDataImages.MoveFile("trash", UnsortedImages[pointer].ImagePath);
+                FileManager.MoveFile("trash", UnsortedImages[pointer].ImagePath);
                 UnsortedImages.RemoveAt(pointer);
                 if (pointer >= (UnsortedImages.Count - 1))
                 {
                     pointer--;
                 }
-                badgeTrash.Text = CacheDataImages.GetImages("trash").Photos.Count.ToString();
+                badgeTrash.Text = FileManager.GetImages("trash").Photos.Count.ToString();
                 setImages();
             }
         }
@@ -189,7 +189,7 @@
 
         void MoveImage(string folderName)
         {
-            CacheDataImages.MoveFile(folderName, UnsortedImages[pointer].ImagePath);
+            FileManager.MoveFile(folderName, UnsortedImages[pointer].ImagePath);
             UnsortedImages.RemoveAt(pointer);
             if (pointer >= (UnsortedImages.Count - 1))
             {

@@ -10,7 +10,7 @@
     using Xamarin.Essentials;
     using Xamarin.Forms;
 
-    public static class CacheDataImages
+    public static class FileManager
     {
         public static async Task SaveUrlImage(string imageName)
         {

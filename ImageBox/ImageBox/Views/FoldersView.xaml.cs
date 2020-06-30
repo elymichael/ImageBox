@@ -38,7 +38,7 @@
         {
             folderLayout.Children.Clear();
 
-            DestinationImageFolders = CacheDataImages.GetFolders();
+            DestinationImageFolders = FileManager.GetFolders();
             foreach (DestinationFolder df in DestinationImageFolders)
             {
                 StackLayout stackLayout = new StackLayout()
@@ -122,7 +122,7 @@
             string result = await App.Current.MainPage.DisplayPromptAsync("New Folder", "Add your folder name");
             if (result != null)
             {
-                CacheDataImages.CreateFolder(result);
+                FileManager.CreateFolder(result);
                 loadDirectory();
 
                 if (OnMoveFileClicked != null)

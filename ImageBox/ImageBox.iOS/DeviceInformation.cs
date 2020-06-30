@@ -14,9 +14,9 @@ namespace ImageBox.iOS
             StorageInfo storageInfo = new StorageInfo();
             NSFileSystemAttributes values = NSFileManager.DefaultManager.GetFileSystemAttributes(Environment.GetFolderPath(Environment.SpecialFolder.Personal));
 
-            storageInfo.localStorage.TotalSpace = values.Size;
-            storageInfo.localStorage.FreeSpace = values.FreeSize;
-            storageInfo.localStorage.AvailableSpace = values.FreeSize;
+            storageInfo.LocalStorage.TotalSpace = values.Size;
+            storageInfo.LocalStorage.FreeSpace = values.FreeSize;
+            storageInfo.LocalStorage.AvailableSpace = values.FreeSize;
 
             return storageInfo;
         }

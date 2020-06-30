@@ -29,10 +29,10 @@
             ImageDestinationDisplay.ItemsSource = _destinationFolder;
             _destinationFolder.Clear();
 
-            List<DestinationFolder> folders = CacheDataImages.GetFolders();
+            List<DestinationFolder> folders = FileManager.GetFolders();
             foreach (DestinationFolder df in folders)
             {
-                df.Images = CacheDataImages.GetImages(df.Name);
+                df.Images = FileManager.GetImages(df.Name);
                 _destinationFolder.Add(df);
             }
             badgeTitle.Text = folders.Count.ToString();
@@ -60,7 +60,7 @@
             string result = await App.Current.MainPage.DisplayPromptAsync("New Folder", "Add your folder name");
             if (result != null)
             {
-                CacheDataImages.CreateFolder(result);
+                FileManager.CreateFolder(result);
                 loadDirectory();
             }            
         }

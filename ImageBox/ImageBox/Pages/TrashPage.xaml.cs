@@ -25,8 +25,7 @@
 
         private int rowPosition = 0;
         private int colPosition = 0;
-        ObservableCollection<UnsortedImage> UnsortedImages { get { return App._unsortedImages; } }
-        ObservableCollection<UnsortedImage> trashImages { get { return App._trashImages; } }
+        ObservableCollection<ImageInfo> trashImages { get { return App._trashImages; } }
 
         public event EventHandler<EventArgs> OperationCompleted;
         private int Selected { get; set; } = 0;
@@ -82,30 +81,30 @@
                 trashImages.Clear();
                 flexLayout.Children.Clear();
 
-                ImageList imageList = CacheDataImages.GetImages("trash");
+                ImageList imageList = FileManager.GetImages("trash");
 
                 foreach (string filepath in imageList.Photos)
                 {
-                    trashImages.Add(new UnsortedImage(filepath));
+                    trashImages.Add(new ImageInfo(filepath));
                 }
 
                 rowPosition = 0;
                 colPosition = 0;
                 if (trashImages.Count > 0)
                 {
-                    foreach (UnsortedImage _image in trashImages)
+                    foreach (ImageInfo _image in trashImages)
                     {
                         AddImage(_image.ImagePath);
                     }
                 }
                 else
                 {
-                    addEmptyTrashMessage("Empty Trash...", 18);
+                    AddEmptyTrashMessage("Empty Trash...", 18);
                 }
             }
             catch (Exception ex)
             {
-                addEmptyTrashMessage(string.Format("Cannot access list of bitmap files: {0}", ex.Message), 12);
+                AddEmptyTrashMessage(string.Format("Cannot access list of bitmap files: {0}", ex.Message), 12);
             }
             finally
             {
@@ -133,7 +132,7 @@
             tapGestureRecognizer.NumberOfTapsRequired = 1;
             tapGestureRecognizer.Tapped += (s, e) =>
             {
-                UnsortedImage ui = trashImages.Where(x => x.ImagePath == image.AutomationId).First();
+                ImageInfo ui = trashImages.Where(x => x.ImagePath == image.AutomationId).First();
 
                 if (image.BackgroundColor == Color.White)
                 {
@@ -193,23 +192,22 @@
 
         private async void btnDelete_Clicked(object sender, EventArgs e)
         {
-            List<UnsortedImage> listImages = new List<UnsortedImage>();
+            List<ImageInfo> listImages = new List<ImageInfo>();
             if (Selected >= 1)
             {
-                listImages = trashImages.Where(x => x.Selected == true).ToList<UnsortedImage>();
+                listImages = trashImages.Where(x => x.Selected == true).ToList<ImageInfo>();
             }
             else
             {
-                listImages = trashImages.ToList<UnsortedImage>();
+                listImages = trashImages.ToList<ImageInfo>();
             }
 
             bool answer = await DeleteConfirmNotifications(listImages.Count);
             if (answer)
             {
-                foreach (UnsortedImage _image in listImages)
-                {
-                    UnsortedImages.Add(_image);
-                    CacheDataImages.DeleteFile(_image.ImagePath);
+                foreach (ImageInfo _image in listImages)
+                {                    
+                    FileManager.DeleteFile(_image.ImagePath);
                 }
             }
 
@@ -220,22 +218,22 @@
 
         private async void btnRecover_Clicked(object sender, EventArgs e)
         {
-            List<UnsortedImage> listImages = new List<UnsortedImage>();
+            List<ImageInfo> listImages = new List<ImageInfo>();
             if (Selected >= 1)
             {
-                listImages = trashImages.Where(x => x.Selected == true).ToList<UnsortedImage>();
+                listImages = trashImages.Where(x => x.Selected == true).ToList<ImageInfo>();
             }
             else
             {
-                listImages = trashImages.ToList<UnsortedImage>();
+                listImages = trashImages.ToList<ImageInfo>();
             }
 
             bool answer = await RecoverConfirmNotifications(listImages.Count);
             if (answer)
             {
-                foreach (UnsortedImage _image in listImages)
+                foreach (ImageInfo _image in listImages)
                 {
-                    CacheDataImages.MoveFile("temp", _image.ImagePath);
+                    FileManager.MoveFile("temp", _image.ImagePath);
                 }
             }
 
@@ -265,7 +263,7 @@
             CrossToastPopUp.Current.ShowToastMessage(message);
         }
 
-        private void addEmptyTrashMessage(string message, int size)
+        private void AddEmptyTrashMessage(string message, int size)
         {
             StackLayout stackLayout = new StackLayout()
             {

@@ -14,11 +14,11 @@ namespace ImageBox.Droid
 
             StatFs stat = new StatFs(Environment.RootDirectory.AbsolutePath);
 
-            SetStats(storageInfo.localStorage, stat);
+            SetStats(storageInfo.LocalStorage, stat);
 
             stat = new StatFs(Environment.ExternalStorageDirectory.AbsolutePath);
 
-            SetStats(storageInfo.sDStorage, stat);
+            SetStats(storageInfo.SDStorage, stat);
 
             return storageInfo;
         }

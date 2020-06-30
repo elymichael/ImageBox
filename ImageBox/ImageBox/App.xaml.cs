@@ -8,8 +8,8 @@
 
     public partial class App : Application
     {
-        public static ObservableCollection<UnsortedImage> _unsortedImages = new ObservableCollection<UnsortedImage>();
-        public static ObservableCollection<UnsortedImage> _trashImages = new ObservableCollection<UnsortedImage>();
+        public static ObservableCollection<ImageInfo> _unsortedImages = new ObservableCollection<ImageInfo>();
+        public static ObservableCollection<ImageInfo> _trashImages = new ObservableCollection<ImageInfo>();
         public static List<DestinationFolder> _destinationImageFolders= new List<DestinationFolder>();
 
         public App()

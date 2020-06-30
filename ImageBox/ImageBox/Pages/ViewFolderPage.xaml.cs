@@ -51,7 +51,7 @@
                     foldertitle.Text = FolderName;                    
                     flexLayout.Children.Clear();
 
-                    ImageList imageList = CacheDataImages.GetImages(FolderName);
+                    ImageList imageList = FileManager.GetImages(FolderName);
 
                     rowPosition = 0;
                     colPosition = 0;
@@ -118,11 +118,11 @@
             switch (action)
             {
                 case "Move to trash":
-                    CacheDataImages.MoveFile("trash", image.AutomationId);
+                    FileManager.MoveFile("trash", image.AutomationId);
                     LoadBitmapCollection();
                     break;
                 case "Unsort Photo":
-                    CacheDataImages.MoveFile("temp", image.AutomationId);
+                    FileManager.MoveFile("temp", image.AutomationId);
                     LoadBitmapCollection();
                     break;
                 default:

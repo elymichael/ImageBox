@@ -1,15 +1,15 @@
 ﻿namespace ImageBox
 {
     using System.IO;
-    public class UnsortedImage
+    public class ImageInfo
     {
         public string Name { get; set; }
         public string ImagePath { get; set; }
         public bool Selected { get; set; }
 
-        public UnsortedImage() { }
+        public ImageInfo() { }
 
-        public UnsortedImage(string imagesource)
+        public ImageInfo(string imagesource)
         {
             Name = Path.GetFileName(imagesource);
             ImagePath = imagesource;

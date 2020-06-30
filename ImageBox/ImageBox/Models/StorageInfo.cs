@@ -6,13 +6,13 @@ namespace ImageBox
 {
     public class StorageInfo
     {
-        public LocalStorageInfo localStorage { get; set; }
-        public SDStorageInfo sDStorage { get; set; }
+        public LocalStorageInfo LocalStorage { get; set; }
+        public SDStorageInfo SDStorage { get; set; }
 
         public StorageInfo()
         {
-            localStorage = new LocalStorageInfo();
-            sDStorage = new SDStorageInfo();
+            LocalStorage = new LocalStorageInfo();
+            SDStorage = new SDStorageInfo();
         }
     }
 
