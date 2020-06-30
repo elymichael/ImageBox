@@ -1,7 +1,7 @@
 # ImageBox
 Organize your photos without sharing personal information.
 
-**ImageBox** is a photo organizer application to sort your photo in personal folders quickly without sharing your personal information with any entity. 
+**ImageBox** is a photo organizer application to sort your photo in personal folders quickly without sharing your personal information with any entity. Also, you can send to the trash photo you are not longer interested and empty the trash folder deleting permanently all the photos inside or only selected photos. The user can order the photo in new directories created on the fly while you are sorting the images. This app was developed using Xamarin Forms for IOS and Android environment OS.
 
 ## Original Requirement: 
 
