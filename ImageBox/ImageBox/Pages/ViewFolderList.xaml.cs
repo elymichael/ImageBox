@@ -27,6 +27,7 @@
         private void loadDirectory()
         {
             ImageDestinationDisplay.ItemsSource = _destinationFolder;
+            _destinationFolder.Clear();
 
             List<DestinationFolder> folders = CacheDataImages.GetFolders();
             foreach (DestinationFolder df in folders)
@@ -68,8 +69,14 @@
             string folderName = ((StackLayout)sender).AutomationId;
 
             var viewFolderPage = new ViewFolderPage(folderName);
-            
+            viewFolderPage.OperationCompleted += ViewFolderPage_OperationCompleted;
             await Navigation.PushModalAsync(viewFolderPage, true);
+        }
+
+        private void ViewFolderPage_OperationCompleted(object sender, EventArgs e)
+        {
+            (sender as ViewFolderPage).OperationCompleted -= ViewFolderPage_OperationCompleted;
+            loadDirectory();
         }
     }
 }

@@ -9,7 +9,7 @@
     public partial class ViewFolderPage : ContentPage
     {
         public ViewFolderPage()
-        {            
+        {
             InitializeComponent();
 
             BindingContext = this;
@@ -30,10 +30,13 @@
 
         public string FolderName { get; set; }
 
+        public event EventHandler<EventArgs> OperationCompleted;
+
         public ICommand CloseTrash => new Command(OnDismissButtonClicked);
 
         private async void OnDismissButtonClicked()
         {
+            OperationCompleted?.Invoke(this, EventArgs.Empty);
             await Navigation.PopModalAsync();
         }
 
@@ -45,9 +48,9 @@
             {
                 if (!string.IsNullOrEmpty(FolderName))
                 {
-                    foldertitle.Text = FolderName;
-
+                    foldertitle.Text = FolderName;                    
                     flexLayout.Children.Clear();
+
                     ImageList imageList = CacheDataImages.GetImages(FolderName);
 
                     rowPosition = 0;
@@ -74,7 +77,7 @@
         }
 
         private void AddImage(string filepath)
-        {            
+        {
             Image image = new Image
             {
                 Source = ImageSource.FromFile(filepath),
@@ -83,21 +86,49 @@
                 HeightRequest = 120,
                 WidthRequest = 120,
                 Aspect = Aspect.Fill,
-                Margin = 5,
                 AutomationId = filepath
             };
-            
+
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.NumberOfTapsRequired = 2;
+            tapGestureRecognizer.Tapped += OnTapGestureRecognizerFolderTapped;
+            image.GestureRecognizers.Add(tapGestureRecognizer);
+
             Grid.SetColumn(image, colPosition);
             Grid.SetRow(image, rowPosition);
 
             flexLayout.Children.Add(image);
 
             colPosition++;
-            if(colPosition == 3)
+            if (colPosition == 3)
             {
                 colPosition = 0;
                 rowPosition++;
             }
         }
+
+        async void OnTapGestureRecognizerFolderTapped(object sender, EventArgs args)
+        {
+            Image image = (Image)sender;
+            image.Opacity = 0.2;
+
+            var options = new[] { "Unsort Photo", "Move to trash" };
+            string action = await DisplayActionSheet("Pick a choice...", "Cancel", null, options);
+                        
+            switch (action)
+            {
+                case "Move to trash":
+                    CacheDataImages.MoveFile("trash", image.AutomationId);
+                    LoadBitmapCollection();
+                    break;
+                case "Unsort Photo":
+                    CacheDataImages.MoveFile("temp", image.AutomationId);
+                    LoadBitmapCollection();
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 }

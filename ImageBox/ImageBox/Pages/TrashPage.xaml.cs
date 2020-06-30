@@ -124,7 +124,7 @@
                 HeightRequest = 120,
                 WidthRequest = 120,
                 Aspect = Aspect.Fill,
-                Margin = 5,
+                Margin = 1,
                 AutomationId = filepath
 
             };
@@ -145,7 +145,7 @@
                 else
                 {
                     image.BackgroundColor = Color.White;
-                    image.Opacity = 0.5;
+                    image.Opacity = 0.25;
                     Selected++;
 
                     ui.Selected = true;
