@@ -138,12 +138,14 @@
                 if (image.BackgroundColor == Color.White)
                 {
                     image.BackgroundColor = Color.Transparent;
+                    image.Opacity = 1;
                     Selected--;
                     ui.Selected = false;
                 }
                 else
                 {
                     image.BackgroundColor = Color.White;
+                    image.Opacity = 0.5;
                     Selected++;
 
                     ui.Selected = true;

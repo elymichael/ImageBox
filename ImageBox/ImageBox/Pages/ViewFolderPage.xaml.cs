@@ -52,6 +52,7 @@
 
                     rowPosition = 0;
                     colPosition = 0;
+                    lblTotalImages.Text = string.Format("Photo(s): {0}", imageList.Photos.Count);
                     foreach (string filepath in imageList.Photos)
                     {
                         AddImage(filepath);
