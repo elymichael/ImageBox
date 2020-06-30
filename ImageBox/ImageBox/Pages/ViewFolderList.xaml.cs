@@ -35,6 +35,7 @@
                 df.Images = CacheDataImages.GetImages(df.Name);
                 _destinationFolder.Add(df);
             }
+            badgeTitle.Text = folders.Count.ToString();
         }
 
         private async void Button_Clicked(object sender, EventArgs e)

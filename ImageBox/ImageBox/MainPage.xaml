@@ -37,16 +37,16 @@
             <Label x:Name="txtPhotoTotal" Text="" TextColor="White" HorizontalOptions="Center" FontSize="Small" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <!--<ScrollView Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">-->
-            <Image x:Name="imgCurrent" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFit" Source="Button">
-                <Image.GestureRecognizers>
-                    <SwipeGestureRecognizer Direction="Left"  Swiped="SwipeGestureRecognizer_SwipedLeft" />
-                    <SwipeGestureRecognizer Direction="Right" Swiped="SwipeGestureRecognizer_SwipedRight"/>
-                    <SwipeGestureRecognizer Direction="Up" Swiped="SwipeGestureRecognizer_SwipedUp"/>
-                    <SwipeGestureRecognizer Direction="Down" Swiped="SwipeGestureRecognizer_Swiped"/>
-                </Image.GestureRecognizers>
-            </Image>
-            <!--</ScrollView>-->
+            <Frame HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="#1E1D1D">
+                <Image x:Name="imgCurrent" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFill" Source="Button">
+                    <Image.GestureRecognizers>
+                        <SwipeGestureRecognizer Direction="Left"  Swiped="SwipeGestureRecognizer_SwipedLeft" />
+                        <SwipeGestureRecognizer Direction="Right" Swiped="SwipeGestureRecognizer_SwipedRight"/>
+                        <SwipeGestureRecognizer Direction="Up" Swiped="SwipeGestureRecognizer_SwipedUp"/>
+                        <SwipeGestureRecognizer Direction="Down" Swiped="SwipeGestureRecognizer_Swiped"/>
+                    </Image.GestureRecognizers>
+                </Image>
+            </Frame>
         </StackLayout>
         <ActivityIndicator x:Name="activityIndicator"
                            IsRunning="True"
