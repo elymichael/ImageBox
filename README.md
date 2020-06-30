@@ -39,4 +39,13 @@ Please, check the concept layout of the aplication, the main idea is to organize
       <img src="./ImageBox/ImageBox/Design/Folder.png" width="200">
       </td>
   </tr>
+  <tr>
+    <td>
+      <img src="./ImageBox/ImageBox/Design/MainPage-2.png" width="200">
+    </td>
+    <td>
+      <img src="./ImageBox/ImageBox/Design/Trash-3.png" width="200">
+    </td>
+    <td></td>
+    </tr>
   </table>
