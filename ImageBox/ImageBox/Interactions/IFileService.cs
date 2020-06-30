@@ -12,3 +12,4 @@
         List<DestinationFolder> GetFolders();
     }
 }
+//https://docs.microsoft.com/en-us/xamarin/android/platform/files/

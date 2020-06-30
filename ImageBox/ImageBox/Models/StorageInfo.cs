@@ -15,6 +15,8 @@ namespace ImageBox
             sDStorage = new SDStorageInfo();
         }
     }
+
+    #region StorageBase
     public class LocalStorageInfo: StorageBase
     {
 
@@ -31,4 +33,6 @@ namespace ImageBox
         public double AvailableSpace { get; set; }
         public double FreeSpace { get; set; }
     }
+    #endregion
+
 }
