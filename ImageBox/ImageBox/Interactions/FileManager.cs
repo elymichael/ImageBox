@@ -14,7 +14,7 @@
     {
         public static async Task SaveUrlImage(string imageName)
         {
-            await SaveUrlImage("temp", imageName);            
+            await SaveUrlImage("temp", imageName);
         }
 
         public static async Task SaveUrlImage(string folderName, string imageName)
@@ -82,9 +82,12 @@
         public static ImageList GetImages(string folderName)
         {
             string newdirectory = Path.Combine(FileSystem.CacheDirectory, folderName);
-            ImageList imageList = new ImageList();
-            imageList.Photos = Directory.GetFiles(newdirectory).ToList<string>();
 
+            ImageList imageList = new ImageList();
+            if (Directory.Exists(newdirectory))
+            {
+                imageList.Photos = Directory.GetFiles(newdirectory).ToList<string>();
+            }
             return imageList;
 
         }

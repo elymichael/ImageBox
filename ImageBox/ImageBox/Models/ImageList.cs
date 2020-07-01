@@ -8,5 +8,9 @@
     {
         [DataMember(Name = "photos")]
         public List<string> Photos = null;
+        public ImageList()
+        {
+            Photos = new List<string>();
+        }
     }
 }

@@ -4,8 +4,12 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:local="clr-namespace:ImageBox"
              xmlns:controls="clr-namespace:ImageBox.Views"
              x:Class="ImageBox.Pages.SettingsPage" BackgroundColor="Black">
+    <ContentPage.BindingContext>
+        <local:SettingsModelView />
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Padding="10" Spacing="10">
             <StackLayout HorizontalOptions="FillAndExpand">
@@ -32,7 +36,7 @@
                         <Label Text="Primary Storage" TextColor="White" />
                     </StackLayout>
                     <StackLayout HorizontalOptions="End">
-                        <Label x:Name="lblPrimaryStorage" Text="N/A" TextColor="Gray"></Label>
+                        <Label x:Name="lblPrimaryStorage" Text="{Binding PrimaryStorage}" TextColor="Gray"></Label>
                     </StackLayout>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Margin="10">
@@ -40,7 +44,7 @@
                         <Label Text="SD Card Storage" TextColor="White" />
                     </StackLayout>
                     <StackLayout HorizontalOptions="End">
-                        <Label x:Name="lblSecondaryStorage" Text="N/A" TextColor="Gray"></Label>
+                        <Label x:Name="lblSecondaryStorage" Text="{Binding SecondaryStorage}" TextColor="Gray"></Label>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
@@ -49,7 +53,7 @@
             </Frame>
             <StackLayout Orientation="Vertical" Margin="10">
                 <StackLayout HorizontalOptions="FillAndExpand">
-                    <Label x:Name="lblApplicationInfo" TextColor="White" />
+                    <Label x:Name="lblApplicationInfo" TextColor="White" Text="{Binding DeviceInformation}" />
                 </StackLayout>
                 <StackLayout HorizontalOptions="FillAndExpand">
                     <Button Text="Write a review" />
