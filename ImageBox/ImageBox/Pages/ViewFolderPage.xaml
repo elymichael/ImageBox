@@ -9,7 +9,7 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout Padding="10" Margin="10" HorizontalOptions="FillAndExpand">
-                <controls:LogoView />
+                <!--<controls:LogoView />-->
                 <StackLayout Orientation="Horizontal">
                     <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
                         <Label x:Name="txtTitleCloseIcon" Text="&#xf00d;" TextColor="White" FontSize="Medium" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">

@@ -9,7 +9,7 @@
 
     <StackLayout Spacing="10" Padding="10">
         <StackLayout HorizontalOptions="FillAndExpand" Padding="10">
-            <controls:LogoView />
+            <!--<controls:LogoView />-->
             <StackLayout Orientation="Horizontal" Padding="20,0,20,0">
                 <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
                     <Label  x:Name="txtTitleUndoIcon" Text="&#xf0e2;" TextColor="White" FontSize="Medium" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">

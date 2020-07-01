@@ -2,10 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     using Xamarin.Forms;
     using Xamarin.Forms.Xaml;
@@ -17,7 +13,7 @@
         {
             InitializeComponent();
 
-            this.loadDirectory();
+            this.LoadDirectory();
         }
 
         List<DestinationFolder> DestinationImageFolders { 
@@ -34,37 +30,16 @@
 
         public OnMoveFileDelegate OnMoveFileClicked { get; set; }
 
-        private void loadDirectory()
+        private void LoadDirectory()
         {
             folderLayout.Children.Clear();
 
             DestinationImageFolders = FileManager.GetFolders();
             foreach (DestinationFolder df in DestinationImageFolders)
             {
-                StackLayout stackLayout = new StackLayout()
-                {
-                    Padding = new Thickness(5),
-                    Margin = new Thickness(0, 5, 0, 0),
-                    AutomationId = df.Name
-                };
-
-                Label labelText = new Label()
-                {
-                    Text = df.Name,
-                    TextColor = Color.White,
-                    VerticalOptions = LayoutOptions.Center,
-                    HorizontalOptions = LayoutOptions.Center
-                };
-
-                Label labelIcon = new Label()
-                {
-                    Text = ((char)0xf063).ToString(),
-                    TextColor = Color.White,
-                    FontFamily = (OnPlatform<string>)Application.Current.Resources["FontAwesomeSolid"],
-                    VerticalOptions = LayoutOptions.Center,
-                    HorizontalOptions = LayoutOptions.Center
-                };
-
+                FolderStackLayout stackLayout = new FolderStackLayout();
+                stackLayout.AddLabels(df.Name, Color.White, 0xf063);
+                
                 var tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.NumberOfTapsRequired = 1;
                 tapGestureRecognizer.Tapped += (s, e) =>
@@ -75,8 +50,6 @@
                 };
                 stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
 
-                stackLayout.Children.Add(labelIcon);
-                stackLayout.Children.Add(labelText);
                 folderLayout.Children.Add(stackLayout);
             }
             CreateNewButtom();
@@ -84,36 +57,14 @@
 
         private void CreateNewButtom()
         {
-            StackLayout stackLayout = new StackLayout()
-            {
-                Padding = new Thickness(5),
-                Margin = new Thickness(0, 5, 0, 0)
-            };
-
-            Label labelText = new Label()
-            {
-                Text = "New Folder",
-                TextColor = Color.Gray,
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Center
-            };
-
-            Label labelIcon = new Label()
-            {
-                Text = ((char)0xf0fe).ToString(),
-                TextColor = Color.Gray,
-                FontFamily = (OnPlatform<string>)Application.Current.Resources["FontAwesomeSolid"],
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Center
-            };
+            FolderStackLayout stackLayout = new FolderStackLayout();
+            stackLayout.AddLabels("New Folder", Color.Gray, 0xf0fe);
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.NumberOfTapsRequired = 1;
             tapGestureRecognizer.Tapped += OnTapGestureRecognizerNewButtonTapped;            
             stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
 
-            stackLayout.Children.Add(labelIcon);
-            stackLayout.Children.Add(labelText);
             folderLayout.Children.Add(stackLayout);
         }
 
@@ -123,7 +74,7 @@
             if (result != null)
             {
                 FileManager.CreateFolder(result);
-                loadDirectory();
+                LoadDirectory();
 
                 if (OnMoveFileClicked != null)
                     OnMoveFileClicked(result);
