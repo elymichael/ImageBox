@@ -10,7 +10,7 @@
             <StackLayout Padding="10" Margin="10" HorizontalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal">
                     <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
-                        <Label x:Name="txtTitleCloseIcon" Text="&#xf00d;" TextColor="White" FontSize="Medium" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                        <Label x:Name="txtTitleCloseIcon" Text="&#xf410;" TextColor="White" FontSize="Medium" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding CloseTrash}" />
                             </Label.GestureRecognizers>
@@ -33,7 +33,7 @@
                     </Grid>
                 </ScrollView>
                 <ActivityIndicator x:Name="activityIndicator"
-                           IsRunning="True"
+                           IsRunning="{Binding ActivityIndicatorIsRunning}" IsVisible="{Binding ActivityIndicatorIsRunning}"
                            VerticalOptions="Center" />
             </StackLayout>
             <Button x:Name="btnRecover" Text="{Binding RecoverText}" Padding="0" Clicked="btnRecover_Clicked" />

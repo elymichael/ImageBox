@@ -12,7 +12,7 @@
                 <!--<controls:LogoView />-->
                 <StackLayout Orientation="Horizontal">
                     <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
-                        <Label x:Name="txtTitleCloseIcon" Text="&#xf00d;" TextColor="White" FontSize="Medium" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                        <Label x:Name="txtTitleCloseIcon" Text="&#xf410;" TextColor="White" FontSize="Medium" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding CloseTrash}" />
                             </Label.GestureRecognizers>

@@ -12,7 +12,7 @@
                 <!--<controls:LogoView />-->
                 <StackLayout Orientation="Horizontal" Padding="10">
                     <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
-                        <Label  x:Name="txtTitleCloseIcon" Text="&#xf00d;" TextColor="White" FontSize="Medium" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                        <Label  x:Name="txtTitleCloseIcon" Text="&#xf410;" TextColor="White" FontSize="Medium" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ClosePage}" />
                             </Label.GestureRecognizers>
@@ -23,7 +23,7 @@
                         <controls:BadgeView x:Name="badgeTitle" Text="0" BadgeColor="Green" VerticalOptions="Start" HorizontalOptions="End"/>
                     </StackLayout>
                     <StackLayout HorizontalOptions="End" VerticalOptions="Center">
-                        <Label x:Name="btnAdd" Text="&#xf067;" TextColor="White" HorizontalOptions="End" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                        <Label x:Name="btnAdd" Text="&#xf0fe;" TextColor="White" HorizontalOptions="End" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" FontSize="Medium">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding AddFolder}" />
                             </Label.GestureRecognizers>

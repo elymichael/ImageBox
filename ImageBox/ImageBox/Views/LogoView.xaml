@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="ImageBox.Views.LogoView">
   <ContentView.Content>
-        <Frame BackgroundColor="DarkSlateGray">
+        <Frame BackgroundColor="#0D0C0C" BorderColor="Gray" CornerRadius="10">
             <StackLayout HorizontalOptions="FillAndExpand">
                 <StackLayout>
                     <Label x:Name="txtTitleIcon" Text="&#xf00a;" TextColor="White" FontSize="Large" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" />

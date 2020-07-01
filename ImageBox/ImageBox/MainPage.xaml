@@ -37,7 +37,7 @@
             <Label x:Name="txtPhotoTotal" Text="" TextColor="White" HorizontalOptions="Center" FontSize="Small" />
         </StackLayout>
         <StackLayout Orientation="Horizontal" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <Frame HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="#1E1D1D">
+            <Frame HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" BorderColor="#1E1D1D" CornerRadius="10">
                 <Image x:Name="imgCurrent" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFill" Source="Button">
                     <Image.GestureRecognizers>
                         <SwipeGestureRecognizer Direction="Left"  Swiped="SwipeGestureRecognizer_SwipedLeft" />

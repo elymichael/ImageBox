@@ -16,15 +16,15 @@
                 <controls:LogoView />
                 <StackLayout Orientation="Horizontal" Padding="10">
                     <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
-                        <Label  x:Name="txtTitleCloseIcon" Text="&#xf00d;" TextColor="White" FontSize="Medium" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
+                        <Label  x:Name="txtTitleCloseIcon" Text="&#xf410; " TextColor="White" FontSize="Medium" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ClosePage}" />
                             </Label.GestureRecognizers>
                         </Label>
                     </StackLayout>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="20,10,10,10">
-                    <Label Text="Organize photos across all your devices without sharing your personal information." TextColor="White" HorizontalOptions="Fill" VerticalOptions="Center"></Label>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="20,10,10,10">
+                        <Label Text="Organize photos across all your devices without sharing your personal information." TextColor="White" HorizontalOptions="Fill" VerticalOptions="Center"></Label>
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
             <Frame>

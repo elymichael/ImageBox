@@ -8,6 +8,13 @@
     [AddINotifyPropertyChangedInterface]
     public class SettingsModelView
     {
+        public ICommand ClosePage => new Command(OnDismissButtonClicked);
+
+        private async void OnDismissButtonClicked()
+        {
+            await App.Current.MainPage.Navigation.PopModalAsync();
+        }
+
         public string DeviceInformation { get; set; }
 
         public string PrimaryStorage { get; set; }
@@ -34,13 +41,6 @@
 
             PrimaryStorage = _storage.LocalStorage.FreeSpace.bytesToHuman() + " of " + _storage.LocalStorage.TotalSpace.bytesToHuman(); ;
             SecondaryStorage = _storage.SDStorage.FreeSpace.bytesToHuman() + " of " + _storage.SDStorage.TotalSpace.bytesToHuman();
-        }
-
-        public ICommand ClosePage => new Command(OnDismissButtonClicked);
-
-        private async void OnDismissButtonClicked()
-        {
-            await App.Current.MainPage.Navigation.PopModalAsync();
         }
     }
 }
