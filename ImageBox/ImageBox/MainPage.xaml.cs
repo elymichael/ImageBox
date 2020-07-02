@@ -27,8 +27,8 @@
             foldersViewer.OnMoveFileClicked += MoveImage;
             LoadBitmapCollection();
         }
-
-        ObservableCollection<ImageInfo> UnsortedImages { get { return App._unsortedImages; } }
+        public ObservableCollection<ImageInfo> _unsortedImages = new ObservableCollection<ImageInfo>();
+        ObservableCollection<ImageInfo> UnsortedImages { get { return _unsortedImages; } }
 
         private int pointer = 0;
 

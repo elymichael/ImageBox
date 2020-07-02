@@ -25,7 +25,9 @@
 
         private int rowPosition = 0;
         private int colPosition = 0;
-        ObservableCollection<ImageInfo> trashImages { get { return App._trashImages; } }
+
+        public ObservableCollection<ImageInfo> _trashImages = new ObservableCollection<ImageInfo>();
+        ObservableCollection<ImageInfo> trashImages { get { return _trashImages; } }
 
         public event EventHandler<EventArgs> OperationCompleted;
         private int Selected { get; set; } = 0;

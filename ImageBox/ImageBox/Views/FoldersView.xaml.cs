@@ -16,14 +16,10 @@
             this.LoadDirectory();
         }
 
+        public static List<DestinationFolder> _destinationImageFolders = new List<DestinationFolder>();
         List<DestinationFolder> DestinationImageFolders { 
-            get 
-            { 
-                return App._destinationImageFolders; 
-            } 
-            set { 
-                App._destinationImageFolders = value; 
-            } 
+            get => _destinationImageFolders;            
+            set => _destinationImageFolders = value;
         }
 
         public delegate void OnMoveFileDelegate(string folderName);

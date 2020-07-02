@@ -10,10 +10,6 @@
 
     public partial class App : Application
     {
-        public static ObservableCollection<ImageInfo> _unsortedImages = new ObservableCollection<ImageInfo>();
-        public static ObservableCollection<ImageInfo> _trashImages = new ObservableCollection<ImageInfo>();
-        public static List<DestinationFolder> _destinationImageFolders= new List<DestinationFolder>();
-
         public App()
         {
             InitializeComponent();
