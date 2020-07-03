@@ -4,8 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Net.Http;
-    using System.Text;
+    using System.Net.Http;    
     using System.Threading.Tasks;
     using Xamarin.Essentials;
     using Xamarin.Forms;
@@ -80,7 +79,9 @@
         }
 
         public static ImageList GetImages(string folderName)
-        {
+        {            
+            ImageList imageListTmp = DependencyService.Get<IFileService>().GetImages(folderName);
+
             string newdirectory = Path.Combine(FileSystem.CacheDirectory, folderName);
 
             ImageList imageList = new ImageList();

@@ -64,6 +64,15 @@
 
                 setImages();
             }
+            catch (PermissionException)
+            {
+                await DisplayAlert("Error", "This application does not have permission to access to the storage.", "Ok");
+
+                if (DeviceInfo.Platform.ToString() == Device.Android)
+                {
+                    DependencyService.Get<ICheckFilePermission>().CheckPermission();
+                }
+            }
             catch (Exception ex)
             {
                 await DisplayAlert("Error", "An unexpected error was found: " + ex.Message, "Ok");
