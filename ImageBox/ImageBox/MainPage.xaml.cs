@@ -67,11 +67,12 @@
             catch (PermissionException)
             {
                 await DisplayAlert("Error", "This application does not have permission to access to the storage.", "Ok");
-
-                if (DeviceInfo.Platform.ToString() == Device.Android)
-                {
-                    DependencyService.Get<ICheckFilePermission>().CheckPermission();
-                }
+                CheckPermission();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                await DisplayAlert("Error", "This application does not have permission to access to the storage.", "Ok");
+                CheckPermission();
             }
             catch (Exception ex)
             {
@@ -205,6 +206,14 @@
                 pointer--;
             }
             setImages();
+        }
+
+        private void CheckPermission()
+        {
+            if (DeviceInfo.Platform.ToString() == Device.Android)
+            {
+                DependencyService.Get<ICheckFilePermission>().CheckPermission();
+            }
         }
     }
 }
