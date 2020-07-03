@@ -8,6 +8,9 @@
     <Copyright>@2020 Sitcs, E.I.R.L</Copyright>
     <RepositoryUrl>https://github.com/elymichael/ImageBox</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
+    <AssemblyVersion>1.0.0.3</AssemblyVersion>
+    <FileVersion>1.0.0.3</FileVersion>
+    <Version>1.0.0.3</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
