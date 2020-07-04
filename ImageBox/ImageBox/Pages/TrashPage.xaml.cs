@@ -130,8 +130,10 @@
                     WidthRequest = 120,
                     Aspect = Aspect.Fill,
                     AutomationId = filepath,
-                    IsOpaque = true
+                    IsOpaque = true,
+                    BackgroundColor = Color.Gray
                 };
+                
                 image.DownsampleToViewSize = true;
                 image.CacheDuration = new TimeSpan(5, 0, 0, 0);
 

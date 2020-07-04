@@ -70,22 +70,30 @@ namespace ImageBox.Droid
 
         public ImageList GetUnsortedImages()
         {
+            string _directorySearch = string.Empty;
+            var allowedExtensions = new[] { ".jpg", ".png", ".gif", ".jpeg" };
+
             ImageList _imageList = new ImageList();
 
             string _path = Environment.ExternalStorageDirectory.AbsolutePath;
-
             var _folders = new[] { Environment.DirectoryDcim, Environment.DirectoryDownloads };
+
             foreach (string folder in _folders)
             {
-                string _directorySearch = Path.Combine(_path, folder);
+                _directorySearch = Path.Combine(_path, folder);
                 if (Directory.Exists(_directorySearch))
                 {
-                    //https://github.com/xamarin/xamarin-android/issues/3426
-                    var allowedExtensions = new[] { ".jpg", ".png", ".gif", ".jpeg" };
                     _imageList.Photos.AddRange(Directory.EnumerateFiles(_directorySearch, "*.*", SearchOption.AllDirectories)
                         .Where(file => allowedExtensions.Any(file.ToLower().EndsWith)));
                 }
             }
+
+            _path = Android.App.Application.Context.FilesDir.AbsolutePath;
+            _directorySearch = Path.Combine(_path, "Images");
+
+            _imageList.Photos.AddRange(Directory.EnumerateFiles(_directorySearch, "*.*", SearchOption.AllDirectories)
+                .Where(file => allowedExtensions.Any(file.ToLower().EndsWith)));
+
             return _imageList;
         }
 

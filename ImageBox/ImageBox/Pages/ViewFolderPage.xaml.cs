@@ -93,7 +93,8 @@
                     WidthRequest = 120,
                     Aspect = Aspect.Fill,
                     AutomationId = filepath,
-                    IsOpaque = true
+                    IsOpaque = true,
+                    BackgroundColor = Color.Gray
                 };
                 image.DownsampleToViewSize = true;
                 image.CacheDuration = new TimeSpan(5, 0, 0, 0);
@@ -132,7 +133,7 @@
                     LoadBitmapCollection();
                     break;
                 case "Unsort Photo":
-                    FileManager.MoveFile("temp", image.AutomationId);
+                    FileManager.RestoreFile(image.AutomationId);
                     LoadBitmapCollection();
                     break;
                 default:

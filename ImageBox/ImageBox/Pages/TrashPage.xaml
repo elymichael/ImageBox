@@ -7,7 +7,7 @@
              x:Class="ImageBox.Pages.TrashPage" BackgroundColor="Black">
     <ContentPage.Content>
         <StackLayout CompressedLayout.IsHeadless="true">
-            <StackLayout Padding="10" Margin="10" HorizontalOptions="FillAndExpand" CompressedLayout.IsHeadless="true">
+            <StackLayout Padding="10" Margin="10" CompressedLayout.IsHeadless="true">
                 <StackLayout Orientation="Horizontal">
                     <Label x:Name="txtTitleCloseIcon" Text="&#xf410;" TextColor="White" FontSize="Medium" HorizontalOptions="Start" FontFamily="{StaticResource FontAwesomeSolid}">
                         <Label.GestureRecognizers>
@@ -24,9 +24,9 @@
                 <ScrollView HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
                     <Grid x:Name="flexLayout">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="120" />
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ScrollView>

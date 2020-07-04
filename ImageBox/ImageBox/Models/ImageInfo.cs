@@ -1,7 +1,8 @@
 ﻿namespace ImageBox
 {
+    using System;    
     using System.IO;
-    public class ImageInfo
+    public class ImageInfo: IComparable<ImageInfo>
     {
         public string Name { get; set; }
         public string ImagePath { get; set; }
@@ -13,6 +14,14 @@
         {
             Name = Path.GetFileName(imagesource);
             ImagePath = imagesource;
+        }
+
+        public int CompareTo(ImageInfo other)
+        {
+            if (other == null)
+                return 1;
+            else
+                return this.Name.CompareTo(other.Name);
         }
     }
 }

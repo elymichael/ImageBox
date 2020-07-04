@@ -32,6 +32,7 @@
                 _destinationFolder.Clear();
 
                 List<DestinationFolder> folders = FileManager.GetFolders();
+                folders.Sort();
 
                 foreach (DestinationFolder df in folders)
                 {

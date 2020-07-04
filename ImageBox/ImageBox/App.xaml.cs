@@ -4,9 +4,11 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using Xamarin.Forms;
+    using Xamarin.Essentials;
     using Microsoft.AppCenter;
     using Microsoft.AppCenter.Analytics;
     using Microsoft.AppCenter.Crashes;
+    using System.IO;
 
     public partial class App : Application
     {
@@ -32,6 +34,22 @@
 
         protected override void OnResume()
         {
+        }
+
+        private static MyDatabase _myDatabase;
+        public static MyDatabase Database
+        {
+            get
+            {
+                if (_myDatabase == null)
+                {
+                    
+                    var databasePath = Path.Combine(FileSystem.AppDataDirectory, "ImageBox.db");
+
+                    _myDatabase = new MyDatabase(databasePath);
+                }
+                return _myDatabase;
+            }
         }
     }
 }

@@ -10,6 +10,7 @@
     using ImageBox.Pages;
     using Xamarin.Forms.Xaml;
     using System.Threading.Tasks;
+    using Xamarin.Forms.PlatformConfiguration;
 
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
@@ -173,8 +174,8 @@
         {
             Device.BeginInvokeOnMainThread(() =>
             {
-                txtPhotoTotal.Text = string.Format("{0} of {1}", (pointer + 1), UnsortedImages.Count);            
-                imgCurrent.Source = UnsortedImages[pointer].ImagePath;
+                txtPhotoTotal.Text = string.Format("{0} of {1}", (pointer + 1), UnsortedImages.Count);
+                imgCurrent.Source = ImageSource.FromFile(UnsortedImages[pointer].ImagePath);                                
             });
         }
 

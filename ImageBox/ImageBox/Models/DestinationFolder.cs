@@ -1,12 +1,14 @@
 ﻿namespace ImageBox
 {
+    using System;
+
     public enum FolderType
     {
         Videos = 0,
         Images = 1
     }
 
-    public class DestinationFolder
+    public class DestinationFolder: IComparable<DestinationFolder>
     {
         public string Name { get; set; }
 
@@ -19,6 +21,14 @@
         public DestinationFolder()
         {
             Images = new ImageList();
+        }
+
+        public int CompareTo(DestinationFolder other)
+        {
+            if (other == null)
+                return 1;
+            else
+                return this.Name.CompareTo(other.Name);
         }
     }
 }

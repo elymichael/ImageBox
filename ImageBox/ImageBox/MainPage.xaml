@@ -5,7 +5,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:controls="clr-namespace:ImageBox.Views"   
-             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="ImageBox.MainPage" BackgroundColor="Black">
 
     <StackLayout Spacing="10" Padding="10" CompressedLayout.IsHeadless="true">
@@ -19,7 +18,7 @@
                 <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" CompressedLayout.IsHeadless="true">
                     <!--<Label x:Name="txtTitle" Text="{x:Static resources:AppResources.unsortedstring}" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" TextColor="White"/>-->
                     <Label x:Name="txtTitle" Text="UNSORTED" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" TextColor="White"/>
-                    <Label x:Name="txtTitleSortIcon" Text="&#xf0dc;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center"/>
+                    <Label x:Name="txtTitleSortIcon" Text="&#xf0dc;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}"/>
                 </StackLayout>
                 <Grid HorizontalOptions="End">
                     <Label x:Name="btnTrash" Text="&#xf1f8; " TextColor="White" FontSize="Large" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}">
@@ -32,14 +31,6 @@
             </StackLayout>
             <Label x:Name="txtPhotoTotal" Text="" TextColor="White" HorizontalOptions="Center" FontSize="Small" />
         </StackLayout>
-        <!--<ff:CachedImage x:Name="imgCurrent" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFit" Source="Button" HeightRequest="250" WidthRequest="250">
-            <ff:CachedImage.GestureRecognizers>
-                <SwipeGestureRecognizer Direction="Left"  Swiped="SwipeGestureRecognizer_SwipedLeft" />
-                <SwipeGestureRecognizer Direction="Right" Swiped="SwipeGestureRecognizer_SwipedRight"/>
-                <SwipeGestureRecognizer Direction="Up" Swiped="SwipeGestureRecognizer_SwipedUp"/>
-                <SwipeGestureRecognizer Direction="Down" Swiped="SwipeGestureRecognizer_Swiped"/>
-            </ff:CachedImage.GestureRecognizers>
-        </ff:CachedImage>-->
         <Image x:Name="imgCurrent" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFit" Source="Button" HeightRequest="250" WidthRequest="250">
             <Image.GestureRecognizers>
                 <SwipeGestureRecognizer Direction="Left"  Swiped="SwipeGestureRecognizer_SwipedLeft" />

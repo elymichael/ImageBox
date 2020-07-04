@@ -31,6 +31,7 @@
             folderLayout.Children.Clear();
 
             DestinationImageFolders = FileManager.GetFolders();
+            DestinationImageFolders.Sort();
             foreach (DestinationFolder df in DestinationImageFolders)
             {
                 FolderStackLayout stackLayout = new FolderStackLayout();

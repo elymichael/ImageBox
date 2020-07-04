@@ -12,7 +12,7 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Padding="10" Spacing="10" CompressedLayout.IsHeadless="true">
-            <StackLayout HorizontalOptions="FillAndExpand" CompressedLayout.IsHeadless="true">
+            <StackLayout CompressedLayout.IsHeadless="true">
                 <controls:LogoView />
                 <StackLayout Orientation="Horizontal" Padding="10" CompressedLayout.IsHeadless="true">
                     <Label  x:Name="txtTitleCloseIcon" Text="&#xf410; " TextColor="White" FontSize="Medium" HorizontalOptions="Start" FontFamily="{StaticResource FontAwesomeSolid}">
@@ -21,7 +21,7 @@
                         </Label.GestureRecognizers>
                     </Label>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="20,10,10,10" CompressedLayout.IsHeadless="true">
-                        <Label Text="Organize photos across all your devices without sharing your personal information." TextColor="White" HorizontalOptions="Fill"></Label>
+                        <Label Text="Organize photos across all your devices without sharing your personal information." TextColor="White"></Label>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
@@ -42,7 +42,7 @@
                 <Label Text="APP" />
             </Frame>
             <StackLayout Orientation="Vertical" Margin="10" CompressedLayout.IsHeadless="true">
-                <Label x:Name="lblApplicationInfo" HorizontalOptions="FillAndExpand" TextColor="White" Text="{Binding DeviceInformation}" />
+                <Label x:Name="lblApplicationInfo" TextColor="White" Text="{Binding DeviceInformation}" />
                 <Button HorizontalOptions="FillAndExpand" Text="Write a review" />
             </StackLayout>
         </StackLayout>
