@@ -119,11 +119,12 @@
 
         private void AddImage(string filepath)
         {
+            string imagePath = FileManager.GetCompressedImage(filepath, 400, 400);
             Device.BeginInvokeOnMainThread(() =>
             {
                 CachedImage image = new CachedImage
                 {
-                    Source = ImageSource.FromFile(filepath),
+                    Source = ImageSource.FromFile(imagePath),
                     HorizontalOptions = LayoutOptions.FillAndExpand,
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HeightRequest = 120,

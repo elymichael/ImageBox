@@ -172,10 +172,11 @@
 
         private void SetImages()
         {
+            string imagePath = FileManager.GetCompressedImage(UnsortedImages[pointer].ImagePath, 800, 800);
             Device.BeginInvokeOnMainThread(() =>
             {
                 txtPhotoTotal.Text = string.Format("{0} of {1}", (pointer + 1), UnsortedImages.Count);
-                imgCurrent.Source = ImageSource.FromFile(UnsortedImages[pointer].ImagePath);                                
+                imgCurrent.Source = ImageSource.FromFile(imagePath);                                
             });
         }
 

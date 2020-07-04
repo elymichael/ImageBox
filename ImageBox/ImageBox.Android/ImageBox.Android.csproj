@@ -67,6 +67,7 @@
     <Compile Include="DeviceInformation.cs" />
     <Compile Include="FileService.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="MediaService .cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

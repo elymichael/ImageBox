@@ -52,5 +52,25 @@
             }
             DependencyService.Get<IFileService>().RestoreFile(destinationFolder, imageName);
         }
+
+        public static string GetCompressedImage(string imageName, float width, float height)
+        {
+            string _directoryName = Path.Combine(FileSystem.CacheDirectory, "Cache");
+            string _filename = Path.Combine(_directoryName, Path.GetFileName(imageName));
+            if (!File.Exists(_filename))
+            {
+                byte[] byteData = DependencyService.Get<IMediaService>().ResizeImage(imageName, width, height);
+                if(byteData != null)
+                {
+                    if (!Directory.Exists(_directoryName))
+                    {
+                        Directory.CreateDirectory(_directoryName);
+                    }
+                    File.WriteAllBytes(_filename, byteData);
+                }
+            }
+
+            return _filename;
+        }
     }
 }
