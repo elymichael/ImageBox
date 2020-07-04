@@ -9,16 +9,14 @@
         <StackLayout BackgroundColor="Black">
             <StackLayout Padding="10" Margin="10" HorizontalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal">
-                    <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
-                        <Label x:Name="txtTitleCloseIcon" Text="&#xf410;" TextColor="White" FontSize="Medium" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding CloseTrash}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </StackLayout>
-                    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
-                        <Label x:Name="trashtitle" Text="Trash" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" TextColor="White" />
-                        <Label Text="delete photos to free up space" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Label x:Name="txtTitleCloseIcon" Text="&#xf410;" TextColor="White" FontSize="Medium" HorizontalOptions="Start" FontFamily="{StaticResource FontAwesomeSolid}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CloseTrash}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <StackLayout HorizontalOptions="CenterAndExpand">
+                        <Label x:Name="trashtitle" Text="Trash" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" TextColor="White" />
+                        <Label Text="delete photos to free up space" TextColor="White" HorizontalOptions="Center" />
                     </StackLayout>
                 </StackLayout>
             </StackLayout>

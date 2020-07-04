@@ -8,11 +8,9 @@
   <ContentView.Content>
         <Frame BackgroundColor="#0D0C0C" BorderColor="Gray" CornerRadius="10">
             <StackLayout HorizontalOptions="FillAndExpand">
-                <StackLayout>
-                    <Label x:Name="txtTitleIcon" Text="&#xf00a;" TextColor="White" FontSize="Large" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
-                    <Label x:Name="txtMainTitle" Text="ImageBox" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" VerticalOptions="Center" TextColor="White"/>
+                <Label x:Name="txtTitleIcon" Text="&#xf00a;" TextColor="White" FontSize="Large" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" />
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    <Label x:Name="txtMainTitle" Text="ImageBox" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold" TextColor="White"/>
                 </StackLayout>
             </StackLayout>
         </Frame>

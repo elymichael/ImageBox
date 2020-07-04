@@ -15,15 +15,13 @@
             <StackLayout HorizontalOptions="FillAndExpand">
                 <controls:LogoView />
                 <StackLayout Orientation="Horizontal" Padding="10">
-                    <StackLayout HorizontalOptions="Start" VerticalOptions="Center">
-                        <Label  x:Name="txtTitleCloseIcon" Text="&#xf410; " TextColor="White" FontSize="Medium" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ClosePage}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </StackLayout>
+                    <Label  x:Name="txtTitleCloseIcon" Text="&#xf410; " TextColor="White" FontSize="Medium" HorizontalOptions="Start" FontFamily="{StaticResource FontAwesomeSolid}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ClosePage}" />
+                        </Label.GestureRecognizers>
+                    </Label>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="20,10,10,10">
-                        <Label Text="Organize photos across all your devices without sharing your personal information." TextColor="White" HorizontalOptions="Fill" VerticalOptions="Center"></Label>
+                        <Label Text="Organize photos across all your devices without sharing your personal information." TextColor="White" HorizontalOptions="Fill"></Label>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
@@ -32,32 +30,20 @@
             </Frame>
             <StackLayout>
                 <StackLayout Orientation="Horizontal" Margin="10">
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                        <Label Text="Primary Storage" TextColor="White" />
-                    </StackLayout>
-                    <StackLayout HorizontalOptions="End">
-                        <Label x:Name="lblPrimaryStorage" Text="{Binding PrimaryStorage}" TextColor="Gray"></Label>
-                    </StackLayout>
+                    <Label  HorizontalOptions="StartAndExpand" Text="Primary Storage" TextColor="White" />
+                    <Label HorizontalOptions="End" x:Name="lblPrimaryStorage" Text="{Binding PrimaryStorage}" TextColor="Gray"></Label>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Margin="10">
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                        <Label Text="SD Card Storage" TextColor="White" />
-                    </StackLayout>
-                    <StackLayout HorizontalOptions="End">
-                        <Label x:Name="lblSecondaryStorage" Text="{Binding SecondaryStorage}" TextColor="Gray"></Label>
-                    </StackLayout>
+                    <Label HorizontalOptions="StartAndExpand" Text="SD Card Storage" TextColor="White" />
+                    <Label HorizontalOptions="End" x:Name="lblSecondaryStorage" Text="{Binding SecondaryStorage}" TextColor="Gray"></Label>
                 </StackLayout>
             </StackLayout>
             <Frame>
                 <Label Text="APP" />
             </Frame>
             <StackLayout Orientation="Vertical" Margin="10">
-                <StackLayout HorizontalOptions="FillAndExpand">
-                    <Label x:Name="lblApplicationInfo" TextColor="White" Text="{Binding DeviceInformation}" />
-                </StackLayout>
-                <StackLayout HorizontalOptions="FillAndExpand">
-                    <Button Text="Write a review" />
-                </StackLayout>
+                <Label x:Name="lblApplicationInfo" HorizontalOptions="FillAndExpand" TextColor="White" Text="{Binding DeviceInformation}" />
+                <Button HorizontalOptions="FillAndExpand" Text="Write a review" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
