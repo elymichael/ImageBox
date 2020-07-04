@@ -10,8 +10,10 @@
     using System.Windows.Input;
     using Xamarin.Forms;
     using Plugin.Toast;
+    using FFImageLoading.Forms;
+    using Xamarin.Forms.Xaml;
 
-    [DesignTimeVisible(false)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TrashPage : ContentPage
     {
         public TrashPage()
@@ -117,55 +119,59 @@
 
         private void AddImage(string filepath)
         {
-            Image image = new Image
+            Device.BeginInvokeOnMainThread(() =>
             {
-                Source = ImageSource.FromFile(filepath),
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HeightRequest = 120,
-                WidthRequest = 120,
-                Aspect = Aspect.Fill,
-                Margin = 1,
-                AutomationId = filepath
-
-            };
-
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.NumberOfTapsRequired = 1;
-            tapGestureRecognizer.Tapped += (s, e) =>
-            {
-                ImageInfo ui = TrashImages.Where(x => x.ImagePath == image.AutomationId).First();
-
-                if (image.BackgroundColor == Color.White)
+                CachedImage image = new CachedImage
                 {
-                    image.BackgroundColor = Color.Transparent;
-                    image.Opacity = 1;
-                    Selected--;
-                    ui.Selected = false;
-                }
-                else
+                    Source = ImageSource.FromFile(filepath),
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    VerticalOptions = LayoutOptions.FillAndExpand,
+                    HeightRequest = 120,
+                    WidthRequest = 120,
+                    Aspect = Aspect.Fill,
+                    AutomationId = filepath,
+                    IsOpaque = true
+                };
+                image.DownsampleToViewSize = true;
+                image.CacheDuration = new TimeSpan(5, 0, 0, 0);
+
+                var tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.NumberOfTapsRequired = 1;
+                tapGestureRecognizer.Tapped += (s, e) =>
                 {
-                    image.BackgroundColor = Color.White;
-                    image.Opacity = 0.25;
-                    Selected++;
+                    ImageInfo ui = TrashImages.Where(x => x.ImagePath == image.AutomationId).First();
 
-                    ui.Selected = true;
+                    if (image.BackgroundColor == Color.White)
+                    {
+                        image.BackgroundColor = Color.Transparent;
+                        image.Opacity = 1;
+                        Selected--;
+                        ui.Selected = false;
+                    }
+                    else
+                    {
+                        image.BackgroundColor = Color.White;
+                        image.Opacity = 0.25;
+                        Selected++;
+
+                        ui.Selected = true;
+                    }
+                    setButtonBindings(Selected);
+                };
+                image.GestureRecognizers.Add(tapGestureRecognizer);
+
+                Grid.SetColumn(image, colPosition);
+                Grid.SetRow(image, rowPosition);
+
+                flexLayout.Children.Add(image);
+
+                colPosition++;
+                if (colPosition == 3)
+                {
+                    colPosition = 0;
+                    rowPosition++;
                 }
-                setButtonBindings(Selected);
-            };
-            image.GestureRecognizers.Add(tapGestureRecognizer);
-
-            Grid.SetColumn(image, colPosition);
-            Grid.SetRow(image, rowPosition);
-
-            flexLayout.Children.Add(image);
-
-            colPosition++;
-            if (colPosition == 3)
-            {
-                colPosition = 0;
-                rowPosition++;
-            }
+            });
         }
 
         private void setButtonBindings(int selected)

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Threading.Tasks;
     using System.Windows.Input;
     using Xamarin.Forms;
     using Xamarin.Forms.Xaml;
@@ -20,21 +21,28 @@
         }
 
         private readonly ObservableCollection<DestinationFolder> _destinationFolder = new ObservableCollection<DestinationFolder>();
-        
+
         public event EventHandler<EventArgs> OperationCompleted;
 
-        private void LoadDirectory()
+        private async void LoadDirectory()
         {
             ImageDestinationDisplay.ItemsSource = _destinationFolder;
-            _destinationFolder.Clear();
-
-            List<DestinationFolder> folders = FileManager.GetFolders();
-            foreach (DestinationFolder df in folders)
+            await Task.Run(() =>
             {
-                df.Images = FileManager.GetSortedImages(df.Name);
-                _destinationFolder.Add(df);
-            }
-            badgeTitle.Text = folders.Count.ToString();
+                _destinationFolder.Clear();
+
+                List<DestinationFolder> folders = FileManager.GetFolders();
+
+                foreach (DestinationFolder df in folders)
+                {
+                    df.Images = FileManager.GetSortedImages(df.Name);
+                    _destinationFolder.Add(df);
+                }
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    badgeTitle.Text = folders.Count.ToString();
+                });
+            });
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -42,7 +50,6 @@
             var settingsPage = new SettingsPage();
             await Navigation.PushModalAsync(settingsPage);
         }
-
 
         public ICommand ClosePage => new Command(OnDismissButtonClicked);
 
@@ -61,7 +68,7 @@
             {
                 FileManager.CreateFolder(result);
                 LoadDirectory();
-            }            
+            }
         }
 
         private void ViewFolderPage_OperationCompleted(object sender, EventArgs e)

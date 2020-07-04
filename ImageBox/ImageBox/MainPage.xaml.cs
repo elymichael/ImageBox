@@ -8,10 +8,12 @@
     using Xamarin.Forms;
 
     using ImageBox.Pages;
+    using Xamarin.Forms.Xaml;
+    using System.Threading.Tasks;
 
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
-    [DesignTimeVisible(false)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage : ContentPage
     {
         public MainPage()
@@ -44,9 +46,10 @@
                 {
                     UnsortedImages.Add(new ImageInfo(filepath));
                 }
-
-                badgeTrash.Text = FileManager.GetTrashImages().Photos.Count.ToString();
-
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    badgeTrash.Text = FileManager.GetTrashImages().Photos.Count.ToString();
+                });
                 SetImages();
             }
             catch (PermissionException)
@@ -144,7 +147,10 @@
                 {
                     pointer--;
                 }
-                badgeTrash.Text = FileManager.GetTrashImages().Photos.Count.ToString();
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    badgeTrash.Text = FileManager.GetTrashImages().Photos.Count.ToString();
+                });
                 SetImages();
             }
         }
@@ -165,8 +171,11 @@
 
         private void SetImages()
         {
-            txtPhotoTotal.Text = string.Format("{0} of {1}", (pointer + 1), UnsortedImages.Count);
-            imgCurrent.Source = UnsortedImages[pointer].ImagePath;
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                txtPhotoTotal.Text = string.Format("{0} of {1}", (pointer + 1), UnsortedImages.Count);            
+                imgCurrent.Source = UnsortedImages[pointer].ImagePath;
+            });
         }
 
         private async void Button_Clicked(object sender, EventArgs e)

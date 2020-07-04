@@ -11,16 +11,16 @@
         <local:SettingsModelView />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout Padding="10" Spacing="10">
-            <StackLayout HorizontalOptions="FillAndExpand">
+        <StackLayout Padding="10" Spacing="10" CompressedLayout.IsHeadless="true">
+            <StackLayout HorizontalOptions="FillAndExpand" CompressedLayout.IsHeadless="true">
                 <controls:LogoView />
-                <StackLayout Orientation="Horizontal" Padding="10">
+                <StackLayout Orientation="Horizontal" Padding="10" CompressedLayout.IsHeadless="true">
                     <Label  x:Name="txtTitleCloseIcon" Text="&#xf410; " TextColor="White" FontSize="Medium" HorizontalOptions="Start" FontFamily="{StaticResource FontAwesomeSolid}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ClosePage}" />
                         </Label.GestureRecognizers>
                     </Label>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="20,10,10,10">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" Margin="20,10,10,10" CompressedLayout.IsHeadless="true">
                         <Label Text="Organize photos across all your devices without sharing your personal information." TextColor="White" HorizontalOptions="Fill"></Label>
                     </StackLayout>
                 </StackLayout>
@@ -28,12 +28,12 @@
             <Frame>
                 <Label Text="STORAGE" />
             </Frame>
-            <StackLayout>
-                <StackLayout Orientation="Horizontal" Margin="10">
+            <StackLayout CompressedLayout.IsHeadless="true">
+                <StackLayout Orientation="Horizontal" Margin="10" CompressedLayout.IsHeadless="true">
                     <Label  HorizontalOptions="StartAndExpand" Text="Primary Storage" TextColor="White" />
                     <Label HorizontalOptions="End" x:Name="lblPrimaryStorage" Text="{Binding PrimaryStorage}" TextColor="Gray"></Label>
                 </StackLayout>
-                <StackLayout Orientation="Horizontal" Margin="10">
+                <StackLayout Orientation="Horizontal" Margin="10" CompressedLayout.IsHeadless="true">
                     <Label HorizontalOptions="StartAndExpand" Text="SD Card Storage" TextColor="White" />
                     <Label HorizontalOptions="End" x:Name="lblSecondaryStorage" Text="{Binding SecondaryStorage}" TextColor="Gray"></Label>
                 </StackLayout>
@@ -41,7 +41,7 @@
             <Frame>
                 <Label Text="APP" />
             </Frame>
-            <StackLayout Orientation="Vertical" Margin="10">
+            <StackLayout Orientation="Vertical" Margin="10" CompressedLayout.IsHeadless="true">
                 <Label x:Name="lblApplicationInfo" HorizontalOptions="FillAndExpand" TextColor="White" Text="{Binding DeviceInformation}" />
                 <Button HorizontalOptions="FillAndExpand" Text="Write a review" />
             </StackLayout>

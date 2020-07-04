@@ -7,9 +7,9 @@
              xmlns:controls="clr-namespace:ImageBox.Views"     
              x:Class="ImageBox.Pages.ViewFolderPage" BackgroundColor="Black">
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout Padding="10" Margin="10" HorizontalOptions="FillAndExpand">
-                <StackLayout Orientation="Horizontal">
+        <StackLayout CompressedLayout.IsHeadless="true">
+            <StackLayout Padding="10" Margin="10" HorizontalOptions="FillAndExpand" CompressedLayout.IsHeadless="true">
+                <StackLayout Orientation="Horizontal" CompressedLayout.IsHeadless="true">
                     <Label x:Name="txtTitleCloseIcon" Text="&#xf410;" TextColor="White" FontSize="Medium" HorizontalOptions="Start" FontFamily="{StaticResource FontAwesomeSolid}">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding CloseTrash}" />

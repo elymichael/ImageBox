@@ -5,6 +5,7 @@
     using Xamarin.Forms;
     using Xamarin.Forms.Xaml;
     using FFImageLoading.Forms;
+    using System.Threading.Tasks;
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewFolderPage : ContentPage
@@ -49,9 +50,11 @@
             {
                 if (!string.IsNullOrEmpty(FolderName))
                 {
-                    foldertitle.Text = FolderName;                    
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        foldertitle.Text = FolderName;                                            
+                    });
                     flexLayout.Children.Clear();
-
                     ImageList imageList = FileManager.GetSortedImages(FolderName);
 
                     rowPosition = 0;
@@ -79,44 +82,39 @@
 
         private void AddImage(string filepath)
         {
-            CachedImage image = new CachedImage
+            Device.BeginInvokeOnMainThread(() =>
             {
-                Source = ImageSource.FromFile(filepath),
-                HorizontalOptions = LayoutOptions.FillAndExpand,
-                VerticalOptions = LayoutOptions.FillAndExpand,
-                HeightRequest = 120,
-                WidthRequest = 120,
-                Aspect = Aspect.Fill,
-                AutomationId = filepath
-            };
+                CachedImage image = new CachedImage
+                {
+                    Source = ImageSource.FromFile(filepath),
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    VerticalOptions = LayoutOptions.FillAndExpand,
+                    HeightRequest = 120,
+                    WidthRequest = 120,
+                    Aspect = Aspect.Fill,
+                    AutomationId = filepath,
+                    IsOpaque = true
+                };
+                image.DownsampleToViewSize = true;
+                image.CacheDuration = new TimeSpan(5, 0, 0, 0);
 
-            //Image image = new Image
-            //{
-            //    Source = ImageSource.FromFile(filepath),
-            //    HorizontalOptions = LayoutOptions.FillAndExpand,
-            //    VerticalOptions = LayoutOptions.FillAndExpand,
-            //    HeightRequest = 120,
-            //    WidthRequest = 120,
-            //    Aspect = Aspect.Fill,
-            //    AutomationId = filepath
-            //};
+                var tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.NumberOfTapsRequired = 2;
+                tapGestureRecognizer.Tapped += OnTapGestureRecognizerFolderTapped;
+                image.GestureRecognizers.Add(tapGestureRecognizer);
 
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.NumberOfTapsRequired = 2;
-            tapGestureRecognizer.Tapped += OnTapGestureRecognizerFolderTapped;
-            image.GestureRecognizers.Add(tapGestureRecognizer);
+                Grid.SetColumn(image, colPosition);
+                Grid.SetRow(image, rowPosition);
 
-            Grid.SetColumn(image, colPosition);
-            Grid.SetRow(image, rowPosition);
+                flexLayout.Children.Add(image);
 
-            flexLayout.Children.Add(image);
-
-            colPosition++;
-            if (colPosition == 3)
-            {
-                colPosition = 0;
-                rowPosition++;
-            }
+                colPosition++;
+                if (colPosition == 3)
+                {
+                    colPosition = 0;
+                    rowPosition++;
+                }
+            });
         }
 
         async void OnTapGestureRecognizerFolderTapped(object sender, EventArgs args)
@@ -126,11 +124,11 @@
 
             var options = new[] { "Unsort Photo", "Move to trash" };
             string action = await DisplayActionSheet("Pick a choice...", "Cancel", null, options);
-                        
+
             switch (action)
             {
                 case "Move to trash":
-                    FileManager.MoveFile("trash", image.AutomationId);
+                    FileManager.MoveFileToTrash(image.AutomationId);
                     LoadBitmapCollection();
                     break;
                 case "Unsort Photo":

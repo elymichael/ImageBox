@@ -7,14 +7,14 @@
              xmlns:controls="clr-namespace:ImageBox.Views"     
              x:Class="ImageBox.Pages.ViewFolderList" BackgroundColor="Black">
     <ContentPage.Content>
-        <StackLayout Spacing="10" Padding="10">
-            <StackLayout Orientation="Horizontal" Padding="10">
+        <StackLayout Spacing="10" Padding="10" CompressedLayout.IsHeadless="true">
+            <StackLayout Orientation="Horizontal" Padding="10" CompressedLayout.IsHeadless="true">
                 <Label  x:Name="txtTitleCloseIcon" Text="&#xf410;" TextColor="White" FontSize="Medium" HorizontalOptions="Start" FontFamily="{StaticResource FontAwesomeSolid}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ClosePage}" />
                     </Label.GestureRecognizers>
                 </Label>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" CompressedLayout.IsHeadless="true">
                     <Label x:Name="txtTitle" Text="ALBUMS" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" TextColor="White"/>
                     <controls:BadgeView x:Name="badgeTitle" Text="0" BadgeColor="Green" VerticalOptions="Start" HorizontalOptions="End"/>
                 </StackLayout>
@@ -24,13 +24,13 @@
                     </Label.GestureRecognizers>
                 </Label>
             </StackLayout>
-            <StackLayout Padding="20">
+            <StackLayout Padding="20" CompressedLayout.IsHeadless="true">
                 <ListView x:Name="ImageDestinationDisplay" ItemsSource="{Binding ImagesDestinationFolder}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" ItemTapped="ImageDestinationDisplay_ItemTapped">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
-                                    <StackLayout Orientation="Horizontal" AutomationId="{Binding Name}">
+                                    <StackLayout Orientation="Horizontal" AutomationId="{Binding Name}" CompressedLayout.IsHeadless="true">
                                         <Label  HorizontalOptions="StartAndExpand" Text="{Binding Name}" TextColor="White" FontSize="Medium"></Label>
                                         <Label HorizontalOptions="End" Text="{Binding Quantity}" TextColor="Gray"></Label>
                                     </StackLayout>

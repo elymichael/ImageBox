@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="ImageBox.Views.FoldersView">
   <ContentView.Content>
-        <StackLayout x:Name="folderLayout" Orientation="Horizontal" VerticalOptions="Center">
+        <StackLayout x:Name="folderLayout" Orientation="Horizontal" VerticalOptions="Center" CompressedLayout.IsHeadless="true">
         </StackLayout>
   </ContentView.Content>
 </ContentView>

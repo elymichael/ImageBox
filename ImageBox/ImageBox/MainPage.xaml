@@ -8,15 +8,15 @@
              xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="ImageBox.MainPage" BackgroundColor="Black">
 
-    <StackLayout Spacing="10" Padding="10">
-        <StackLayout HorizontalOptions="FillAndExpand" Padding="10">
-            <StackLayout Orientation="Horizontal" Padding="20,0,20,0">
+    <StackLayout Spacing="10" Padding="10" CompressedLayout.IsHeadless="true">
+        <StackLayout HorizontalOptions="FillAndExpand" Padding="10" CompressedLayout.IsHeadless="true">
+            <StackLayout Orientation="Horizontal" Padding="20,0,20,0" CompressedLayout.IsHeadless="true">
                 <Label  x:Name="txtTitleUndoIcon" Text="&#xf0e2;" TextColor="White" FontSize="Medium" HorizontalOptions="Start" FontFamily="{StaticResource FontAwesomeSolid}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding RefreshPage}" />
                     </Label.GestureRecognizers>
                 </Label>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" CompressedLayout.IsHeadless="true">
                     <!--<Label x:Name="txtTitle" Text="{x:Static resources:AppResources.unsortedstring}" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center" TextColor="White"/>-->
                     <Label x:Name="txtTitle" Text="UNSORTED" HorizontalOptions="Center" FontSize="Medium" FontAttributes="Bold" TextColor="White"/>
                     <Label x:Name="txtTitleSortIcon" Text="&#xf0dc;" TextColor="White" HorizontalOptions="Center" FontFamily="{StaticResource FontAwesomeSolid}" VerticalOptions="Center"/>
