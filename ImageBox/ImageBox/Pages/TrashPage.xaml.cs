@@ -27,7 +27,7 @@
         private int colPosition = 0;
 
         public ObservableCollection<ImageInfo> _trashImages = new ObservableCollection<ImageInfo>();
-        ObservableCollection<ImageInfo> trashImages { get { return _trashImages; } }
+        ObservableCollection<ImageInfo> TrashImages { get { return _trashImages; } }
 
         public event EventHandler<EventArgs> OperationCompleted;
         private int Selected { get; set; } = 0;
@@ -80,21 +80,21 @@
             try
             {
                 Selected = 0;
-                trashImages.Clear();
+                TrashImages.Clear();
                 flexLayout.Children.Clear();
 
-                ImageList imageList = FileManager.GetImages("trash");
+                ImageList imageList = FileManager.GetTrashImages();
 
                 foreach (string filepath in imageList.Photos)
                 {
-                    trashImages.Add(new ImageInfo(filepath));
+                    TrashImages.Add(new ImageInfo(filepath));
                 }
 
                 rowPosition = 0;
                 colPosition = 0;
-                if (trashImages.Count > 0)
+                if (TrashImages.Count > 0)
                 {
-                    foreach (ImageInfo _image in trashImages)
+                    foreach (ImageInfo _image in TrashImages)
                     {
                         AddImage(_image.ImagePath);
                     }
@@ -134,7 +134,7 @@
             tapGestureRecognizer.NumberOfTapsRequired = 1;
             tapGestureRecognizer.Tapped += (s, e) =>
             {
-                ImageInfo ui = trashImages.Where(x => x.ImagePath == image.AutomationId).First();
+                ImageInfo ui = TrashImages.Where(x => x.ImagePath == image.AutomationId).First();
 
                 if (image.BackgroundColor == Color.White)
                 {
@@ -197,11 +197,11 @@
             List<ImageInfo> listImages = new List<ImageInfo>();
             if (Selected >= 1)
             {
-                listImages = trashImages.Where(x => x.Selected == true).ToList<ImageInfo>();
+                listImages = TrashImages.Where(x => x.Selected == true).ToList<ImageInfo>();
             }
             else
             {
-                listImages = trashImages.ToList<ImageInfo>();
+                listImages = TrashImages.ToList<ImageInfo>();
             }
 
             bool answer = await DeleteConfirmNotifications(listImages.Count);
@@ -223,11 +223,11 @@
             List<ImageInfo> listImages = new List<ImageInfo>();
             if (Selected >= 1)
             {
-                listImages = trashImages.Where(x => x.Selected == true).ToList<ImageInfo>();
+                listImages = TrashImages.Where(x => x.Selected == true).ToList<ImageInfo>();
             }
             else
             {
-                listImages = trashImages.ToList<ImageInfo>();
+                listImages = TrashImages.ToList<ImageInfo>();
             }
 
             bool answer = await RecoverConfirmNotifications(listImages.Count);

@@ -26,7 +26,12 @@ namespace ImageBox.iOS
             throw new System.NotImplementedException();
         }
 
-        public ImageList GetImages(string folderName)
+        public ImageList GetUnsortedImages()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ImageList GetSortedImages(string folderName)
         {
             throw new System.NotImplementedException();
         }
@@ -54,6 +59,11 @@ namespace ImageBox.iOS
                 int length = bArray.Length;
                 fs.Write(bArray, 0, length);
             }
+        }
+
+        public ImageList GetTrashImages()
+        {
+            throw new NotImplementedException();
         }
     }
 }

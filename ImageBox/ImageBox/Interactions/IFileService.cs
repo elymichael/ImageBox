@@ -8,7 +8,9 @@
         void CreateFolder(string folderName);
         void MoveFile(string folderName, string imageName);
         void DeleteFile(string imageName);
-        ImageList GetImages(string folderName);
+        ImageList GetUnsortedImages();
+        ImageList GetSortedImages(string folderName);
+        ImageList GetTrashImages();
         List<DestinationFolder> GetFolders();
     }
 }

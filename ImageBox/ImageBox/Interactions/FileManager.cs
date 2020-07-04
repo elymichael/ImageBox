@@ -1,121 +1,42 @@
 ﻿namespace ImageBox
-{
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Net.Http;    
-    using System.Threading.Tasks;
-    using Xamarin.Essentials;
+{    
+    using System.Collections.Generic;    
     using Xamarin.Forms;
 
     public static class FileManager
     {
-        public static async Task SaveUrlImage(string imageName)
-        {
-            await SaveUrlImage("temp", imageName);
-        }
-
-        public static async Task SaveUrlImage(string folderName, string imageName)
-        {
-            var cacheDir = FileSystem.CacheDirectory;
-
-            string filename = Path.GetFileName(imageName);
-
-            string newdirectory = Path.Combine(cacheDir, folderName);
-
-            if (!Directory.Exists(newdirectory))
-            {
-                Directory.CreateDirectory(newdirectory);
-            }
-
-            filename = Path.Combine(newdirectory, filename);
-            using (var client = new HttpClient())
-            {
-                using (var response = await client.GetAsync(imageName))
-                {
-                    byte[] imageBytes = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                    File.WriteAllBytes(filename, imageBytes);
-                    // Store in the in phone public directory.
-                    Stream stream = new MemoryStream(imageBytes);
-                    DependencyService.Get<IFileService>().Save(Path.GetFileName(filename), stream, folderName);
-                }
-            }
-        }
-
         public static void CreateFolder(string folderName)
         {
-            if (!string.IsNullOrEmpty(folderName))
-            {
-                var cacheDir = FileSystem.CacheDirectory;
-                string newdirectory = Path.Combine(cacheDir, folderName);
-
-                if (!Directory.Exists(newdirectory))
-                {
-                    Directory.CreateDirectory(newdirectory);
-                }
-            }
+            DependencyService.Get<IFileService>().CreateFolder(folderName);
         }
 
         public static void MoveFile(string folderName, string imageName)
         {
-            string filename = Path.GetFileName(imageName);
-            string newdirectory = Path.Combine(FileSystem.CacheDirectory, folderName);
-            if (!Directory.Exists(newdirectory))
-            {
-                Directory.CreateDirectory(newdirectory);
-            }
-
-            filename = Path.Combine(newdirectory, filename);
-            File.Move(imageName, filename);
+            DependencyService.Get<IFileService>().MoveFile(folderName, imageName);
         }
 
         public static void DeleteFile(string imageName)
         {
-            if (File.Exists(imageName))
-            {
-                File.Delete(imageName);
-            }
+            DependencyService.Get<IFileService>().DeleteFile(imageName);
         }
 
-        public static ImageList GetImages(string folderName)
+        public static ImageList GetTrashImages()
+        {
+            return DependencyService.Get<IFileService>().GetTrashImages();
+        }
+
+        public static ImageList GetUnsortedImages()
         {            
-            ImageList imageListTmp = DependencyService.Get<IFileService>().GetImages(folderName);
-
-            string newdirectory = Path.Combine(FileSystem.CacheDirectory, folderName);
-
-            ImageList imageList = new ImageList();
-            if (Directory.Exists(newdirectory))
-            {
-                imageList.Photos = Directory.GetFiles(newdirectory).ToList<string>();
-            }
-            return imageList;
-
+            return DependencyService.Get<IFileService>().GetUnsortedImages();
+        }
+        public static ImageList GetSortedImages(string folderName)
+        {
+            return DependencyService.Get<IFileService>().GetSortedImages(folderName);
         }
 
         public static List<DestinationFolder> GetFolders()
         {
-            List<DestinationFolder> _folders = new List<DestinationFolder>();
-
-            var cacheDir = FileSystem.CacheDirectory;
-
-            string[] _directories = Directory.GetDirectories(cacheDir);
-
-            foreach (string _directory in _directories)
-            {
-                if (!",temp,trash,".Contains(Path.GetFileNameWithoutExtension(_directory).ToLower()))
-                {
-                    if (_directory != cacheDir)
-                    {
-                        _folders.Add(new DestinationFolder()
-                        {
-                            Name = Path.GetFileNameWithoutExtension(_directory),
-                            FolderType = FolderType.Images
-                        });
-                    }
-                }
-            }
-            return _folders;
+            return DependencyService.Get<IFileService>().GetFolders();
         }
     }
 }

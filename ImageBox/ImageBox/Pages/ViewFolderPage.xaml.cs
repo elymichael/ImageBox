@@ -51,7 +51,7 @@
                     foldertitle.Text = FolderName;                    
                     flexLayout.Children.Clear();
 
-                    ImageList imageList = FileManager.GetImages(FolderName);
+                    ImageList imageList = FileManager.GetSortedImages(FolderName);
 
                     rowPosition = 0;
                     colPosition = 0;

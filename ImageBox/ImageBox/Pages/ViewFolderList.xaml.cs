@@ -16,7 +16,7 @@
 
             BindingContext = this;
 
-            loadDirectory();
+            LoadDirectory();
         }
 
         ObservableCollection<DestinationFolder> _destinationFolder = new ObservableCollection<DestinationFolder>();
@@ -24,7 +24,7 @@
 
         public event EventHandler<EventArgs> OperationCompleted;
 
-        private void loadDirectory()
+        private void LoadDirectory()
         {
             ImageDestinationDisplay.ItemsSource = _destinationFolder;
             _destinationFolder.Clear();
@@ -32,7 +32,7 @@
             List<DestinationFolder> folders = FileManager.GetFolders();
             foreach (DestinationFolder df in folders)
             {
-                df.Images = FileManager.GetImages(df.Name);
+                df.Images = FileManager.GetSortedImages(df.Name);
                 _destinationFolder.Add(df);
             }
             badgeTitle.Text = folders.Count.ToString();
@@ -61,7 +61,7 @@
             if (result != null)
             {
                 FileManager.CreateFolder(result);
-                loadDirectory();
+                LoadDirectory();
             }            
         }
 
@@ -77,7 +77,7 @@
         private void ViewFolderPage_OperationCompleted(object sender, EventArgs e)
         {
             (sender as ViewFolderPage).OperationCompleted -= ViewFolderPage_OperationCompleted;
-            loadDirectory();
+            LoadDirectory();
         }
     }
 }
