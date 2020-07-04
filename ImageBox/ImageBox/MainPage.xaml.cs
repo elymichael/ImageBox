@@ -138,7 +138,7 @@
         {
             if (e.Direction == SwipeDirection.Up)
             {
-                FileManager.MoveFile("trash", UnsortedImages[pointer].ImagePath);
+                FileManager.MoveFileToTrash(UnsortedImages[pointer].ImagePath);
                 UnsortedImages.RemoveAt(pointer);
                 if (pointer >= (UnsortedImages.Count - 1))
                 {

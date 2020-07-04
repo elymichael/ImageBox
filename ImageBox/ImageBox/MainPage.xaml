@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             xmlns:controls="clr-namespace:ImageBox.Views"                  
+             xmlns:controls="clr-namespace:ImageBox.Views"   
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="ImageBox.MainPage" BackgroundColor="Black">
 
     <StackLayout Spacing="10" Padding="10">
@@ -31,6 +32,14 @@
             </StackLayout>
             <Label x:Name="txtPhotoTotal" Text="" TextColor="White" HorizontalOptions="Center" FontSize="Small" />
         </StackLayout>
+        <!--<ff:CachedImage x:Name="imgCurrent" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFit" Source="Button" HeightRequest="250" WidthRequest="250">
+            <ff:CachedImage.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Left"  Swiped="SwipeGestureRecognizer_SwipedLeft" />
+                <SwipeGestureRecognizer Direction="Right" Swiped="SwipeGestureRecognizer_SwipedRight"/>
+                <SwipeGestureRecognizer Direction="Up" Swiped="SwipeGestureRecognizer_SwipedUp"/>
+                <SwipeGestureRecognizer Direction="Down" Swiped="SwipeGestureRecognizer_Swiped"/>
+            </ff:CachedImage.GestureRecognizers>
+        </ff:CachedImage>-->
         <Image x:Name="imgCurrent" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFit" Source="Button" HeightRequest="250" WidthRequest="250">
             <Image.GestureRecognizers>
                 <SwipeGestureRecognizer Direction="Left"  Swiped="SwipeGestureRecognizer_SwipedLeft" />

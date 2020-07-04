@@ -19,9 +19,8 @@
             LoadDirectory();
         }
 
-        ObservableCollection<DestinationFolder> _destinationFolder = new ObservableCollection<DestinationFolder>();
-        ObservableCollection<DestinationFolder> ImagesDestinationFolder { get { return _destinationFolder; } }
-
+        private readonly ObservableCollection<DestinationFolder> _destinationFolder = new ObservableCollection<DestinationFolder>();
+        
         public event EventHandler<EventArgs> OperationCompleted;
 
         private void LoadDirectory()
@@ -65,19 +64,19 @@
             }            
         }
 
-        async void OnTapGestureRecognizerFolderTapped(object sender, EventArgs args)
-        {
-            string folderName = ((StackLayout)sender).AutomationId;
-
-            var viewFolderPage = new ViewFolderPage(folderName);
-            viewFolderPage.OperationCompleted += ViewFolderPage_OperationCompleted;
-            await Navigation.PushModalAsync(viewFolderPage, true);
-        }
-
         private void ViewFolderPage_OperationCompleted(object sender, EventArgs e)
         {
             (sender as ViewFolderPage).OperationCompleted -= ViewFolderPage_OperationCompleted;
             LoadDirectory();
+        }
+
+        private async void ImageDestinationDisplay_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            string folderName = ((DestinationFolder)e.Item).Name;
+
+            var viewFolderPage = new ViewFolderPage(folderName);
+            viewFolderPage.OperationCompleted += ViewFolderPage_OperationCompleted;
+            await Navigation.PushModalAsync(viewFolderPage, true);
         }
     }
 }

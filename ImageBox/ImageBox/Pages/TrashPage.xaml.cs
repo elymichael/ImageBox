@@ -21,7 +21,7 @@
             BindingContext = this;
 
             LoadBitmapCollection();
-        }
+        }        
 
         private int rowPosition = 0;
         private int colPosition = 0;
@@ -235,7 +235,7 @@
             {
                 foreach (ImageInfo _image in listImages)
                 {
-                    FileManager.MoveFile("temp", _image.ImagePath);
+                    FileManager.RestoreFile(_image.ImagePath);
                 }
             }
 
@@ -287,6 +287,6 @@
             });
 
             MainLayout.Children.Add(stackLayout);
-        }
+        }        
     }
 }

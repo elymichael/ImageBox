@@ -10,6 +10,7 @@ using Android;
 using Android.Support.V4.Content;
 using Android.Support.V4.App;
 using Android.Content;
+using FFImageLoading.Forms.Platform;
 
 namespace ImageBox.Droid
 {
@@ -25,6 +26,7 @@ namespace ImageBox.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            CachedImageRenderer.Init(true);
 
             LoadApplication(new App());
             App.ParentWindow = this;

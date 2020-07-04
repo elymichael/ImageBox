@@ -25,21 +25,14 @@
                 </Label>
             </StackLayout>
             <StackLayout Padding="20">
-                <ListView x:Name="ImageDestinationDisplay" ItemsSource="{Binding ImagesDestinationFolder}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <ListView x:Name="ImageDestinationDisplay" ItemsSource="{Binding ImagesDestinationFolder}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" ItemTapped="ImageDestinationDisplay_ItemTapped">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
                                     <StackLayout Orientation="Horizontal" AutomationId="{Binding Name}">
-                                        <StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
-                                            <Label Text="{Binding Name}" TextColor="White" FontSize="Medium"></Label>
-                                        </StackLayout>
-                                        <StackLayout HorizontalOptions="End">
-                                            <Label Text="{Binding Quantity}" TextColor="Gray"></Label>
-                                        </StackLayout>
-                                        <StackLayout.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="OnTapGestureRecognizerFolderTapped" />
-                                        </StackLayout.GestureRecognizers>
+                                        <Label  HorizontalOptions="StartAndExpand" Text="{Binding Name}" TextColor="White" FontSize="Medium"></Label>
+                                        <Label HorizontalOptions="End" Text="{Binding Quantity}" TextColor="Gray"></Label>
                                     </StackLayout>
                                 </ViewCell.View>
                             </ViewCell>

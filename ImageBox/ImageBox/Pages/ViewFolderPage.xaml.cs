@@ -4,6 +4,7 @@
     using System.Windows.Input;
     using Xamarin.Forms;
     using Xamarin.Forms.Xaml;
+    using FFImageLoading.Forms;
 
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewFolderPage : ContentPage
@@ -78,7 +79,7 @@
 
         private void AddImage(string filepath)
         {
-            Image image = new Image
+            CachedImage image = new CachedImage
             {
                 Source = ImageSource.FromFile(filepath),
                 HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -88,6 +89,17 @@
                 Aspect = Aspect.Fill,
                 AutomationId = filepath
             };
+
+            //Image image = new Image
+            //{
+            //    Source = ImageSource.FromFile(filepath),
+            //    HorizontalOptions = LayoutOptions.FillAndExpand,
+            //    VerticalOptions = LayoutOptions.FillAndExpand,
+            //    HeightRequest = 120,
+            //    WidthRequest = 120,
+            //    Aspect = Aspect.Fill,
+            //    AutomationId = filepath
+            //};
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.NumberOfTapsRequired = 2;

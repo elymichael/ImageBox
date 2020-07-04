@@ -9,22 +9,22 @@
         {
             DependencyService.Get<IFileService>().CreateFolder(folderName);
         }
-
         public static void MoveFile(string folderName, string imageName)
         {
             DependencyService.Get<IFileService>().MoveFile(folderName, imageName);
         }
-
+        public static void MoveFileToTrash(string imageName)
+        {
+            DependencyService.Get<IFileService>().MoveFileToTrash(imageName);
+        }
         public static void DeleteFile(string imageName)
         {
             DependencyService.Get<IFileService>().DeleteFile(imageName);
         }
-
         public static ImageList GetTrashImages()
         {
             return DependencyService.Get<IFileService>().GetTrashImages();
         }
-
         public static ImageList GetUnsortedImages()
         {            
             return DependencyService.Get<IFileService>().GetUnsortedImages();
@@ -33,10 +33,14 @@
         {
             return DependencyService.Get<IFileService>().GetSortedImages(folderName);
         }
-
         public static List<DestinationFolder> GetFolders()
         {
             return DependencyService.Get<IFileService>().GetFolders();
+        }
+        public static void RestoreFile(string imageName)
+        {
+            string destinationFolder = string.Empty;
+            DependencyService.Get<IFileService>().RestoreFile(destinationFolder, imageName);
         }
     }
 }

@@ -35,12 +35,6 @@ namespace ImageBox.Droid
                 availableSpaceBytes = stat.AvailableBlocksLong * stat.BlockSizeLong;
                 freeSpaceBytes = stat.FreeBlocksLong * stat.BlockSizeLong;
             }
-            else
-            {
-                totalSpaceBytes = (long)stat.BlockCount * (long)stat.BlockSize;
-                availableSpaceBytes = (long)stat.AvailableBlocks * (long)stat.BlockSize;
-                freeSpaceBytes = (long)stat.FreeBlocks * (long)stat.BlockSize;
-            }
             storage.TotalSpace = totalSpaceBytes;
             storage.AvailableSpace = availableSpaceBytes;
             storage.FreeSpace = freeSpaceBytes;
