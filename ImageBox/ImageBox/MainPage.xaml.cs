@@ -40,6 +40,8 @@
             try
             {
                 UnsortedImages.Clear();
+                if(pointer == -1) { pointer = 0; }
+
                 ImageList imageList = FileManager.GetUnsortedImages();
 
                 // Create an Image object for each bitmap
@@ -100,54 +102,73 @@
 
             LoadBitmapCollection();
         }
-        void SwipeGestureRecognizer_SwipedRight(object sender, SwipedEventArgs e)
+        private async void SwipeGestureRecognizer_SwipedRight(object sender, SwipedEventArgs e)
         {
-            if (e.Direction == SwipeDirection.Right)
+            try
             {
-                if (pointer > 0)
+                if (e.Direction == SwipeDirection.Right)
                 {
-                    pointer--;
-                }
-                else
-                {
-                    pointer = (UnsortedImages.Count - 1);
-                }
+                    if (pointer > 0)
+                    {
+                        pointer--;
+                    }
+                    else
+                    {
+                        pointer = (UnsortedImages.Count - 1);
+                    }
 
-                SetImages();
+                    SetImages();
+                }
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "An error has ocurred: " + ex.Message, "OK");
             }
         }
-
-        void SwipeGestureRecognizer_SwipedLeft(object sender, SwipedEventArgs e)
+        private async void SwipeGestureRecognizer_SwipedLeft(object sender, SwipedEventArgs e)
         {
-            if (e.Direction == SwipeDirection.Left)
+            try
             {
-                if (pointer < (UnsortedImages.Count - 1))
+                if (e.Direction == SwipeDirection.Left)
                 {
-                    pointer++;
+                    if (pointer < (UnsortedImages.Count - 1))
+                    {
+                        pointer++;
+                    }
+                    else
+                    {
+                        pointer = 0;
+                    }
+                    SetImages();
                 }
-                else
-                {
-                    pointer = 0;
-                }
-                SetImages();
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "An error has ocurred: " + ex.Message, "OK");
             }
         }
-
-        void SwipeGestureRecognizer_SwipedUp(object sender, SwipedEventArgs e)
+        private async void SwipeGestureRecognizer_SwipedUp(object sender, SwipedEventArgs e)
         {
-            if (e.Direction == SwipeDirection.Up)
+            try
             {
-                FileManager.MoveFileToTrash(UnsortedImages[pointer].ImagePath);
-                UnsortedImages.RemoveAt(pointer);
-                if (pointer >= (UnsortedImages.Count - 1))
+                if (e.Direction == SwipeDirection.Up)
                 {
-                    pointer--;
+                    FileManager.MoveFileToTrash(UnsortedImages[pointer].ImagePath);
+                    UnsortedImages.RemoveAt(pointer);
+                    if (pointer >= (UnsortedImages.Count - 1))
+                    {
+                        pointer--;
+                    }
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        badgeTrash.Text = FileManager.GetTrashImages().Photos.Count.ToString();
+                    });
+                    SetImages();
                 }
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    badgeTrash.Text = FileManager.GetTrashImages().Photos.Count.ToString();
-                });
-                SetImages();
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "An error has ocurred: " + ex.Message, "OK");
             }
         }
         void SwipeGestureRecognizer_Swiped(object sender, SwipedEventArgs e)
@@ -167,12 +188,15 @@
 
         private void SetImages()
         {
-            string imagePath = FileManager.GetCompressedImage(UnsortedImages[pointer].ImagePath, 250, 250);
-            Device.BeginInvokeOnMainThread(() =>
+            if (UnsortedImages.Count > pointer)
             {
-                txtPhotoTotal.Text = string.Format("{0} of {1}", (pointer + 1), UnsortedImages.Count);
-                imgCurrent.Source = ImageSource.FromFile(imagePath);                                
-            });
+                string imagePath = FileManager.GetCompressedImage(UnsortedImages[pointer].ImagePath, 250, 250);
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    txtPhotoTotal.Text = string.Format("{0} of {1}", (pointer + 1), UnsortedImages.Count);
+                    imgCurrent.Source = ImageSource.FromFile(imagePath);
+                });
+            }
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -188,15 +212,22 @@
             OnRefreshPage();
         }
 
-        void MoveImage(string folderName)
+        async void MoveImage(string folderName)
         {
-            FileManager.MoveFile(folderName, UnsortedImages[pointer].ImagePath);
-            UnsortedImages.RemoveAt(pointer);
-            if (pointer >= (UnsortedImages.Count - 1))
+            try
             {
-                pointer--;
+                FileManager.MoveFile(folderName, UnsortedImages[pointer].ImagePath);
+                UnsortedImages.RemoveAt(pointer);
+                if (pointer >= (UnsortedImages.Count - 1))
+                {
+                    pointer--;
+                }
+                SetImages();
             }
-            SetImages();
-        }        
+            catch(Exception ex)
+            {
+                await DisplayAlert("Error", "An error has ocurred: " + ex.Message, "OK");
+            }                
+        }
     }
 }

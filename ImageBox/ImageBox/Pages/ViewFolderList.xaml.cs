@@ -27,24 +27,31 @@
         private bool _isPageOpen = false;
         private async void LoadDirectory()
         {
-            ImageDestinationDisplay.ItemsSource = _destinationFolder;
-            await Task.Run(() =>
+            try
             {
-                _destinationFolder.Clear();
-
-                List<DestinationFolder> folders = FileManager.GetFolders();
-                folders.Sort();
-
-                foreach (DestinationFolder df in folders)
+                ImageDestinationDisplay.ItemsSource = _destinationFolder;
+                await Task.Run(async () =>
                 {
-                    df.Images = FileManager.GetSortedImages(df.Name);
-                    _destinationFolder.Add(df);
-                }
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    badgeTitle.Text = folders.Count.ToString();
+                    _destinationFolder.Clear();
+
+                    List<DestinationFolder> folders = await FileManager.GetFolders();
+                    folders.Sort();
+
+                    foreach (DestinationFolder df in folders)
+                    {
+                        df.Images = FileManager.GetSortedImages(df.Name);
+                        _destinationFolder.Add(df);
+                    }
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        badgeTitle.Text = folders.Count.ToString();
+                    });
                 });
-            });
+            }
+            catch(Exception ex)
+            {
+                await DisplayAlert("Error", "An error has ocurred: " + ex.Message, "OK");
+            }
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
@@ -65,11 +72,18 @@
 
         private async void OnAddButtonClicked()
         {
-            string result = await App.Current.MainPage.DisplayPromptAsync("New Folder", "Add your folder name");
-            if (result != null)
+            try
             {
-                FileManager.CreateFolder(result);
-                LoadDirectory();
+                string result = await App.Current.MainPage.DisplayPromptAsync("New Folder", "Add your folder name");
+                if (result != null)
+                {
+                    FileManager.CreateFolder(result);
+                    LoadDirectory();
+                }
+            }
+            catch(Exception ex)
+            {
+                await DisplayAlert("Error", "An error has ocurred: " + ex.Message, "OK");
             }
         }
 
@@ -81,17 +95,24 @@
         }
 
         private async void ImageDestinationDisplay_ItemTapped(object sender, ItemTappedEventArgs e)
-        {            
-            if (e.Item == null) return;
-            if (_isPageOpen) return;
+        {
+            try
+            {
+                if (e.Item == null) return;
+                if (_isPageOpen) return;
 
-            _isPageOpen = true;
+                _isPageOpen = true;
 
-            string folderName = ((DestinationFolder)e.Item).Name;
+                string folderName = ((DestinationFolder)e.Item).Name;
 
-            var viewFolderPage = new ViewFolderPage(folderName);
-            viewFolderPage.OperationCompleted += ViewFolderPage_OperationCompleted;
-            await Navigation.PushModalAsync(viewFolderPage, true);
+                var viewFolderPage = new ViewFolderPage(folderName);
+                viewFolderPage.OperationCompleted += ViewFolderPage_OperationCompleted;
+                await Navigation.PushModalAsync(viewFolderPage, true);
+            }
+            catch(Exception ex)
+            {
+                await DisplayAlert("Error", "An error has ocurred: " + ex.Message, "OK");
+            }
         }        
     }
 }

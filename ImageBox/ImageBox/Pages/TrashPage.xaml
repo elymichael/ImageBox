@@ -30,9 +30,6 @@
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ScrollView>
-                <ActivityIndicator x:Name="activityIndicator"
-                           IsRunning="{Binding ActivityIndicatorIsRunning}" IsVisible="{Binding ActivityIndicatorIsRunning}"
-                           VerticalOptions="Center" />
             </StackLayout>
             <Button x:Name="btnRecover" Text="{Binding RecoverText}" Padding="0" Clicked="btnRecover_Clicked" />
             <Button x:Name="btnDelete" Text="{Binding DeleteText}" Padding="0" BackgroundColor="Red" Clicked="btnDelete_Clicked"/>

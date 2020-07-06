@@ -13,7 +13,7 @@
         {
             InitializeComponent();
 
-            this.LoadDirectory();
+            LoadDirectory();
         }
 
         public static List<DestinationFolder> _destinationImageFolders = new List<DestinationFolder>();
@@ -27,38 +27,41 @@
 
         public OnMoveFileDelegate OnMoveFileClicked { get; set; }
 
-        private void LoadDirectory()
+        private async void LoadDirectory()
         {
             try
             {
-                folderLayout.Children.Clear();
-
-                DestinationImageFolders = FileManager.GetFolders();
-                DestinationImageFolders.Sort();
-                foreach (DestinationFolder df in DestinationImageFolders)
+                Device.BeginInvokeOnMainThread(async () =>
                 {
-                    FolderStackLayout stackLayout = new FolderStackLayout();
-                    stackLayout.AddLabels(df.Name, Color.White, 0xf063);
+                    folderLayout.Children.Clear();
 
-                    var tapGestureRecognizer = new TapGestureRecognizer();
-                    tapGestureRecognizer.NumberOfTapsRequired = 1;
-                    tapGestureRecognizer.Tapped += (s, e) =>
+                    DestinationImageFolders = await FileManager.GetFolders();
+                    DestinationImageFolders.Sort();
+                    foreach (DestinationFolder df in DestinationImageFolders)
                     {
-                        string folderName = ((StackLayout)s).AutomationId;
-                        if (OnMoveFileClicked != null)
-                            OnMoveFileClicked(folderName);
-                    };
-                    stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+                        FolderStackLayout stackLayout = new FolderStackLayout();
+                        stackLayout.AddLabels(df.Name, Color.White, 0xf063);
 
-                    folderLayout.Children.Add(stackLayout);
-                }
-                CreateNewButtom();
+                        var tapGestureRecognizer = new TapGestureRecognizer();
+                        tapGestureRecognizer.NumberOfTapsRequired = 1;
+                        tapGestureRecognizer.Tapped += (s, e) =>
+                        {
+                            string folderName = ((StackLayout)s).AutomationId;
+                            if (OnMoveFileClicked != null)
+                                OnMoveFileClicked(folderName);
+                        };
+                        stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+
+                        folderLayout.Children.Add(stackLayout);
+                    }
+                    CreateNewButtom();
+                });
             }
             catch (UnauthorizedAccessException)
             {
                 if (App.Current.MainPage != null)
                 {
-                    App.Current.MainPage.DisplayAlert("Access Permissions", "Request access permission to storage.", "Ok");
+                    await App.Current.MainPage.DisplayAlert("Access Permissions", "Request access permission to storage.", "Ok");
                     FileManager.CheckPermission();
                 }
             }
@@ -66,7 +69,7 @@
             {
                 if (App.Current.MainPage != null)
                 {
-                    App.Current.MainPage.DisplayAlert("Error", "An unexpected error was found: " + ex.Message, "Ok");
+                    await App.Current.MainPage.DisplayAlert("Error", "An unexpected error was found: " + ex.Message, "Ok");
                 }
             }
         }
@@ -86,14 +89,24 @@
 
         async void OnTapGestureRecognizerNewButtonTapped(object sender, EventArgs args)
         {
-            string result = await App.Current.MainPage.DisplayPromptAsync("New Folder", "Add your folder name");
-            if (result != null)
+            try
             {
-                FileManager.CreateFolder(result);
-                LoadDirectory();
+                string result = await App.Current.MainPage.DisplayPromptAsync("New Folder", "Add your folder name");
+                if (result != null)
+                {
+                    FileManager.CreateFolder(result);
+                    LoadDirectory();
 
-                if (OnMoveFileClicked != null)
-                    OnMoveFileClicked(result);
+                    if (OnMoveFileClicked != null)
+                        OnMoveFileClicked(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                if (App.Current.MainPage != null)
+                {
+                    await App.Current.MainPage.DisplayAlert("Error", "An unexpected error was found: " + ex.Message, "Ok");
+                }
             }
         }
     }

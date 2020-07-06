@@ -44,27 +44,30 @@
 
         private int rowPosition = 0;
         private int colPosition = 0;
-        void LoadBitmapCollection()
+        async void LoadBitmapCollection()
         {
             try
             {
                 if (!string.IsNullOrEmpty(FolderName))
-                {
-                    Device.BeginInvokeOnMainThread(() =>
+                {                    
+                    await Task.Run(async () =>
                     {
-                        foldertitle.Text = FolderName;
-                        flexLayout.Children.Clear();
-                    });                    
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            foldertitle.Text = FolderName;
+                            flexLayout.Children.Clear();
+                        });
 
-                    ImageList imageList = FileManager.GetSortedImages(FolderName);
+                        ImageList imageList = FileManager.GetSortedImages(FolderName);
 
-                    rowPosition = 0;
-                    colPosition = 0;
-                    lblTotalImages.Text = string.Format("Photo(s): {0}", imageList.Photos.Count);
-                    foreach (string filepath in imageList.Photos)
-                    {
-                        AddImage(filepath);
-                    }
+                        rowPosition = 0;
+                        colPosition = 0;
+                        lblTotalImages.Text = string.Format("Photo(s): {0}", imageList.Photos.Count);
+                        foreach (string filepath in imageList.Photos)
+                        {
+                            await AddImage(filepath);
+                        }
+                    });
                 }
             }
             catch (Exception ex)
@@ -76,20 +79,18 @@
             }
             finally
             {
-                activityIndicator.IsRunning = false;
-                activityIndicator.IsVisible = false;
+                
             }
         }
 
-        private void AddImage(string filepath)
+        private async Task AddImage(string filepath)
         {
-            string imagePath = FileManager.GetCompressedImage(filepath, 150, 150);
+            string imagePath = await Task<string>.Factory.StartNew(() => FileManager.GetCompressedImage(filepath, 150, 150));
 
-            Device.BeginInvokeOnMainThread(() =>
+            Device.BeginInvokeOnMainThread(async () =>
             {
                 CachedImage image = new CachedImage
                 {
-                    Source = ImageSource.FromFile(imagePath),
                     HorizontalOptions = LayoutOptions.FillAndExpand,
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HeightRequest = 120,
@@ -101,6 +102,7 @@
                 };
                 image.DownsampleToViewSize = true;
                 image.CacheDuration = new TimeSpan(5, 0, 0, 0);
+                image.Source = await Task<ImageSource>.Factory.StartNew(() => ImageSource.FromFile(imagePath));
 
                 var tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.NumberOfTapsRequired = 2;
@@ -109,7 +111,7 @@
 
                 Grid.SetColumn(image, colPosition);
                 Grid.SetRow(image, rowPosition);
-                
+
                 flexLayout.Children.Add(image);
 
                 colPosition++;
@@ -121,26 +123,33 @@
             });
         }
 
-        async void OnTapGestureRecognizerFolderTapped(object sender, EventArgs args)
+        private async void OnTapGestureRecognizerFolderTapped(object sender, EventArgs args)
         {
-            Image image = (Image)sender;
-            image.Opacity = 0.2;
-
-            var options = new[] { "Unsort Photo", "Move to trash" };
-            string action = await DisplayActionSheet("Pick a choice...", "Cancel", null, options);
-
-            switch (action)
+            try
             {
-                case "Move to trash":
-                    FileManager.MoveFileToTrash(image.AutomationId);
-                    LoadBitmapCollection();
-                    break;
-                case "Unsort Photo":
-                    FileManager.RestoreFile(image.AutomationId);
-                    LoadBitmapCollection();
-                    break;
-                default:
-                    break;
+                CachedImage image = (CachedImage)sender;
+                image.Opacity = 0.2;
+
+                var options = new[] { "Unsort Photo", "Move to trash", "View Image" };
+                string action = await DisplayActionSheet("Pick a choice...", "Cancel", null, options);
+
+                switch (action)
+                {
+                    case "Move to trash":
+                        FileManager.MoveFileToTrash(image.AutomationId);
+                        LoadBitmapCollection();
+                        break;
+                    case "Unsort Photo":
+                        FileManager.RestoreFile(image.AutomationId);
+                        LoadBitmapCollection();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch(Exception ex)
+            {
+                await DisplayAlert("Error", "An error has ocurred: " + ex.Message, "OK");
             }
         }
 

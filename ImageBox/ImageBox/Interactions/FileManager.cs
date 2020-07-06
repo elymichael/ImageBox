@@ -2,13 +2,16 @@
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
     using Xamarin.Essentials;
     using Xamarin.Forms;
 
     public static class FileManager
     {
-        public static void CreateFolder(string folderName)
+        public async static void CreateFolder(string folderName)
         {
+            await App.Database.AddFolderItem(folderName);
             DependencyService.Get<IFileService>().CreateFolder(folderName);
         }
         public static void MoveFile(string folderName, string imageName)
@@ -17,13 +20,21 @@
         }
         public async static void MoveFileToTrash(string imageName)
         {
-            await App.Database.AddItem(new ImageInfo(imageName));
+            await App.Database.AddImageItem(new ImageInfo(imageName));
             DependencyService.Get<IFileService>().MoveFileToTrash(imageName);
         }
         public async static void DeleteFile(string imageName)
         {
-            await App.Database.DeleteItem(new ImageInfo(imageName));
+            await App.Database.DeleteImageItem(new ImageInfo(imageName));
             DependencyService.Get<IFileService>().DeleteFile(imageName);
+
+            // Delete Cache Image file.
+            string _directoryName = Path.Combine(FileSystem.CacheDirectory, "Cache");
+            string _filename = Path.Combine(_directoryName, Path.GetFileName(imageName));
+            if (File.Exists(_filename))
+            {
+                File.Delete(_filename);
+            }
         }
         public static ImageList GetTrashImages()
         {
@@ -37,14 +48,17 @@
         {
             return DependencyService.Get<IFileService>().GetSortedImages(folderName);
         }
-        public static List<DestinationFolder> GetFolders()
+        public async static Task<List<DestinationFolder>> GetFolders()
         {
-            return DependencyService.Get<IFileService>().GetFolders();
+            List<DestinationFolder> folders = DependencyService.Get<IFileService>().GetFolders();
+            List<FolderInfo> folderList = await App.Database.GetFolders();
+
+            return folders.Where(x => folderList.Exists(y => y.Name == x.Name)).ToList();            
         }
         public async static void RestoreFile(string imageName)
         {
             ImageInfo imageInfo = new ImageInfo(imageName);
-            imageInfo = await App.Database.Get(imageInfo.Name);
+            imageInfo = await App.Database.GetImage(imageInfo.Name);
 
             string destinationFolder = Path.Combine(FileSystem.AppDataDirectory, "Images");
             if (imageInfo != null)
@@ -53,7 +67,6 @@
             }
             DependencyService.Get<IFileService>().RestoreFile(destinationFolder, imageName);
         }
-
         public static string GetCompressedImage(string imageName, float width, float height)
         {
             string _directoryName = Path.Combine(FileSystem.CacheDirectory, "Cache");
@@ -61,7 +74,7 @@
             if (!File.Exists(_filename))
             {
                 byte[] byteData = DependencyService.Get<IMediaService>().ResizeImage(imageName, width, height);
-                if(byteData != null)
+                if (byteData != null)
                 {
                     if (!Directory.Exists(_directoryName))
                     {
@@ -70,7 +83,6 @@
                     File.WriteAllBytes(_filename, byteData);
                 }
             }
-
             return _filename;
         }
 

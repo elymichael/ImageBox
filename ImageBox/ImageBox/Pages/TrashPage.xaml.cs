@@ -23,7 +23,7 @@
             BindingContext = this;
 
             LoadBitmapCollection();
-        }        
+        }
 
         private int rowPosition = 0;
         private int colPosition = 0;
@@ -75,40 +75,44 @@
         }
         #endregion
 
-        void LoadBitmapCollection()
+        async void LoadBitmapCollection()
         {
             setButtonBindings(Selected);
 
             try
             {
                 Selected = 0;
-                TrashImages.Clear();
 
-                Device.BeginInvokeOnMainThread(() =>
+                await Task.Run(async () =>
                 {
-                    flexLayout.Children.Clear();
-                });
+                    TrashImages.Clear();
 
-                ImageList imageList = FileManager.GetTrashImages();
-
-                foreach (string filepath in imageList.Photos)
-                {
-                    TrashImages.Add(new ImageInfo(filepath));
-                }
-
-                rowPosition = 0;
-                colPosition = 0;
-                if (TrashImages.Count > 0)
-                {
-                    foreach (ImageInfo _image in TrashImages)
+                    Device.BeginInvokeOnMainThread(() =>
                     {
-                        AddImage(_image.ImagePath);
+                        flexLayout.Children.Clear();
+                    });
+
+                    ImageList imageList = FileManager.GetTrashImages();
+
+                    foreach (string filepath in imageList.Photos)
+                    {
+                        TrashImages.Add(new ImageInfo(filepath));
                     }
-                }
-                else
-                {
-                    AddEmptyTrashMessage("Empty Trash...", 18);
-                }
+
+                    rowPosition = 0;
+                    colPosition = 0;
+                    if (TrashImages.Count > 0)
+                    {
+                        foreach (ImageInfo _image in TrashImages)
+                        {
+                            await AddImage(_image.ImagePath);
+                        }
+                    }
+                    else
+                    {
+                        AddEmptyTrashMessage("Empty Trash...", 18);
+                    }
+                });
             }
             catch (Exception ex)
             {
@@ -116,19 +120,17 @@
             }
             finally
             {
-                activityIndicator.IsRunning = false;
-                activityIndicator.IsVisible = false;
             }
         }
 
-        private void AddImage(string filepath)
+        private async Task AddImage(string filepath)
         {
-            string imagePath = FileManager.GetCompressedImage(filepath, 150, 150);
-            Device.BeginInvokeOnMainThread(() =>
+            string imagePath = await Task<string>.Factory.StartNew(() => FileManager.GetCompressedImage(filepath, 150, 150));
+
+            Device.BeginInvokeOnMainThread(async () =>
             {
                 CachedImage image = new CachedImage
                 {
-                    Source = ImageSource.FromFile(imagePath),
                     HorizontalOptions = LayoutOptions.FillAndExpand,
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HeightRequest = 120,
@@ -138,9 +140,10 @@
                     IsOpaque = true,
                     BackgroundColor = Color.Gray
                 };
-                
+
                 image.DownsampleToViewSize = true;
                 image.CacheDuration = new TimeSpan(5, 0, 0, 0);
+                image.Source = await Task<ImageSource>.Factory.StartNew(() => ImageSource.FromFile(imagePath));
 
                 var tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.NumberOfTapsRequired = 1;
@@ -207,54 +210,67 @@
 
         private async void btnDelete_Clicked(object sender, EventArgs e)
         {
-            List<ImageInfo> listImages = new List<ImageInfo>();
-            if (Selected >= 1)
+            try
             {
-                listImages = TrashImages.Where(x => x.Selected == true).ToList<ImageInfo>();
-            }
-            else
-            {
-                listImages = TrashImages.ToList<ImageInfo>();
-            }
+                List<ImageInfo> listImages = new List<ImageInfo>();
+                if (Selected >= 1)
+                {
+                    listImages = TrashImages.Where(x => x.Selected == true).ToList<ImageInfo>();
+                }
+                else
+                {
+                    listImages = TrashImages.ToList<ImageInfo>();
+                }
 
-            bool answer = await DeleteConfirmNotifications(listImages.Count);
-            if (answer)
-            {
-                foreach (ImageInfo _image in listImages)
-                {                    
-                    FileManager.DeleteFile(_image.ImagePath);
+                bool answer = await DeleteConfirmNotifications(listImages.Count);
+                if (answer)
+                {
+                    foreach (ImageInfo _image in listImages)
+                    {
+                        FileManager.DeleteFile(_image.ImagePath);
+                    }
+
+                    LoadBitmapCollection();
+
+                    ShowToastMessage("Photos deleted permanently!");
                 }
             }
-
-            LoadBitmapCollection();
-
-            ShowToastMessage("Photos deleted permanently!");
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "An error has ocurred: " + ex.Message, "OK");
+            }
         }
 
         private async void btnRecover_Clicked(object sender, EventArgs e)
         {
-            List<ImageInfo> listImages = new List<ImageInfo>();
-            if (Selected >= 1)
+            try
             {
-                listImages = TrashImages.Where(x => x.Selected == true).ToList<ImageInfo>();
-            }
-            else
-            {
-                listImages = TrashImages.ToList<ImageInfo>();
-            }
-
-            bool answer = await RecoverConfirmNotifications(listImages.Count);
-            if (answer)
-            {
-                foreach (ImageInfo _image in listImages)
+                List<ImageInfo> listImages = new List<ImageInfo>();
+                if (Selected >= 1)
                 {
-                    FileManager.RestoreFile(_image.ImagePath);
+                    listImages = TrashImages.Where(x => x.Selected == true).ToList<ImageInfo>();
+                }
+                else
+                {
+                    listImages = TrashImages.ToList<ImageInfo>();
+                }
+
+                bool answer = await RecoverConfirmNotifications(listImages.Count);
+                if (answer)
+                {
+                    foreach (ImageInfo _image in listImages)
+                    {
+                        FileManager.RestoreFile(_image.ImagePath);
+                    }
+                    LoadBitmapCollection();
+
+                    ShowToastMessage("Photos moved to unsorted!");
                 }
             }
-
-            LoadBitmapCollection();
-
-            ShowToastMessage("Photos moved to unsorted!");
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", "An error has ocurred: " + ex.Message, "OK");
+            }
         }
 
         private async Task<bool> DeleteConfirmNotifications(int total)
@@ -300,6 +316,6 @@
             });
 
             MainLayout.Children.Add(stackLayout);
-        }        
+        }
     }
 }
