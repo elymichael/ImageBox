@@ -107,8 +107,11 @@ namespace ImageBox.Droid
             {
                 if (!fi.Exists(x => x.Name.ToLower() == Path.GetFileNameWithoutExtension(_directory).ToLower()))
                 {
-                    _imageList.Photos.AddRange(Directory.EnumerateFiles(_directory, "*.*", SearchOption.TopDirectoryOnly)
-                        .Where(file => allowedExtensions.Any(file.ToLower().EndsWith)));
+                    if (!",.thumbnails,.gallery2".Contains(Path.GetFileNameWithoutExtension(_directory).ToLower()))
+                    {
+                        _imageList.Photos.AddRange(Directory.EnumerateFiles(_directory, "*.*", SearchOption.TopDirectoryOnly)
+                            .Where(file => allowedExtensions.Any(file.ToLower().EndsWith)));
+                    }
                 }
             }
             return _imageList;

@@ -53,7 +53,6 @@
         {
             List<FolderInfo> folderList = await App.Database.GetFolders();
             return DependencyService.Get<IFileService>().GetFolders(folderList);
-            //return folders.Where(x => folderList.Exists(y => y.Name.ToLower() == x.Name.ToLower())).ToList();            
         }
         public async static void RestoreFile(string imageName)
         {

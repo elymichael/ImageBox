@@ -17,12 +17,14 @@
         {
             InitializeComponent();
             string _directoryName = Path.Combine(FileSystem.CacheDirectory, "Cache");
-            string[] _files = Directory.GetFiles(_directoryName);
-            foreach(string _file in _files)
+            if (Directory.Exists(_directoryName))
             {
-                File.Delete(_file);
+                string[] _files = Directory.GetFiles(_directoryName);
+                foreach (string _file in _files)
+                {
+                    File.Delete(_file);
+                }
             }
-
             MainPage = new MainPage();
         }
 
@@ -49,7 +51,7 @@
             {
                 if (_myDatabase == null)
                 {
-                    
+
                     var databasePath = Path.Combine(FileSystem.AppDataDirectory, "ImageBox.db");
 
                     _myDatabase = new MyDatabase(databasePath);
