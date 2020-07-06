@@ -68,7 +68,7 @@ namespace ImageBox.Droid
             }
         }
 
-        public ImageList GetUnsortedImages()
+        public ImageList GetUnsortedImages(List<FolderInfo> fi)
         {
             string _directorySearch = string.Empty;
             var allowedExtensions = new[] { ".jpg", ".png", ".gif", ".jpeg" };
@@ -95,6 +95,21 @@ namespace ImageBox.Droid
             {
                 _imageList.Photos.AddRange(Directory.EnumerateFiles(_directorySearch, "*.*", SearchOption.AllDirectories)
                     .Where(file => allowedExtensions.Any(file.ToLower().EndsWith)));
+            }
+
+            _path = Environment.ExternalStorageDirectory.AbsolutePath;
+
+            _directorySearch = Path.Combine(_path, Environment.DirectoryPictures);
+
+            string[] _directories = Directory.GetDirectories(_directorySearch);
+
+            foreach (string _directory in _directories)
+            {
+                if (!fi.Exists(x => x.Name.ToLower() == Path.GetFileNameWithoutExtension(_directory).ToLower()))
+                {
+                    _imageList.Photos.AddRange(Directory.EnumerateFiles(_directory, "*.*", SearchOption.TopDirectoryOnly)
+                        .Where(file => allowedExtensions.Any(file.ToLower().EndsWith)));
+                }
             }
             return _imageList;
         }
@@ -135,7 +150,7 @@ namespace ImageBox.Droid
             return _imageList;
         }
 
-        public List<DestinationFolder> GetFolders()
+        public List<DestinationFolder> GetFolders(List<FolderInfo> fi)
         {
             List<DestinationFolder> _folders = new List<DestinationFolder>();
             string _path = Environment.ExternalStorageDirectory.AbsolutePath;
@@ -146,7 +161,7 @@ namespace ImageBox.Droid
 
             foreach (string _directory in _directories)
             {
-                if (!",temp,trash,".Contains(Path.GetFileNameWithoutExtension(_directory).ToLower()))
+                if (fi.Exists(x => x.Name.ToLower() == Path.GetFileNameWithoutExtension(_directory).ToLower()))
                 {
                     if (_directory != _path)
                     {

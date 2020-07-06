@@ -42,7 +42,7 @@
                 UnsortedImages.Clear();
                 if(pointer == -1) { pointer = 0; }
 
-                ImageList imageList = FileManager.GetUnsortedImages();
+                ImageList imageList = await FileManager.GetUnsortedImages();
 
                 // Create an Image object for each bitmap
                 foreach (string filepath in imageList.Photos)

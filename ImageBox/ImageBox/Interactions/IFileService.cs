@@ -8,10 +8,10 @@
         void MoveFile(string folderName, string imageName);
         void MoveFileToTrash(string imageName);
         void DeleteFile(string imageName);
-        ImageList GetUnsortedImages();
+        ImageList GetUnsortedImages(List<FolderInfo> fi);
         ImageList GetSortedImages(string folderName);
         ImageList GetTrashImages();
-        List<DestinationFolder> GetFolders();
+        List<DestinationFolder> GetFolders(List<FolderInfo> fi);
         void RestoreFile(string destinationFolder, string imageName);
     }
 }

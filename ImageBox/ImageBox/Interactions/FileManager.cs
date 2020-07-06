@@ -40,9 +40,10 @@
         {
             return DependencyService.Get<IFileService>().GetTrashImages();
         }
-        public static ImageList GetUnsortedImages()
+        public async static Task<ImageList> GetUnsortedImages()
         {
-            return DependencyService.Get<IFileService>().GetUnsortedImages();
+            List<FolderInfo> folderList = await App.Database.GetFolders();
+            return DependencyService.Get<IFileService>().GetUnsortedImages(folderList);
         }
         public static ImageList GetSortedImages(string folderName)
         {
@@ -50,10 +51,9 @@
         }
         public async static Task<List<DestinationFolder>> GetFolders()
         {
-            List<DestinationFolder> folders = DependencyService.Get<IFileService>().GetFolders();
             List<FolderInfo> folderList = await App.Database.GetFolders();
-
-            return folders.Where(x => folderList.Exists(y => y.Name == x.Name)).ToList();            
+            return DependencyService.Get<IFileService>().GetFolders(folderList);
+            //return folders.Where(x => folderList.Exists(y => y.Name.ToLower() == x.Name.ToLower())).ToList();            
         }
         public async static void RestoreFile(string imageName)
         {

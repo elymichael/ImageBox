@@ -76,9 +76,11 @@
             {
                 string result = await App.Current.MainPage.DisplayPromptAsync("New Folder", "Add your folder name");
                 if (result != null)
-                {
-                    FileManager.CreateFolder(result);
-                    LoadDirectory();
+                {                    
+                    await Task.Run(() => {
+                        FileManager.CreateFolder(result);
+                        LoadDirectory(); 
+                    });
                 }
             }
             catch(Exception ex)
@@ -87,11 +89,13 @@
             }
         }
 
-        private void ViewFolderPage_OperationCompleted(object sender, EventArgs e)
-        {
-            _isPageOpen = false;
+        private async void ViewFolderPage_OperationCompleted(object sender, EventArgs e)
+        {            
             (sender as ViewFolderPage).OperationCompleted -= ViewFolderPage_OperationCompleted;
-            LoadDirectory();
+            await Task.Run(() => {
+                _isPageOpen = false;
+                LoadDirectory(); 
+            });
         }
 
         private async void ImageDestinationDisplay_ItemTapped(object sender, ItemTappedEventArgs e)

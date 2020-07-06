@@ -21,7 +21,7 @@ namespace ImageBox.iOS
             throw new NotImplementedException();
         }
 
-        public List<DestinationFolder> GetFolders()
+        public List<DestinationFolder> GetFolders(List<FolderInfo> fi)
         {
             throw new NotImplementedException();
         }
@@ -36,7 +36,7 @@ namespace ImageBox.iOS
             throw new NotImplementedException();
         }
 
-        public ImageList GetUnsortedImages()
+        public ImageList GetUnsortedImages(List<FolderInfo> fi)
         {
             throw new NotImplementedException();
         }
