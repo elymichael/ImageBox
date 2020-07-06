@@ -52,9 +52,10 @@
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        foldertitle.Text = FolderName;                                            
-                    });
-                    flexLayout.Children.Clear();
+                        foldertitle.Text = FolderName;
+                        flexLayout.Children.Clear();
+                    });                    
+
                     ImageList imageList = FileManager.GetSortedImages(FolderName);
 
                     rowPosition = 0;
@@ -82,7 +83,7 @@
 
         private void AddImage(string filepath)
         {
-            string imagePath = FileManager.GetCompressedImage(filepath, 400, 400);
+            string imagePath = FileManager.GetCompressedImage(filepath, 150, 150);
 
             Device.BeginInvokeOnMainThread(() =>
             {
@@ -108,7 +109,7 @@
 
                 Grid.SetColumn(image, colPosition);
                 Grid.SetRow(image, rowPosition);
-
+                
                 flexLayout.Children.Add(image);
 
                 colPosition++;

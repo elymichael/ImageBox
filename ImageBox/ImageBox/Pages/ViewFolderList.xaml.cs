@@ -24,6 +24,7 @@
 
         public event EventHandler<EventArgs> OperationCompleted;
 
+        private bool _isPageOpen = false;
         private async void LoadDirectory()
         {
             ImageDestinationDisplay.ItemsSource = _destinationFolder;
@@ -74,17 +75,23 @@
 
         private void ViewFolderPage_OperationCompleted(object sender, EventArgs e)
         {
+            _isPageOpen = false;
             (sender as ViewFolderPage).OperationCompleted -= ViewFolderPage_OperationCompleted;
             LoadDirectory();
         }
 
         private async void ImageDestinationDisplay_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
+        {            
+            if (e.Item == null) return;
+            if (_isPageOpen) return;
+
+            _isPageOpen = true;
+
             string folderName = ((DestinationFolder)e.Item).Name;
 
             var viewFolderPage = new ViewFolderPage(folderName);
             viewFolderPage.OperationCompleted += ViewFolderPage_OperationCompleted;
             await Navigation.PushModalAsync(viewFolderPage, true);
-        }
+        }        
     }
 }

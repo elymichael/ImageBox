@@ -20,8 +20,9 @@
             await App.Database.AddItem(new ImageInfo(imageName));
             DependencyService.Get<IFileService>().MoveFileToTrash(imageName);
         }
-        public static void DeleteFile(string imageName)
+        public async static void DeleteFile(string imageName)
         {
+            await App.Database.DeleteItem(new ImageInfo(imageName));
             DependencyService.Get<IFileService>().DeleteFile(imageName);
         }
         public static ImageList GetTrashImages()
@@ -71,6 +72,14 @@
             }
 
             return _filename;
+        }
+
+        public static void CheckPermission()
+        {
+            if (DeviceInfo.Platform.ToString() == Device.Android)
+            {
+                DependencyService.Get<ICheckFilePermission>().CheckPermission();
+            }
         }
     }
 }

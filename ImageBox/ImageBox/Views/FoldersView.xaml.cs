@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using Xamarin.Essentials;
     using Xamarin.Forms;
     using Xamarin.Forms.Xaml;
 
@@ -17,8 +17,9 @@
         }
 
         public static List<DestinationFolder> _destinationImageFolders = new List<DestinationFolder>();
-        List<DestinationFolder> DestinationImageFolders { 
-            get => _destinationImageFolders;            
+        List<DestinationFolder> DestinationImageFolders
+        {
+            get => _destinationImageFolders;
             set => _destinationImageFolders = value;
         }
 
@@ -28,28 +29,46 @@
 
         private void LoadDirectory()
         {
-            folderLayout.Children.Clear();
-
-            DestinationImageFolders = FileManager.GetFolders();
-            DestinationImageFolders.Sort();
-            foreach (DestinationFolder df in DestinationImageFolders)
+            try
             {
-                FolderStackLayout stackLayout = new FolderStackLayout();
-                stackLayout.AddLabels(df.Name, Color.White, 0xf063);
-                
-                var tapGestureRecognizer = new TapGestureRecognizer();
-                tapGestureRecognizer.NumberOfTapsRequired = 1;
-                tapGestureRecognizer.Tapped += (s, e) =>
-                {
-                    string folderName = ((StackLayout)s).AutomationId;
-                    if (OnMoveFileClicked != null)
-                        OnMoveFileClicked(folderName);
-                };
-                stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+                folderLayout.Children.Clear();
 
-                folderLayout.Children.Add(stackLayout);
+                DestinationImageFolders = FileManager.GetFolders();
+                DestinationImageFolders.Sort();
+                foreach (DestinationFolder df in DestinationImageFolders)
+                {
+                    FolderStackLayout stackLayout = new FolderStackLayout();
+                    stackLayout.AddLabels(df.Name, Color.White, 0xf063);
+
+                    var tapGestureRecognizer = new TapGestureRecognizer();
+                    tapGestureRecognizer.NumberOfTapsRequired = 1;
+                    tapGestureRecognizer.Tapped += (s, e) =>
+                    {
+                        string folderName = ((StackLayout)s).AutomationId;
+                        if (OnMoveFileClicked != null)
+                            OnMoveFileClicked(folderName);
+                    };
+                    stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+
+                    folderLayout.Children.Add(stackLayout);
+                }
+                CreateNewButtom();
             }
-            CreateNewButtom();
+            catch (UnauthorizedAccessException)
+            {
+                if (App.Current.MainPage != null)
+                {
+                    App.Current.MainPage.DisplayAlert("Access Permissions", "Request access permission to storage.", "Ok");
+                    FileManager.CheckPermission();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (App.Current.MainPage != null)
+                {
+                    App.Current.MainPage.DisplayAlert("Error", "An unexpected error was found: " + ex.Message, "Ok");
+                }
+            }
         }
 
         private void CreateNewButtom()
@@ -59,7 +78,7 @@
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.NumberOfTapsRequired = 1;
-            tapGestureRecognizer.Tapped += OnTapGestureRecognizerNewButtonTapped;            
+            tapGestureRecognizer.Tapped += OnTapGestureRecognizerNewButtonTapped;
             stackLayout.GestureRecognizers.Add(tapGestureRecognizer);
 
             folderLayout.Children.Add(stackLayout);

@@ -19,6 +19,27 @@ namespace ImageBox.Droid
 {
     public class MediaService: IMediaService
     {
+        private int CalculateInSampleSize(BitmapFactory.Options options, float reqWidth, float reqHeight)
+        {
+            // Raw height and width of image
+            float height = options.OutHeight;
+            float width = options.OutWidth;
+            double inSampleSize = 1D;
+
+            if (height > reqHeight || width > reqWidth)
+            {
+                int halfHeight = (int)(height / 2);
+                int halfWidth = (int)(width / 2);
+
+                // Calculate a inSampleSize that is a power of 2 - the decoder will use a value that is a power of two anyway.
+                while ((halfHeight / inSampleSize) > reqHeight && (halfWidth / inSampleSize) > reqWidth)
+                {
+                    inSampleSize *= 2;
+                }
+            }
+
+            return (int)inSampleSize;
+        }
         public byte[] ResizeImage(string filename, float width, float height)
         {
             if (File.Exists(filename))
@@ -26,31 +47,19 @@ namespace ImageBox.Droid
                 byte[] imageData = File.ReadAllBytes(filename);
                 // Load the bitmap 
                 BitmapFactory.Options options = new BitmapFactory.Options();// Create object of bitmapfactory's option method for further option use
-                options.InPurgeable = true; // inPurgeable is used to free up memory while required
+                options.InJustDecodeBounds = true;
                 Bitmap originalImage = BitmapFactory.DecodeByteArray(imageData, 0, imageData.Length, options);
 
-                float newHeight = 0;
-                float newWidth = 0;
+                var originalHeight = options.OutHeight;
+                var originalWidth = options.OutWidth;
 
-                var originalHeight = originalImage.Height;
-                var originalWidth = originalImage.Width;
+                // Calculate inSampleSize
+                options.InSampleSize = CalculateInSampleSize(options, width, height);
 
-                if (originalHeight > originalWidth)
-                {
-                    newHeight = height;
-                    float ratio = originalHeight / height;
-                    newWidth = originalWidth / ratio;
-                }
-                else
-                {
-                    newWidth = width;
-                    float ratio = originalWidth / width;
-                    newHeight = originalHeight / ratio;
-                }
+                // Decode bitmap with inSampleSize set
+                options.InJustDecodeBounds = false;
 
-                Bitmap resizedImage = Bitmap.CreateScaledBitmap(originalImage, (int)newWidth, (int)newHeight, true);
-
-                originalImage.Recycle();
+                Bitmap resizedImage = BitmapFactory.DecodeByteArray(imageData, 0, imageData.Length, options);                
 
                 using (MemoryStream ms = new MemoryStream())
                 {
@@ -63,5 +72,52 @@ namespace ImageBox.Droid
             }
             return null;
         }
+        //public byte[] ResizeImage(string filename, float width, float height)
+        //{
+        //    if (File.Exists(filename))
+        //    {
+        //        byte[] imageData2 = RecalculateImage(filename, width, height);
+
+        //        byte[] imageData = File.ReadAllBytes(filename);
+
+        //        // Load the bitmap 
+        //        BitmapFactory.Options options = new BitmapFactory.Options();// Create object of bitmapfactory's option method for further option use
+        //        options.InPurgeable = true; // inPurgeable is used to free up memory while required
+        //        Bitmap originalImage = BitmapFactory.DecodeByteArray(imageData, 0, imageData.Length, options);
+
+        //        float newHeight = 0;
+        //        float newWidth = 0;
+
+        //        var originalHeight = originalImage.Height;
+        //        var originalWidth = originalImage.Width;
+
+        //        if (originalHeight > originalWidth)
+        //        {
+        //            newHeight = height;
+        //            float ratio = originalHeight / height;
+        //            newWidth = originalWidth / ratio;
+        //        }
+        //        else
+        //        {
+        //            newWidth = width;
+        //            float ratio = originalWidth / width;
+        //            newHeight = originalHeight / ratio;
+        //        }
+
+        //        Bitmap resizedImage = Bitmap.CreateScaledBitmap(originalImage, (int)newWidth, (int)newHeight, true);
+
+        //        originalImage.Recycle();
+
+        //        using (MemoryStream ms = new MemoryStream())
+        //        {
+        //            resizedImage.Compress(Bitmap.CompressFormat.Png, 100, ms);
+
+        //            resizedImage.Recycle();
+
+        //            return ms.ToArray();
+        //        }
+        //    }
+        //    return null;
+        //}
     }
 }

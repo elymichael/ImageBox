@@ -22,11 +22,11 @@
             </StackLayout>
             <StackLayout x:Name="MainLayout" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BindingContext="{Binding TrashPage}" CompressedLayout.IsHeadless="true">
                 <ScrollView HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                    <Grid x:Name="flexLayout">
+                    <Grid x:Name="flexLayout" Margin="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="120" />
-                            <ColumnDefinition Width="120" />
-                            <ColumnDefinition Width="120" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                     </Grid>
                 </ScrollView>

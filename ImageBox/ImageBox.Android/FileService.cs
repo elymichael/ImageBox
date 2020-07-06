@@ -44,7 +44,7 @@ namespace ImageBox.Droid
         }
 
         public void MoveFileToTrash(string imageName)
-        {            
+        {
             string filename = Path.GetFileName(imageName);
 
             string _path = Android.App.Application.Context.FilesDir.AbsolutePath;
@@ -91,9 +91,11 @@ namespace ImageBox.Droid
             _path = Android.App.Application.Context.FilesDir.AbsolutePath;
             _directorySearch = Path.Combine(_path, "Images");
 
-            _imageList.Photos.AddRange(Directory.EnumerateFiles(_directorySearch, "*.*", SearchOption.AllDirectories)
-                .Where(file => allowedExtensions.Any(file.ToLower().EndsWith)));
-
+            if (Directory.Exists(_directorySearch))
+            {
+                _imageList.Photos.AddRange(Directory.EnumerateFiles(_directorySearch, "*.*", SearchOption.AllDirectories)
+                    .Where(file => allowedExtensions.Any(file.ToLower().EndsWith)));
+            }
             return _imageList;
         }
 

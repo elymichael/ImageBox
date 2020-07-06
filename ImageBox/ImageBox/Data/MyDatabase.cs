@@ -19,13 +19,31 @@
 
         public async Task AddItem(ImageInfo item)
         {
+            if(_myDatabaseConnection.Table<ImageInfo>() == null)
+            {
+                await _myDatabaseConnection.CreateTableAsync<ImageInfo>();
+            }
             await _myDatabaseConnection.InsertAsync(item);
         }
 
+        public async Task DeleteItem(ImageInfo item)
+        {
+            if (_myDatabaseConnection.Table<ImageInfo>() != null)
+            {
+              ImageInfo iiToDelete = await _myDatabaseConnection
+                .Table<ImageInfo>().FirstOrDefaultAsync(x => x.Name == item.Name);
+
+                await _myDatabaseConnection.DeleteAsync(iiToDelete);
+            }            
+        }
         public async Task<ImageInfo> Get(string name)
         {
-            return await _myDatabaseConnection
+            if (_myDatabaseConnection.Table<ImageInfo>() != null)
+            {
+                return await _myDatabaseConnection
                 .Table<ImageInfo>().FirstOrDefaultAsync(x => x.Name == name);
+            }
+            return null;
         }
     }
 }

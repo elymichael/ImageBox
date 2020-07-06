@@ -53,15 +53,10 @@
                 });
                 SetImages();
             }
-            catch (PermissionException)
-            {
-                await DisplayAlert("Access Permissions", "Request access permission to storage.", "Ok");
-                CheckPermission();
-            }
             catch (UnauthorizedAccessException)
             {
                 await DisplayAlert("Access Permissions", "Request access permission to storage.", "Ok");
-                CheckPermission();
+                FileManager.CheckPermission();
             }
             catch (Exception ex)
             {
@@ -172,7 +167,7 @@
 
         private void SetImages()
         {
-            string imagePath = FileManager.GetCompressedImage(UnsortedImages[pointer].ImagePath, 800, 800);
+            string imagePath = FileManager.GetCompressedImage(UnsortedImages[pointer].ImagePath, 250, 250);
             Device.BeginInvokeOnMainThread(() =>
             {
                 txtPhotoTotal.Text = string.Format("{0} of {1}", (pointer + 1), UnsortedImages.Count);
@@ -202,14 +197,6 @@
                 pointer--;
             }
             SetImages();
-        }
-
-        private void CheckPermission()
-        {
-            if (DeviceInfo.Platform.ToString() == Device.Android)
-            {
-                DependencyService.Get<ICheckFilePermission>().CheckPermission();
-            }
-        }
+        }        
     }
 }

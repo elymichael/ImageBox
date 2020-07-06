@@ -16,6 +16,12 @@
         public App()
         {
             InitializeComponent();
+            string _directoryName = Path.Combine(FileSystem.CacheDirectory, "Cache");
+            string[] _files = Directory.GetFiles(_directoryName);
+            foreach(string _file in _files)
+            {
+                File.Delete(_file);
+            }
 
             MainPage = new MainPage();
         }

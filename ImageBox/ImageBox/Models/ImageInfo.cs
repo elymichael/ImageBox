@@ -1,9 +1,11 @@
 ﻿namespace ImageBox
 {
+    using SQLite;
     using System;    
     using System.IO;
     public class ImageInfo: IComparable<ImageInfo>
     {
+        [PrimaryKey]
         public string Name { get; set; }
         public string ImagePath { get; set; }
         public bool Selected { get; set; }

@@ -83,7 +83,11 @@
             {
                 Selected = 0;
                 TrashImages.Clear();
-                flexLayout.Children.Clear();
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    flexLayout.Children.Clear();
+                });
 
                 ImageList imageList = FileManager.GetTrashImages();
 
@@ -119,7 +123,7 @@
 
         private void AddImage(string filepath)
         {
-            string imagePath = FileManager.GetCompressedImage(filepath, 400, 400);
+            string imagePath = FileManager.GetCompressedImage(filepath, 150, 150);
             Device.BeginInvokeOnMainThread(() =>
             {
                 CachedImage image = new CachedImage
