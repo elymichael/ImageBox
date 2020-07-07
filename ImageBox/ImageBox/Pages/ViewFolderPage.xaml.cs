@@ -111,9 +111,9 @@
 
                 Grid.SetColumn(image, colPosition);
                 Grid.SetRow(image, rowPosition);
-
+                image.Opacity = 0;
                 flexLayout.Children.Add(image);
-
+                image.Opacity = 1;
                 colPosition++;
                 if (colPosition == 3)
                 {

@@ -24,7 +24,6 @@
 
         public event EventHandler<EventArgs> OperationCompleted;
 
-        private bool _isPageOpen = false;
         private async void LoadDirectory()
         {
             try
@@ -48,7 +47,7 @@
                     });
                 });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await DisplayAlert("Error", "An error has ocurred: " + ex.Message, "OK");
             }
@@ -76,47 +75,42 @@
             {
                 string result = await App.Current.MainPage.DisplayPromptAsync("New Folder", "Add your folder name");
                 if (result != null)
-                {                    
-                    await Task.Run(() => {
+                {
+                    await Task.Run(() =>
+                    {
                         FileManager.CreateFolder(result);
-                        LoadDirectory(); 
+                        LoadDirectory();
                     });
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await DisplayAlert("Error", "An error has ocurred: " + ex.Message, "OK");
             }
         }
 
         private async void ViewFolderPage_OperationCompleted(object sender, EventArgs e)
-        {            
+        {
             (sender as ViewFolderPage).OperationCompleted -= ViewFolderPage_OperationCompleted;
-            await Task.Run(() => {
-                _isPageOpen = false;
-                LoadDirectory(); 
+            await Task.Run(() =>
+            {                
+                LoadDirectory();
             });
         }
-
-        private async void ImageDestinationDisplay_ItemTapped(object sender, ItemTappedEventArgs e)
+        async void OnTapGestureRecognizerFolderTapped(object sender, EventArgs args)
         {
             try
             {
-                if (e.Item == null) return;
-                if (_isPageOpen) return;
-
-                _isPageOpen = true;
-
-                string folderName = ((DestinationFolder)e.Item).Name;
+                string folderName = ((StackLayout)sender).AutomationId;
 
                 var viewFolderPage = new ViewFolderPage(folderName);
                 viewFolderPage.OperationCompleted += ViewFolderPage_OperationCompleted;
                 await Navigation.PushModalAsync(viewFolderPage, true);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await DisplayAlert("Error", "An error has ocurred: " + ex.Message, "OK");
             }
-        }        
+        }
     }
 }
