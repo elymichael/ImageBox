@@ -88,6 +88,14 @@ namespace ImageBox.Droid
                 }
             }
 
+            _directorySearch = Path.Combine(_path, "WhatsApp/Media/WhatsApp Images");
+
+            if (Directory.Exists(_directorySearch))
+            {
+                _imageList.Photos.AddRange(Directory.EnumerateFiles(_directorySearch, "*.*", SearchOption.TopDirectoryOnly)
+                    .Where(file => allowedExtensions.Any(file.ToLower().EndsWith)));
+            }
+
             _path = Android.App.Application.Context.FilesDir.AbsolutePath;
             _directorySearch = Path.Combine(_path, "Images");
 

@@ -26,6 +26,9 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="120" />
+                        </Grid.RowDefinitions>
                     </Grid>
                 </ScrollView>
             </Grid>

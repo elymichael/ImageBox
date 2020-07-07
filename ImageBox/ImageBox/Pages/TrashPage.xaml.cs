@@ -22,7 +22,7 @@
 
             BindingContext = this;
 
-            LoadBitmapCollection();
+            Task.Run(async () => { await LoadBitmapCollection(); });
         }
 
         private int rowPosition = 0;
@@ -75,7 +75,7 @@
         }
         #endregion
 
-        async void LoadBitmapCollection()
+        async Task LoadBitmapCollection()
         {
             setButtonBindings(Selected);
 
@@ -131,6 +131,7 @@
             {
                 CachedImage image = new CachedImage
                 {
+                    Source = await Task<ImageSource>.Factory.StartNew(() => ImageSource.FromFile(imagePath)),
                     HorizontalOptions = LayoutOptions.FillAndExpand,
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HeightRequest = 120,
@@ -143,8 +144,7 @@
 
                 image.DownsampleToViewSize = true;
                 image.CacheDuration = new TimeSpan(5, 0, 0, 0);
-                image.Source = await Task<ImageSource>.Factory.StartNew(() => ImageSource.FromFile(imagePath));
-
+                
                 var tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.NumberOfTapsRequired = 1;
                 tapGestureRecognizer.Tapped += (s, e) =>
@@ -230,7 +230,7 @@
                         FileManager.DeleteFile(_image.ImagePath);
                     }
 
-                    LoadBitmapCollection();
+                    await LoadBitmapCollection();
 
                     ShowToastMessage("Photos deleted permanently!");
                 }
@@ -262,7 +262,7 @@
                     {
                         FileManager.RestoreFile(_image.ImagePath);
                     }
-                    LoadBitmapCollection();
+                    await LoadBitmapCollection();
 
                     ShowToastMessage("Photos moved to unsorted!");
                 }

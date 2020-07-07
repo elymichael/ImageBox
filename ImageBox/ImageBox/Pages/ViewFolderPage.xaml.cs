@@ -91,7 +91,8 @@
             {
                 CachedImage image = new CachedImage
                 {
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
+                    Source = await Task<ImageSource>.Factory.StartNew(() => ImageSource.FromFile(imagePath)),
+                    HorizontalOptions = LayoutOptions.FillAndExpand,    
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HeightRequest = 120,
                     WidthRequest = 120,
@@ -101,8 +102,7 @@
                     BackgroundColor = Color.Gray
                 };
                 image.DownsampleToViewSize = true;
-                image.CacheDuration = new TimeSpan(5, 0, 0, 0);
-                image.Source = await Task<ImageSource>.Factory.StartNew(() => ImageSource.FromFile(imagePath));
+                image.CacheDuration = new TimeSpan(5, 0, 0, 0);                
 
                 var tapGestureRecognizer = new TapGestureRecognizer();
                 tapGestureRecognizer.NumberOfTapsRequired = 2;

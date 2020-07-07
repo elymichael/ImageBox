@@ -155,7 +155,7 @@
                 {
                     FileManager.MoveFileToTrash(UnsortedImages[pointer].ImagePath);
                     UnsortedImages.RemoveAt(pointer);
-                    if (pointer >= (UnsortedImages.Count - 1))
+                    if (pointer > (UnsortedImages.Count - 1))
                     {
                         pointer--;
                     }
@@ -188,7 +188,13 @@
 
         private void SetImages()
         {
-            if (UnsortedImages.Count > pointer)
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                txtPhotoTotal.Text = string.Format("{0} of {1}", 0, UnsortedImages.Count);
+                imgCurrent.Source = null;
+            });
+
+            if (UnsortedImages.Count > 0)
             {
                 string imagePath = FileManager.GetCompressedImage(UnsortedImages[pointer].ImagePath, 250, 250);
                 Device.BeginInvokeOnMainThread(() =>
